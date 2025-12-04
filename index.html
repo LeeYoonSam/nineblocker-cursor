@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나인블로커스 리그 - 2025년 8월 시즌</title>
+  <style>
+    :root {
+      --bg-primary: #0f0f0f;
+      --bg-secondary: #1a1a1a;
+      --bg-tertiary: #252525;
+      --bg-hover: #2a2a2a;
+      --text-primary: #f5f5f5;
+      --text-secondary: #a0a0a0;
+      --text-muted: #666;
+      --accent: #ff6b35;
+      --accent-hover: #ff8555;
+      --accent-glow: rgba(255, 107, 53, 0.3);
+      --border: #333;
+      --success: #4ade80;
+      --team-a: #3b82f6;
+      --team-b: #22c55e;
+      --team-c: #f59e0b;
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+      padding: 40px 0;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--accent) 0%, #ffd700 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    .stats-summary {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 24px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      align-items: center;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px 20px 14px 48px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .toggle-group {
+      display: flex;
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .toggle-btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .toggle-btn.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .toggle-btn:hover:not(.active) {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    /* Table */
+    .table-wrapper {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    th {
+      background: var(--bg-tertiary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+      border-bottom: 2px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+
+    th:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    th.sorted {
+      color: var(--accent);
+    }
+
+    th .sort-icon {
+      display: inline-block;
+      margin-left: 6px;
+      opacity: 0.5;
+      transition: all 0.2s ease;
+    }
+
+    th.sorted .sort-icon {
+      opacity: 1;
+    }
+
+    th.sorted.desc .sort-icon {
+      transform: rotate(180deg);
+    }
+
+    td {
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+
+    tr:hover td {
+      background: var(--bg-hover);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .player-name {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .team-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .team-A { background: rgba(59, 130, 246, 0.2); color: var(--team-a); }
+    .team-B { background: rgba(34, 197, 94, 0.2); color: var(--team-b); }
+    .team-C { background: rgba(245, 158, 11, 0.2); color: var(--team-c); }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .rank {
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    tr:nth-child(1) .rank { color: #ffd700; }
+    tr:nth-child(2) .rank { color: #c0c0c0; }
+    tr:nth-child(3) .rank { color: #cd7f32; }
+
+    /* Chat Button */
+    .chat-fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--accent) 0%, #ff8555 100%);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 4px 20px var(--accent-glow);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chat-fab:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px var(--accent-glow);
+    }
+
+    .chat-fab svg {
+      color: white;
+    }
+
+    /* Chat Modal */
+    .chat-modal {
+      position: fixed;
+      bottom: 100px;
+      right: 24px;
+      width: 400px;
+      max-width: calc(100vw - 48px);
+      height: 500px;
+      max-height: calc(100vh - 150px);
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: none;
+      flex-direction: column;
+      z-index: 1001;
+      overflow: hidden;
+    }
+
+    .chat-modal.open {
+      display: flex;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .chat-header {
+      padding: 16px 20px;
+      background: var(--bg-tertiary);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chat-header h3 svg {
+      color: var(--accent);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background: var(--accent);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .message.ai {
+      align-self: flex-start;
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border-bottom-left-radius: 4px;
+    }
+
+    .message.system {
+      align-self: center;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 8px;
+    }
+
+    .chat-input-area {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-input-area input {
+      flex: 1;
+      padding: 12px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+    }
+
+    .chat-input-area input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .chat-input-area input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .send-btn {
+      padding: 12px 16px;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .send-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .send-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* API Key Modal */
+    .api-key-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 24px;
+    }
+
+    .api-key-modal.open {
+      display: flex;
+    }
+
+    .api-key-content {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 32px;
+      max-width: 450px;
+      width: 100%;
+    }
+
+    .api-key-content h3 {
+      margin-bottom: 8px;
+      font-size: 1.25rem;
+    }
+
+    .api-key-content p {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .api-key-content input {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    .api-key-content input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .api-key-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .btn-secondary {
+      padding: 10px 20px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-hover);
+    }
+
+    .btn-primary {
+      padding: 10px 20px;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Loading */
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      padding: 12px 16px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius);
+      width: fit-content;
+    }
+
+    .typing-indicator span {
+      width: 8px;
+      height: 8px;
+      background: var(--text-muted);
+      border-radius: 50%;
+      animation: bounce 1.4s infinite ease-in-out;
+    }
+
+    .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+    .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 16px;
+      }
+
+      header {
+        padding: 24px 16px;
+      }
+
+      header h1 {
+        font-size: 1.75rem;
+      }
+
+      .stats-summary {
+        gap: 24px;
+      }
+
+      .stat-value {
+        font-size: 1.4rem;
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      .chat-modal {
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        max-width: 100%;
+        height: calc(100vh - 80px);
+        max-height: calc(100vh - 80px);
+        border-radius: var(--radius) var(--radius) 0 0;
+      }
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg {
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-tertiary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🏀 나인블로커스 리그</h1>
+      <p>2025년 8월 시즌 선수 통계</p>
+      <div class="stats-summary">
+        <div class="stat-item">
+          <div class="stat-value" id="totalRounds">12</div>
+          <div class="stat-label">총 라운드</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="totalPlayers">42</div>
+          <div class="stat-label">참가 선수</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="totalTeams">3</div>
+          <div class="stat-label">팀</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="controls">
+      <div class="search-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" placeholder="선수 이름으로 검색...">
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>순위</th>
+              <th data-sort="번호">번호<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="팀">팀<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="선수명">선수명<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="출석">출석<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="누적득점" class="sorted desc">누적득점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="평균득점">평균득점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="누적어시">누적어시<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="평균어시">평균어시<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="누적리바">누적리바<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="평균리바">평균리바<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="누적스틸">누적스틸<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="평균스틸">평균스틸<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="누적블록">누적블록<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="평균블록">평균블록<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="누적3점">누적3점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="평균3점">평균3점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat FAB -->
+  <button class="chat-fab" id="chatFab" title="AI에게 질문하기">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+  </button>
+
+  <!-- Chat Modal -->
+  <div class="chat-modal" id="chatModal">
+    <div class="chat-header">
+      <h3>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        리그 통계 AI
+      </h3>
+      <button class="close-btn" id="closeChat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message system">
+        나인블로커스 리그 통계에 대해 무엇이든 물어보세요!
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="질문을 입력하세요..." autocomplete="off">
+      <button class="send-btn" id="sendBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- API Key Modal -->
+  <div class="api-key-modal" id="apiKeyModal">
+    <div class="api-key-content">
+      <h3>🔑 Gemini API 키 입력</h3>
+      <p>AI 채팅 기능을 사용하려면 Google Gemini API 키가 필요합니다. 키는 브라우저에 안전하게 저장됩니다.</p>
+      <input type="password" id="apiKeyInput" placeholder="API 키를 입력하세요...">
+      <div class="api-key-buttons">
+        <button class="btn-secondary" id="cancelApiKey">취소</button>
+        <button class="btn-primary" id="saveApiKey">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+    // 선수 데이터
+    const leagueData = {
+      "시즌": "2025년 8월",
+      "총라운드": 12,
+      "총선수수": 42,
+      "선수목록": [
+        {"번호":0,"팀":"C","선수명":"이장원","득점":{"누적득점":168,"평균득점":24.0},"출석":8,"부가기록":{"어시스트":{"누적":29,"평균":4.1},"리바운드":{"누적":95,"평균":13.6},"스틸":{"누적":10,"평균":1.4},"블록":{"누적":2,"평균":0.3},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":2,"팀":"B","선수명":"오종필","득점":{"누적득점":32,"평균득점":8.0},"출석":5,"부가기록":{"어시스트":{"누적":5,"평균":1.2},"리바운드":{"누적":48,"평균":12.0},"스틸":{"누적":1,"평균":0.2},"블록":{"누적":2,"평균":0.5},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":4,"팀":"A","선수명":"김돈규","득점":{"누적득점":106,"평균득점":15.1},"출석":9,"부가기록":{"어시스트":{"누적":29,"평균":4.1},"리바운드":{"누적":115,"평균":16.4},"스틸":{"누적":8,"평균":1.1},"블록":{"누적":15,"평균":2.1},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":6,"팀":"A","선수명":"안병웅","득점":{"누적득점":349,"평균득점":38.8},"출석":10,"부가기록":{"어시스트":{"누적":15,"평균":1.7},"리바운드":{"누적":85,"평균":9.4},"스틸":{"누적":23,"평균":2.6},"블록":{"누적":3,"평균":0.3},"3점슛":{"누적":33,"평균":3.7}}},
+        {"번호":7,"팀":"B","선수명":"권인회","득점":{"누적득점":77,"평균득점":11.0},"출석":8,"부가기록":{"어시스트":{"누적":17,"평균":2.4},"리바운드":{"누적":84,"평균":12.0},"스틸":{"누적":3,"평균":0.4},"블록":{"누적":6,"평균":0.9},"3점슛":{"누적":8,"평균":1.1}}},
+        {"번호":8,"팀":"C","선수명":"박정현","득점":{"누적득점":24,"평균득점":8.0},"출석":4,"부가기록":{"어시스트":{"누적":11,"평균":3.7},"리바운드":{"누적":16,"평균":5.3},"스틸":{"누적":7,"평균":2.3},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":9,"팀":"A","선수명":"김진배","득점":{"누적득점":8,"평균득점":2.0},"출석":5,"부가기록":{"어시스트":{"누적":2,"평균":0.5},"리바운드":{"누적":22,"평균":5.5},"스틸":{"누적":2,"평균":0.5},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":10,"팀":"C","선수명":"안병영","득점":{"누적득점":56,"평균득점":11.2},"출석":5,"부가기록":{"어시스트":{"누적":10,"평균":2.0},"리바운드":{"누적":64,"평균":12.8},"스틸":{"누적":4,"평균":0.8},"블록":{"누적":3,"평균":0.6},"3점슛":{"누적":2,"평균":0.4}}},
+        {"번호":13,"팀":"C","선수명":"김경환","득점":{"누적득점":0,"평균득점":0.0},"출석":0,"부가기록":{"어시스트":{"누적":0,"평균":0.0},"리바운드":{"누적":0,"평균":0.0},"스틸":{"누적":0,"평균":0.0},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":14,"팀":"C","선수명":"고민근","득점":{"누적득점":21,"평균득점":4.2},"출석":5,"부가기록":{"어시스트":{"누적":8,"평균":1.6},"리바운드":{"누적":44,"평균":8.8},"스틸":{"누적":5,"평균":1.0},"블록":{"누적":1,"평균":0.2},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":16,"팀":"A","선수명":"김현준","득점":{"누적득점":96,"평균득점":12.0},"출석":10,"부가기록":{"어시스트":{"누적":18,"평균":2.2},"리바운드":{"누적":27,"평균":3.4},"스틸":{"누적":6,"평균":0.8},"블록":{"누적":3,"평균":0.4},"3점슛":{"누적":2,"평균":0.2}}},
+        {"번호":17,"팀":"A","선수명":"채영진","득점":{"누적득점":41,"평균득점":8.2},"출석":6,"부가기록":{"어시스트":{"누적":10,"평균":2.0},"리바운드":{"누적":10,"평균":2.0},"스틸":{"누적":9,"평균":1.8},"블록":{"누적":1,"평균":0.2},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":19,"팀":"B","선수명":"정용주","득점":{"누적득점":35,"평균득점":8.8},"출석":5,"부가기록":{"어시스트":{"누적":6,"평균":1.5},"리바운드":{"누적":11,"평균":2.8},"스틸":{"누적":8,"평균":2.0},"블록":{"누적":2,"평균":0.5},"3점슛":{"누적":2,"평균":0.5}}},
+        {"번호":20,"팀":"C","선수명":"정희원","득점":{"누적득점":26,"평균득점":13.0},"출석":2,"부가기록":{"어시스트":{"누적":6,"평균":3.0},"리바운드":{"누적":19,"평균":9.5},"스틸":{"누적":3,"평균":1.5},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":21,"팀":"A","선수명":"권기현","득점":{"누적득점":51,"평균득점":5.7},"출석":11,"부가기록":{"어시스트":{"누적":15,"평균":1.7},"리바운드":{"누적":56,"평균":6.2},"스틸":{"누적":6,"평균":0.7},"블록":{"누적":5,"평균":0.6},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":22,"팀":"C","선수명":"이윤삼","득점":{"누적득점":165,"평균득점":18.3},"출석":10,"부가기록":{"어시스트":{"누적":35,"평균":3.9},"리바운드":{"누적":43,"평균":4.8},"스틸":{"누적":5,"평균":0.6},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":4,"평균":0.4}}},
+        {"번호":23,"팀":"A","선수명":"백경준","득점":{"누적득점":95,"평균득점":15.8},"출석":6,"부가기록":{"어시스트":{"누적":12,"평균":2.0},"리바운드":{"누적":69,"평균":11.5},"스틸":{"누적":6,"평균":1.0},"블록":{"누적":3,"평균":0.5},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":24,"팀":"B","선수명":"유지형","득점":{"누적득점":213,"평균득점":30.4},"출석":8,"부가기록":{"어시스트":{"누적":38,"평균":5.4},"리바운드":{"누적":26,"평균":3.7},"스틸":{"누적":6,"평균":0.9},"블록":{"누적":1,"평균":0.1},"3점슛":{"누적":5,"평균":0.7}}},
+        {"번호":25,"팀":"A","선수명":"손재민","득점":{"누적득점":20,"평균득점":20.0},"출석":3,"부가기록":{"어시스트":{"누적":1,"평균":1.0},"리바운드":{"누적":2,"평균":2.0},"스틸":{"누적":0,"평균":0.0},"블록":{"누적":1,"평균":1.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":26,"팀":"B","선수명":"이윤수","득점":{"누적득점":20,"평균득점":20.0},"출석":1,"부가기록":{"어시스트":{"누적":0,"평균":0.0},"리바운드":{"누적":7,"평균":7.0},"스틸":{"누적":0,"평균":0.0},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":28,"팀":"C","선수명":"강효진","득점":{"누적득점":34,"평균득점":11.3},"출석":4,"부가기록":{"어시스트":{"누적":3,"평균":1.0},"리바운드":{"누적":19,"평균":6.3},"스틸":{"누적":6,"평균":2.0},"블록":{"누적":2,"평균":0.7},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":30,"팀":"A","선수명":"김동광","득점":{"누적득점":202,"평균득점":25.2},"출석":10,"부가기록":{"어시스트":{"누적":62,"평균":7.8},"리바운드":{"누적":33,"평균":4.1},"스틸":{"누적":10,"평균":1.2},"블록":{"누적":2,"평균":0.2},"3점슛":{"누적":4,"평균":0.5}}},
+        {"번호":31,"팀":"A","선수명":"김준환","득점":{"누적득점":29,"평균득점":4.8},"출석":7,"부가기록":{"어시스트":{"누적":9,"평균":1.5},"리바운드":{"누적":59,"평균":9.8},"스틸":{"누적":8,"평균":1.3},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":32,"팀":"A","선수명":"김정호","득점":{"누적득점":114,"평균득점":11.4},"출석":11,"부가기록":{"어시스트":{"누적":115,"평균":11.5},"리바운드":{"누적":85,"평균":8.5},"스틸":{"누적":26,"평균":2.6},"블록":{"누적":1,"평균":0.1},"3점슛":{"누적":22,"평균":2.2}}},
+        {"번호":34,"팀":"B","선수명":"이승현","득점":{"누적득점":117,"평균득점":19.5},"출석":7,"부가기록":{"어시스트":{"누적":6,"평균":1.0},"리바운드":{"누적":100,"평균":16.7},"스틸":{"누적":3,"평균":0.5},"블록":{"누적":14,"평균":2.3},"3점슛":{"누적":1,"평균":0.2}}},
+        {"번호":35,"팀":"C","선수명":"강권열","득점":{"누적득점":92,"평균득점":10.2},"출석":9,"부가기록":{"어시스트":{"누적":43,"평균":4.8},"리바운드":{"누적":96,"평균":10.7},"스틸":{"누적":14,"평균":1.6},"블록":{"누적":6,"평균":0.7},"3점슛":{"누적":4,"평균":0.4}}},
+        {"번호":38,"팀":"A","선수명":"길을섭","득점":{"누적득점":70,"평균득점":8.8},"출석":8,"부가기록":{"어시스트":{"누적":7,"평균":0.9},"리바운드":{"누적":52,"평균":6.5},"스틸":{"누적":5,"평균":0.6},"블록":{"누적":1,"평균":0.1},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":39,"팀":"C","선수명":"이민호","득점":{"누적득점":209,"평균득점":29.9},"출석":8,"부가기록":{"어시스트":{"누적":33,"평균":4.7},"리바운드":{"누적":145,"평균":20.7},"스틸":{"누적":13,"평균":1.9},"블록":{"누적":1,"평균":0.1},"3점슛":{"누적":1,"평균":0.1}}},
+        {"번호":40,"팀":"B","선수명":"정문관","득점":{"누적득점":5,"평균득점":1.7},"출석":5,"부가기록":{"어시스트":{"누적":3,"평균":1.0},"리바운드":{"누적":20,"평균":6.7},"스틸":{"누적":0,"평균":0.0},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":41,"팀":"B","선수명":"이동석","득점":{"누적득점":28,"평균득점":9.3},"출석":3,"부가기록":{"어시스트":{"누적":6,"평균":2.0},"리바운드":{"누적":41,"평균":13.7},"스틸":{"누적":3,"평균":1.0},"블록":{"누적":10,"평균":3.3},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":45,"팀":"B","선수명":"김원범","득점":{"누적득점":30,"평균득점":5.0},"출석":6,"부가기록":{"어시스트":{"누적":6,"평균":1.0},"리바운드":{"누적":24,"평균":4.0},"스틸":{"누적":8,"평균":1.3},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":46,"팀":"B","선수명":"심창현","득점":{"누적득점":113,"평균득점":12.6},"출석":11,"부가기록":{"어시스트":{"누적":19,"평균":2.1},"리바운드":{"누적":27,"평균":3.0},"스틸":{"누적":8,"평균":0.9},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":47,"팀":"A","선수명":"송성일","득점":{"누적득점":59,"평균득점":7.4},"출석":10,"부가기록":{"어시스트":{"누적":9,"평균":1.1},"리바운드":{"누적":39,"평균":4.9},"스틸":{"누적":8,"평균":1.0},"블록":{"누적":9,"평균":1.1},"3점슛":{"누적":11,"평균":1.4}}},
+        {"번호":50,"팀":"A","선수명":"이종혁","득점":{"누적득점":0,"평균득점":0.0},"출석":0,"부가기록":{"어시스트":{"누적":0,"평균":0.0},"리바운드":{"누적":0,"평균":0.0},"스틸":{"누적":0,"평균":0.0},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":52,"팀":"C","선수명":"곽성재","득점":{"누적득점":7,"평균득점":1.0},"출석":8,"부가기록":{"어시스트":{"누적":3,"평균":0.4},"리바운드":{"누적":33,"평균":4.7},"스틸":{"누적":1,"평균":0.1},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":72,"팀":"B","선수명":"김주철","득점":{"누적득점":161,"평균득점":26.8},"출석":7,"부가기록":{"어시스트":{"누적":15,"평균":2.5},"리바운드":{"누적":64,"평균":10.7},"스틸":{"누적":8,"평균":1.3},"블록":{"누적":11,"평균":1.8},"3점슛":{"누적":6,"평균":1.0}}},
+        {"번호":78,"팀":"C","선수명":"송진수","득점":{"누적득점":90,"평균득점":12.9},"출석":8,"부가기록":{"어시스트":{"누적":21,"평균":3.0},"리바운드":{"누적":37,"평균":5.3},"스틸":{"누적":7,"평균":1.0},"블록":{"누적":2,"평균":0.3},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":79,"팀":"C","선수명":"민득수","득점":{"누적득점":42,"평균득점":7.0},"출석":8,"부가기록":{"어시스트":{"누적":10,"평균":1.7},"리바운드":{"누적":21,"평균":3.5},"스틸":{"누적":3,"평균":0.5},"블록":{"누적":1,"평균":0.2},"3점슛":{"누적":8,"평균":1.3}}},
+        {"번호":88,"팀":"C","선수명":"최승환","득점":{"누적득점":43,"평균득점":10.8},"출석":5,"부가기록":{"어시스트":{"누적":8,"평균":2.0},"리바운드":{"누적":31,"평균":7.8},"스틸":{"누적":2,"평균":0.5},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":7,"평균":1.8}}},
+        {"번호":92,"팀":"B","선수명":"박문용","득점":{"누적득점":19,"평균득점":19.0},"출석":1,"부가기록":{"어시스트":{"누적":1,"평균":1.0},"리바운드":{"누적":6,"평균":6.0},"스틸":{"누적":0,"평균":0.0},"블록":{"누적":1,"평균":1.0},"3점슛":{"누적":0,"평균":0.0}}},
+        {"번호":93,"팀":"B","선수명":"강재훈","득점":{"누적득점":340,"평균득점":48.6},"출석":8,"부가기록":{"어시스트":{"누적":43,"평균":6.1},"리바운드":{"누적":45,"평균":6.4},"스틸":{"누적":20,"평균":2.9},"블록":{"누적":6,"평균":0.9},"3점슛":{"누적":9,"평균":1.3}}},
+        {"번호":99,"팀":"B","선수명":"김혜미","득점":{"누적득점":47,"평균득점":11.8},"출석":5,"부가기록":{"어시스트":{"누적":8,"평균":2.0},"리바운드":{"누적":6,"평균":1.5},"스틸":{"누적":3,"평균":0.8},"블록":{"누적":0,"평균":0.0},"3점슛":{"누적":8,"평균":2.0}}}
+      ]
+    };
+
+    // 상태 관리
+    let currentSort = { field: '누적득점', order: 'desc' };
+    let searchQuery = '';
+    let apiKey = localStorage.getItem('gemini_api_key') || '';
+    let genAI = null;
+    let chatHistory = [];
+
+    // DOM 요소
+    const tableBody = document.getElementById('tableBody');
+    const searchInput = document.getElementById('searchInput');
+    const chatFab = document.getElementById('chatFab');
+    const chatModal = document.getElementById('chatModal');
+    const closeChat = document.getElementById('closeChat');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const apiKeyModal = document.getElementById('apiKeyModal');
+    const apiKeyInput = document.getElementById('apiKeyInput');
+    const saveApiKey = document.getElementById('saveApiKey');
+    const cancelApiKey = document.getElementById('cancelApiKey');
+
+    // 데이터 가공 함수
+    function getPlayerValue(player, field) {
+      switch (field) {
+        case '번호': return player.번호;
+        case '팀': return player.팀;
+        case '선수명': return player.선수명;
+        case '출석': return player.출석;
+        case '누적득점': return player.득점.누적득점;
+        case '평균득점': return player.득점.평균득점;
+        case '누적어시': return player.부가기록.어시스트.누적;
+        case '평균어시': return player.부가기록.어시스트.평균;
+        case '누적리바': return player.부가기록.리바운드.누적;
+        case '평균리바': return player.부가기록.리바운드.평균;
+        case '누적스틸': return player.부가기록.스틸.누적;
+        case '평균스틸': return player.부가기록.스틸.평균;
+        case '누적블록': return player.부가기록.블록.누적;
+        case '평균블록': return player.부가기록.블록.평균;
+        case '누적3점': return player.부가기록['3점슛'].누적;
+        case '평균3점': return player.부가기록['3점슛'].평균;
+        default: return 0;
+      }
+    }
+
+    // 정렬 및 필터링
+    function getFilteredAndSortedPlayers() {
+      let players = [...leagueData.선수목록];
+      
+      // 검색 필터링
+      if (searchQuery) {
+        players = players.filter(p => 
+          p.선수명.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+      
+      // 정렬
+      players.sort((a, b) => {
+        const aVal = getPlayerValue(a, currentSort.field);
+        const bVal = getPlayerValue(b, currentSort.field);
+        
+        if (typeof aVal === 'string') {
+          return currentSort.order === 'asc' 
+            ? aVal.localeCompare(bVal) 
+            : bVal.localeCompare(aVal);
+        }
+        
+        return currentSort.order === 'asc' ? aVal - bVal : bVal - aVal;
+      });
+      
+      return players;
+    }
+
+    // 테이블 렌더링
+    function renderTable() {
+      const players = getFilteredAndSortedPlayers();
+      
+      if (players.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="17">
+              <div class="empty-state">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <p>검색 결과가 없습니다</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      tableBody.innerHTML = players.map((player, index) => `
+        <tr>
+          <td class="rank">${index + 1}</td>
+          <td>${player.번호}</td>
+          <td><span class="team-badge team-${player.팀}">${player.팀}</span></td>
+          <td class="player-name">${player.선수명}</td>
+          <td>${player.출석}</td>
+          <td class="highlight">${player.득점.누적득점}</td>
+          <td>${player.득점.평균득점.toFixed(1)}</td>
+          <td>${player.부가기록.어시스트.누적}</td>
+          <td>${player.부가기록.어시스트.평균.toFixed(1)}</td>
+          <td>${player.부가기록.리바운드.누적}</td>
+          <td>${player.부가기록.리바운드.평균.toFixed(1)}</td>
+          <td>${player.부가기록.스틸.누적}</td>
+          <td>${player.부가기록.스틸.평균.toFixed(1)}</td>
+          <td>${player.부가기록.블록.누적}</td>
+          <td>${player.부가기록.블록.평균.toFixed(1)}</td>
+          <td>${player.부가기록['3점슛'].누적}</td>
+          <td>${player.부가기록['3점슛'].평균.toFixed(1)}</td>
+        </tr>
+      `).join('');
+    }
+
+    // 정렬 헤더 업데이트
+    function updateSortHeaders() {
+      document.querySelectorAll('th').forEach(th => {
+        th.classList.remove('sorted', 'asc', 'desc');
+        if (th.dataset.sort === currentSort.field) {
+          th.classList.add('sorted', currentSort.order);
+        }
+      });
+    }
+
+    // 정렬 클릭 핸들러
+    document.querySelectorAll('th').forEach(th => {
+      th.addEventListener('click', () => {
+        const field = th.dataset.sort;
+        if (currentSort.field === field) {
+          currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+        } else {
+          currentSort.field = field;
+          currentSort.order = 'desc';
+        }
+        updateSortHeaders();
+        renderTable();
+      });
+    });
+
+    // 검색 핸들러
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderTable();
+    });
+
+    // 채팅 모달 토글
+    chatFab.addEventListener('click', () => {
+      if (!apiKey) {
+        apiKeyModal.classList.add('open');
+        return;
+      }
+      chatModal.classList.toggle('open');
+    });
+
+    closeChat.addEventListener('click', () => {
+      chatModal.classList.remove('open');
+    });
+
+    // API 키 모달
+    saveApiKey.addEventListener('click', () => {
+      const key = apiKeyInput.value.trim();
+      if (key) {
+        apiKey = key;
+        localStorage.setItem('gemini_api_key', key);
+        initGemini();
+        apiKeyModal.classList.remove('open');
+        chatModal.classList.add('open');
+        apiKeyInput.value = '';
+      }
+    });
+
+    cancelApiKey.addEventListener('click', () => {
+      apiKeyModal.classList.remove('open');
+      apiKeyInput.value = '';
+    });
+
+    // Gemini 초기화
+    function initGemini() {
+      if (apiKey) {
+        genAI = new GoogleGenerativeAI(apiKey);
+      }
+    }
+
+    // 시스템 프롬프트 생성
+    function getSystemPrompt() {
+      const playersSummary = leagueData.선수목록.map(p => 
+        `${p.선수명}(#${p.번호}, 팀${p.팀}): 득점 ${p.득점.평균득점}(평균)/${p.득점.누적득점}(누적), ` +
+        `어시스트 ${p.부가기록.어시스트.평균}/${p.부가기록.어시스트.누적}, ` +
+        `리바운드 ${p.부가기록.리바운드.평균}/${p.부가기록.리바운드.누적}, ` +
+        `스틸 ${p.부가기록.스틸.평균}/${p.부가기록.스틸.누적}, ` +
+        `블록 ${p.부가기록.블록.평균}/${p.부가기록.블록.누적}, ` +
+        `3점슛 ${p.부가기록['3점슛'].평균}/${p.부가기록['3점슛'].누적}, ` +
+        `출석 ${p.출석}경기`
+      ).join('\n');
+
+      return `당신은 "나인블로커스" 농구 리그의 공식 통계 분석 AI입니다.
+
+## 시즌 정보
+- 시즌: 2025년 8월
+- 총 라운드: 12
+- 총 선수: 42명
+- 팀: A, B, C
+
+## 선수 데이터 (이름, 번호, 팀, 평균/누적 기록)
+${playersSummary}
+
+## 당신의 역할
+1. 위 선수 데이터를 기반으로 질문에 정확하게 답변합니다.
+2. 득점왕, 어시스트왕, 리바운드왕 등 각 부문별 1위를 찾아줄 수 있습니다.
+3. 특정 선수의 기록을 알려줄 수 있습니다.
+4. 팀별 통계 비교를 해줄 수 있습니다.
+5. 선수들의 강점과 약점을 분석해줄 수 있습니다.
+
+## 중요 규칙
+- 반드시 위 데이터에 있는 정보만 사용하세요.
+- 이 리그 통계와 관련 없는 질문(날씨, 일반 상식, 다른 스포츠 등)에는 정중하게 "죄송합니다. 저는 나인블로커스 리그 통계에 대한 질문에만 답변할 수 있습니다."라고 거절하세요.
+- 답변은 한국어로 친절하고 간결하게 해주세요.
+- 숫자 데이터를 인용할 때는 정확하게 해주세요.`;
+    }
+
+    // 메시지 추가
+    function addMessage(content, type) {
+      const div = document.createElement('div');
+      div.className = `message ${type}`;
+      div.textContent = content;
+      chatMessages.appendChild(div);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // 타이핑 인디케이터 추가
+    function addTypingIndicator() {
+      const div = document.createElement('div');
+      div.className = 'typing-indicator';
+      div.id = 'typingIndicator';
+      div.innerHTML = '<span></span><span></span><span></span>';
+      chatMessages.appendChild(div);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // 타이핑 인디케이터 제거
+    function removeTypingIndicator() {
+      const indicator = document.getElementById('typingIndicator');
+      if (indicator) indicator.remove();
+    }
+
+    // 메시지 전송
+    async function sendMessage() {
+      const message = chatInput.value.trim();
+      if (!message || !genAI) return;
+
+      chatInput.value = '';
+      sendBtn.disabled = true;
+      addMessage(message, 'user');
+      addTypingIndicator();
+
+      try {
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+        
+        // 대화 히스토리 구성
+        const historyFormatted = chatHistory.map(h => ({
+          role: h.role,
+          parts: [{ text: h.content }]
+        }));
+
+        const chat = model.startChat({
+          history: historyFormatted,
+          systemInstruction: getSystemPrompt()
+        });
+
+        const result = await chat.sendMessage(message);
+        const response = await result.response;
+        const text = response.text();
+
+        // 히스토리 업데이트
+        chatHistory.push({ role: 'user', content: message });
+        chatHistory.push({ role: 'model', content: text });
+
+        removeTypingIndicator();
+        addMessage(text, 'ai');
+      } catch (error) {
+        console.error('Gemini API Error:', error);
+        removeTypingIndicator();
+        addMessage('오류가 발생했습니다. API 키를 확인해주세요.', 'system');
+      }
+
+      sendBtn.disabled = false;
+    }
+
+    // 전송 버튼 클릭
+    sendBtn.addEventListener('click', sendMessage);
+
+    // Enter 키로 전송
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    // 초기화
+    initGemini();
+    renderTable();
+    updateSortHeaders();
+  </script>
+</body>
+</html>
+
