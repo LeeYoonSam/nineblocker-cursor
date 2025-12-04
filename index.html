@@ -308,9 +308,9 @@
       position: fixed;
       bottom: 100px;
       right: 24px;
-      width: 400px;
+      width: 480px;
       max-width: calc(100vw - 48px);
-      height: 500px;
+      height: 600px;
       max-height: calc(100vh - 150px);
       background: var(--bg-secondary);
       border-radius: var(--radius);
@@ -384,11 +384,13 @@
     }
 
     .message {
-      max-width: 85%;
+      max-width: 95%;
       padding: 12px 16px;
       border-radius: var(--radius);
       font-size: 0.9rem;
       line-height: 1.5;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
 
     .message.user {
@@ -403,6 +405,125 @@
       background: var(--bg-tertiary);
       color: var(--text-primary);
       border-bottom-left-radius: 4px;
+    }
+
+    /* AI 메시지 마크다운 스타일 */
+    .message.ai p {
+      margin: 0 0 8px 0;
+    }
+
+    .message.ai p:last-child {
+      margin-bottom: 0;
+    }
+
+    .message.ai strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .message.ai ul, .message.ai ol {
+      margin: 8px 0;
+      padding-left: 20px;
+    }
+
+    .message.ai li {
+      margin: 4px 0;
+    }
+
+    .message.ai .table-wrapper {
+      overflow-x: auto;
+      margin: 12px 0;
+      border-radius: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .message.ai table {
+      width: 100%;
+      min-width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    .message.ai th, .message.ai td {
+      padding: 6px 8px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+
+    .message.ai th {
+      background: var(--bg-hover);
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    .message.ai td:first-child {
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .message.ai tr:hover td {
+      background: rgba(255, 107, 53, 0.05);
+    }
+
+    /* 테이블 스크롤바 스타일 */
+    .message.ai .table-wrapper::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .message.ai .table-wrapper::-webkit-scrollbar-track {
+      background: var(--bg-hover);
+      border-radius: 2px;
+    }
+
+    .message.ai .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* 모바일에서 테이블 최적화 */
+    @media (max-width: 480px) {
+      .message.ai table {
+        font-size: 0.72rem;
+      }
+      
+      .message.ai th, .message.ai td {
+        padding: 4px 5px;
+      }
+
+      .message.ai th {
+        font-size: 0.7rem;
+      }
+    }
+
+    .message.ai h3, .message.ai h4 {
+      margin: 12px 0 8px 0;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .message.ai h3:first-child, .message.ai h4:first-child {
+      margin-top: 0;
+    }
+
+    .message.ai code {
+      background: var(--bg-hover);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.85em;
+    }
+
+    .message.ai hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 12px 0;
+    }
+
+    .message.ai .highlight-value {
+      color: var(--accent);
+      font-weight: 600;
     }
 
     .message.system {
@@ -1046,14 +1167,112 @@ ${playersSummary}
 - 반드시 위 데이터에 있는 정보만 사용하세요.
 - 이 리그 통계와 관련 없는 질문(날씨, 일반 상식, 다른 스포츠 등)에는 정중하게 "죄송합니다. 저는 나인블로커스 리그 통계에 대한 질문에만 답변할 수 있습니다."라고 거절하세요.
 - 답변은 한국어로 친절하고 간결하게 해주세요.
-- 숫자 데이터를 인용할 때는 정확하게 해주세요.`;
+- 숫자 데이터를 인용할 때는 정확하게 해주세요.
+
+## 답변 형식 가이드 (매우 중요!)
+화면이 좁을 수 있으니 간결하게 답변하세요.
+
+1. **순위/랭킹 질문** (득점 상위 N위 등):
+   - 테이블은 **최대 3~4개 컬럼**만 사용
+   - 컬럼명은 짧게: 순위→#, 선수명→선수, 기록→수치
+   - 예시:
+   | # | 선수 | 팀 | 득점 |
+   |---|------|----|----|
+   | 1 | 강재훈 | B | 48.6 |
+   | 2 | 안병웅 | A | 38.8 |
+
+2. **특정 선수 정보**:
+   - 리스트 형식 사용 (테이블 X)
+   - 예시:
+   **김정호** (#32, A팀)
+   - 득점: 11.4 / 114
+   - 어시: 11.5 / 115
+   - 리바: 8.5 / 85
+
+3. **비교 질문**:
+   - 2~3개 항목 비교시 리스트
+   - 많은 항목 비교시 간결한 테이블
+
+4. **일반 원칙**:
+   - 숫자는 소수점 1자리까지만
+   - 불필요한 설명 생략
+   - 핵심만 **굵게** 강조`;
+    }
+
+    // 간단한 마크다운 파서
+    function parseMarkdown(text) {
+      // 테이블 파싱 (스크롤 가능한 wrapper로 감싸기)
+      text = text.replace(/\n?\|(.+)\|\n\|[-\s|]+\|\n((?:\|.+\|\n?)+)/g, (match, header, body) => {
+        const headers = header.split('|').map(h => h.trim()).filter(h => h);
+        const rows = body.trim().split('\n').map(row => 
+          row.split('|').map(cell => cell.trim()).filter(cell => cell)
+        );
+        
+        let table = '<div class="table-wrapper"><table><thead><tr>';
+        headers.forEach(h => table += `<th>${h}</th>`);
+        table += '</tr></thead><tbody>';
+        rows.forEach(row => {
+          table += '<tr>';
+          row.forEach(cell => table += `<td>${cell}</td>`);
+          table += '</tr>';
+        });
+        table += '</tbody></table></div>';
+        return table;
+      });
+
+      // 볼드 처리
+      text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      
+      // 이탤릭 처리
+      text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+      
+      // 인라인 코드
+      text = text.replace(/`(.+?)`/g, '<code>$1</code>');
+      
+      // 헤더 처리
+      text = text.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
+      text = text.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+      
+      // 수평선
+      text = text.replace(/^---$/gm, '<hr>');
+      
+      // 순서 있는 리스트
+      text = text.replace(/^(\d+)\. (.+)$/gm, '<li data-num="$1">$2</li>');
+      text = text.replace(/(<li data-num="\d+">.+<\/li>\n?)+/g, (match) => `<ol>${match}</ol>`);
+      text = text.replace(/ data-num="\d+"/g, '');
+      
+      // 순서 없는 리스트
+      text = text.replace(/^- (.+)$/gm, '<li>$1</li>');
+      text = text.replace(/(<li>.+<\/li>\n?)+/g, (match) => {
+        if (!match.includes('<ol>')) return `<ul>${match}</ul>`;
+        return match;
+      });
+      
+      // 줄바꿈을 <br>로 변환 (리스트/테이블/헤더 태그 뒤는 제외)
+      text = text.replace(/\n(?!<)/g, '<br>');
+      
+      // 연속된 <br> 정리
+      text = text.replace(/(<br>){3,}/g, '<br><br>');
+      
+      // 태그 뒤 불필요한 <br> 제거
+      text = text.replace(/<\/(table|ul|ol|h3|h4|hr)><br>/g, '</$1>');
+      text = text.replace(/<br><(table|ul|ol|h3|h4|hr)/g, '<$1');
+      
+      return text;
     }
 
     // 메시지 추가
     function addMessage(content, type) {
       const div = document.createElement('div');
       div.className = `message ${type}`;
-      div.textContent = content;
+      
+      if (type === 'ai') {
+        // AI 메시지는 마크다운 파싱
+        div.innerHTML = parseMarkdown(content);
+      } else {
+        div.textContent = content;
+      }
+      
       chatMessages.appendChild(div);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
