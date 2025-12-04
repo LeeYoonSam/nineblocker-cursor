@@ -860,16 +860,9 @@
       }
     }
 
-    // 정렬 및 필터링
-    function getFilteredAndSortedPlayers() {
+    // 정렬된 전체 선수 목록 반환
+    function getSortedPlayers() {
       let players = [...leagueData.선수목록];
-      
-      // 검색 필터링
-      if (searchQuery) {
-        players = players.filter(p => 
-          p.선수명.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-      }
       
       // 정렬
       players.sort((a, b) => {
@@ -888,11 +881,29 @@
       return players;
     }
 
+    // 검색 필터링 적용
+    function getFilteredPlayers(sortedPlayers) {
+      if (!searchQuery) {
+        return sortedPlayers;
+      }
+      
+      return sortedPlayers.filter(p => 
+        p.선수명.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
     // 테이블 렌더링
     function renderTable() {
-      const players = getFilteredAndSortedPlayers();
+      const sortedPlayers = getSortedPlayers();
+      const filteredPlayers = getFilteredPlayers(sortedPlayers);
       
-      if (players.length === 0) {
+      // 정렬된 전체 목록에서 각 선수의 순위 맵 생성
+      const rankMap = new Map();
+      sortedPlayers.forEach((player, index) => {
+        rankMap.set(player.선수명, index + 1);
+      });
+      
+      if (filteredPlayers.length === 0) {
         tableBody.innerHTML = `
           <tr>
             <td colspan="17">
@@ -909,9 +920,9 @@
         return;
       }
       
-      tableBody.innerHTML = players.map((player, index) => `
+      tableBody.innerHTML = filteredPlayers.map(player => `
         <tr>
-          <td class="rank">${index + 1}</td>
+          <td class="rank">${rankMap.get(player.선수명)}</td>
           <td>${player.번호}</td>
           <td><span class="team-badge team-${player.팀}">${player.팀}</span></td>
           <td class="player-name">${player.선수명}</td>
