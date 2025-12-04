@@ -1095,7 +1095,9 @@ ${playersSummary}
 
         const chat = model.startChat({
           history: historyFormatted,
-          systemInstruction: getSystemPrompt()
+          systemInstruction: {
+            parts: [{ text: getSystemPrompt() }]
+          }
         });
 
         const result = await chat.sendMessage(message);
@@ -1111,7 +1113,22 @@ ${playersSummary}
       } catch (error) {
         console.error('Gemini API Error:', error);
         removeTypingIndicator();
-        addMessage('오류가 발생했습니다. API 키를 확인해주세요.', 'system');
+        
+        let errorMsg = '오류가 발생했습니다.';
+        if (error.message) {
+          if (error.message.includes('API_KEY_INVALID') || error.message.includes('API key not valid')) {
+            errorMsg = 'API 키가 유효하지 않습니다. 올바른 키를 입력해주세요.';
+          } else if (error.message.includes('PERMISSION_DENIED')) {
+            errorMsg = 'API 접근 권한이 없습니다. Gemini API가 활성화되어 있는지 확인해주세요.';
+          } else if (error.message.includes('RESOURCE_EXHAUSTED') || error.message.includes('quota')) {
+            errorMsg = 'API 할당량이 초과되었습니다. 잠시 후 다시 시도해주세요.';
+          } else if (error.message.includes('fetch') || error.message.includes('network')) {
+            errorMsg = '네트워크 오류가 발생했습니다. 인터넷 연결을 확인해주세요.';
+          } else {
+            errorMsg = `오류: ${error.message}`;
+          }
+        }
+        addMessage(errorMsg, 'system');
       }
 
       sendBtn.disabled = false;
