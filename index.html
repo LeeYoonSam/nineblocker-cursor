@@ -202,12 +202,15 @@
       letter-spacing: 0.5px;
       color: var(--text-secondary);
       border-bottom: 2px solid var(--border);
-      cursor: pointer;
-      user-select: none;
       transition: all 0.2s ease;
     }
 
-    th:hover {
+    th[data-sort] {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    th[data-sort]:hover {
       background: var(--bg-hover);
       color: var(--text-primary);
     }
@@ -1068,7 +1071,7 @@
     }
 
     // 정렬 클릭 핸들러
-    document.querySelectorAll('th').forEach(th => {
+    document.querySelectorAll('th[data-sort]').forEach(th => {
       th.addEventListener('click', () => {
         const field = th.dataset.sort;
         if (currentSort.field === field) {
