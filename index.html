@@ -1455,6 +1455,11 @@
       );
     }
 
+    // 현재 정렬 기준에 따라 highlight 클래스 반환
+    function getHighlightClass(field) {
+      return currentSort.field === field ? 'highlight' : '';
+    }
+
     // 테이블 렌더링
     function renderTable() {
       const sortedPlayers = getSortedPlayers();
@@ -1489,22 +1494,22 @@
         return `
         <tr>
           <td class="${rankClass}">${rank}</td>
-          <td>${player.번호}</td>
-          <td><span class="team-badge team-${player.팀}">${player.팀}</span></td>
-          <td class="player-name">${player.선수명}</td>
-          <td>${player.출석}</td>
-          <td class="highlight">${player.득점.누적득점}</td>
-          <td>${player.득점.평균득점.toFixed(1)}</td>
-          <td>${player.부가기록.어시스트.누적}</td>
-          <td>${player.부가기록.어시스트.평균.toFixed(1)}</td>
-          <td>${player.부가기록.리바운드.누적}</td>
-          <td>${player.부가기록.리바운드.평균.toFixed(1)}</td>
-          <td>${player.부가기록.스틸.누적}</td>
-          <td>${player.부가기록.스틸.평균.toFixed(1)}</td>
-          <td>${player.부가기록.블록.누적}</td>
-          <td>${player.부가기록.블록.평균.toFixed(1)}</td>
-          <td>${player.부가기록['3점슛'].누적}</td>
-          <td>${player.부가기록['3점슛'].평균.toFixed(1)}</td>
+          <td class="${getHighlightClass('번호')}">${player.번호}</td>
+          <td class="${getHighlightClass('팀')}"><span class="team-badge team-${player.팀}">${player.팀}</span></td>
+          <td class="player-name ${getHighlightClass('선수명')}">${player.선수명}</td>
+          <td class="${getHighlightClass('출석')}">${player.출석}</td>
+          <td class="${getHighlightClass('누적득점')}">${player.득점.누적득점}</td>
+          <td class="${getHighlightClass('평균득점')}">${player.득점.평균득점.toFixed(1)}</td>
+          <td class="${getHighlightClass('누적어시')}">${player.부가기록.어시스트.누적}</td>
+          <td class="${getHighlightClass('평균어시')}">${player.부가기록.어시스트.평균.toFixed(1)}</td>
+          <td class="${getHighlightClass('누적리바')}">${player.부가기록.리바운드.누적}</td>
+          <td class="${getHighlightClass('평균리바')}">${player.부가기록.리바운드.평균.toFixed(1)}</td>
+          <td class="${getHighlightClass('누적스틸')}">${player.부가기록.스틸.누적}</td>
+          <td class="${getHighlightClass('평균스틸')}">${player.부가기록.스틸.평균.toFixed(1)}</td>
+          <td class="${getHighlightClass('누적블록')}">${player.부가기록.블록.누적}</td>
+          <td class="${getHighlightClass('평균블록')}">${player.부가기록.블록.평균.toFixed(1)}</td>
+          <td class="${getHighlightClass('누적3점')}">${player.부가기록['3점슛'].누적}</td>
+          <td class="${getHighlightClass('평균3점')}">${player.부가기록['3점슛'].평균.toFixed(1)}</td>
         </tr>
       `;}).join('');
     }
