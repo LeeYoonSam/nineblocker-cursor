@@ -54,6 +54,9 @@
 
 ```
 nineblockers-cursor/
+├── .claude/
+│   └── commands/
+│       └── sync-league.md   # 리그 데이터 동기화 커맨드
 ├── index.html               # 메인 애플리케이션 (HTML + CSS + JS 통합)
 ├── convert_excel_to_json.py # 엑셀→JSON 변환 스크립트
 ├── league_stats_202601.json # 2026년 1월 시즌 데이터
@@ -67,7 +70,24 @@ nineblockers-cursor/
 
 매주 새로운 리그 기록이 업데이트되면 엑셀 파일을 JSON으로 변환하여 적용합니다.
 
-### 1. 엑셀 파일을 JSON으로 변환
+### Claude Code 슬래시 커맨드 (권장)
+
+Claude Code CLI에서 `/sync-league` 커맨드를 사용하면 모든 처리가 자동으로 수행됩니다:
+
+```
+/sync-league /Users/user/Downloads/2026-01 리그 기록.xlsx
+```
+
+**자동 처리 내용:**
+1. 파일명에서 시즌 코드 자동 추출 (YYYY-MM → YYYYMM)
+2. JSON 파일 생성 (`league_stats_YYYYMM.json`, `league_metadata_YYYYMM.json`)
+3. 새 시즌인 경우 `index.html`의 `SEASONS` 배열 자동 업데이트
+
+> **파일명 요구사항:** 파일명에 `YYYY-MM` 형식이 포함되어야 합니다.
+
+### 수동 방법
+
+시즌 코드를 직접 지정하려면 터미널에서 다음 명령어를 사용하세요:
 
 ```bash
 python3 convert_excel_to_json.py "<엑셀파일경로>" <시즌코드>
@@ -80,13 +100,10 @@ python3 convert_excel_to_json.py "/Users/user/Downloads/2026-01-recording.xlsx" 
 
 **시즌코드 형식:** `YYYYMM` (예: 202601 = 2026년 1월)
 
-### 2. 새 시즌 추가 시
-
-1. 변환된 JSON 파일(`league_stats_YYYYMM.json`)이 프로젝트 루트에 생성됩니다.
-2. `index.html`의 `SEASONS` 배열에 시즌 코드를 추가합니다:
-   ```javascript
-   const SEASONS = ['202701', '202601', '202508', ...];  // 새 시즌을 배열 앞에 추가
-   ```
+수동 방법 사용 시 새 시즌이라면 `index.html`의 `SEASONS` 배열에 시즌 코드를 직접 추가해야 합니다:
+```javascript
+const SEASONS = ['202701', '202601', '202508', ...];  // 새 시즌을 배열 앞에 추가
+```
 
 > **참고:** JSON 파일은 앱 실행 시 자동으로 로딩되므로 별도의 복사 작업이 필요 없습니다.
 

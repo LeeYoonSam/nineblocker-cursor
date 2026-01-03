@@ -1,0 +1,39 @@
+---
+allowed-tools: Bash, Read, Edit, Glob
+description: 엑셀 파일을 JSON으로 변환하여 리그 데이터를 동기화합니다. 사용법: /sync-league <엑셀파일경로>
+argument-hint: <엑셀파일경로>
+---
+
+# 리그 데이터 동기화
+
+사용자가 제공한 엑셀 파일을 JSON으로 변환하고, 필요시 SEASONS 배열을 업데이트합니다.
+
+## 입력
+
+엑셀 파일 경로: $ARGUMENTS
+
+## 실행 단계
+
+1. **파일 존재 확인**: 제공된 엑셀 파일이 존재하는지 확인
+
+2. **시즌 코드 추출**: 파일명에서 `YYYY-MM` 패턴을 찾아 `YYYYMM` 형식으로 변환
+   - 예: `2026-01 리그 기록.xlsx` → `202601`
+   - 예: `2026-01-recording.xlsx` → `202601`
+
+3. **JSON 변환 실행**:
+   ```bash
+   python3 convert_excel_to_json.py "<엑셀파일경로>" <시즌코드>
+   ```
+
+4. **새 시즌 확인**: index.html의 SEASONS 배열에 해당 시즌이 있는지 확인
+
+5. **SEASONS 배열 업데이트** (새 시즌인 경우):
+   - index.html에서 `const SEASONS = [...]` 부분을 찾아 새 시즌 코드를 배열 맨 앞에 추가
+
+6. **결과 보고**: 변환 결과와 업데이트 내용을 사용자에게 알림
+
+## 주의사항
+
+- 파일명에 `YYYY-MM` 형식이 반드시 포함되어야 함
+- convert_excel_to_json.py 스크립트가 프로젝트 루트에 있어야 함
+- 엑셀 파일에는 '전체득점', '부가기록 계산' 시트가 필요함
