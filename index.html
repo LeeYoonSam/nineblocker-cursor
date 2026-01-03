@@ -1172,6 +1172,229 @@
       transform: none;
     }
 
+    /* ===== Team View Button ===== */
+    .team-view-btn {
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      font-family: inherit;
+      position: relative;
+      overflow: visible;
+      border: none;
+    }
+
+    .team-view-btn .stat-value {
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .team-view-btn .stat-label {
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .team-view-btn::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: calc(var(--radius-md) + 2px);
+      background: linear-gradient(90deg,
+        var(--team-a), var(--team-b), var(--team-c), var(--team-a));
+      background-size: 300% 100%;
+      animation: gradientFlow 3s linear infinite;
+      z-index: -1;
+    }
+
+    .team-view-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-md);
+      background: var(--btn-glass-bg);
+      z-index: -1;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    .team-view-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .team-view-btn:hover::after {
+      background: var(--btn-glass-bg-hover);
+    }
+
+    .team-view-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== Team Modal ===== */
+    .team-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: var(--space-lg);
+    }
+
+    .team-modal.open {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .team-modal-content {
+      background: var(--glass-bg);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      width: fit-content;
+      max-width: calc(100vw - 32px);
+      max-height: 80vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 48px var(--glass-shadow);
+    }
+
+    .team-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-md);
+    }
+
+    .team-modal-header h3 {
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+    }
+
+    .team-modal-header .close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: var(--space-xs);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+
+    .team-modal-header .close-btn:hover {
+      color: var(--text-primary);
+      background: var(--btn-glass-bg-hover);
+    }
+
+    .team-tabs {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .team-tab {
+      flex: 1;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--btn-glass-bg);
+      border: 1px solid var(--btn-glass-border);
+      border-radius: var(--radius-full);
+      color: var(--text-secondary);
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+    }
+
+    .team-tab:hover {
+      background: var(--btn-glass-bg-hover);
+      color: var(--text-primary);
+    }
+
+    .team-tab.active {
+      background: var(--active-glass-bg);
+      border-color: var(--active-glass-border);
+      color: var(--accent);
+    }
+
+    .team-tab[data-team="A"].active {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.3);
+      color: var(--team-a);
+    }
+
+    .team-tab[data-team="B"].active {
+      background: rgba(34, 197, 94, 0.15);
+      border-color: rgba(34, 197, 94, 0.3);
+      color: var(--team-b);
+    }
+
+    .team-tab[data-team="C"].active {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.3);
+      color: var(--team-c);
+    }
+
+    .team-table-container {
+      overflow: auto;
+      flex: 1;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .team-table {
+      width: 500px;
+      min-width: 500px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .team-table th,
+    .team-table td {
+      padding: 12px 10px;
+      text-align: center;
+      border-bottom: 1px solid var(--glass-border);
+      font-size: 15px;
+    }
+
+    .team-table th:nth-child(1) { width: 80px; }
+    .team-table th:nth-child(2) { width: 150px; }
+    .team-table th:nth-child(3) { width: 80px; }
+    .team-table th:nth-child(4) { width: 120px; }
+
+    .team-table th {
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: var(--btn-glass-bg);
+      position: sticky;
+      top: 0;
+      font-size: 11px;
+    }
+
+    .team-table td {
+      color: var(--text-primary);
+    }
+
+    .team-table tbody tr:hover {
+      background: var(--btn-glass-bg-hover);
+    }
+
+    .team-table td:last-child {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
     /* ===== API Key Modal ===== */
     .api-key-modal {
       position: fixed;
@@ -1314,11 +1537,23 @@
       }
 
       .stats-summary {
-        gap: var(--space-md);
+        gap: var(--space-sm);
+        flex-wrap: nowrap;
+      }
+
+      .stat-item {
+        padding: var(--space-sm) var(--space-md);
+        min-width: auto;
+        flex: 1;
       }
 
       .stat-value {
-        font-size: var(--font-size-lg);
+        font-size: var(--font-size-md);
+      }
+
+      .stat-label {
+        font-size: 10px;
+        letter-spacing: 0.5px;
       }
 
       .controls {
@@ -1338,6 +1573,22 @@
         max-height: calc(100vh - 80px);
         border-radius: var(--radius-lg) var(--radius-lg) 0 0;
       }
+
+      .team-table {
+        width: 280px;
+        min-width: 280px;
+      }
+
+      .team-table th,
+      .team-table td {
+        padding: 8px 4px;
+        font-size: 13px;
+      }
+
+      .team-table th:nth-child(1) { width: 50px; }
+      .team-table th:nth-child(2) { width: 80px; }
+      .team-table th:nth-child(3) { width: 50px; }
+      .team-table th:nth-child(4) { width: 100px; }
     }
 
     /* Empty State */
@@ -1411,10 +1662,10 @@
           <div class="stat-value" id="totalPlayers">42</div>
           <div class="stat-label">참가 선수</div>
         </div>
-        <div class="stat-item">
+        <button class="stat-item team-view-btn" id="teamViewBtn">
           <div class="stat-value" id="totalTeams">3</div>
-          <div class="stat-label">팀</div>
-        </div>
+          <div class="stat-label">팀 보기</div>
+        </button>
       </div>
 
       <!-- 팀 순위 및 어워드 (메타데이터에서 동적 로딩) -->
@@ -1561,6 +1812,39 @@
           <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
         </svg>
       </button>
+    </div>
+  </div>
+
+  <!-- Team Modal -->
+  <div class="team-modal" id="teamModal">
+    <div class="team-modal-content">
+      <div class="team-modal-header">
+        <h3>팀 정보</h3>
+        <button class="close-btn" id="closeTeamModal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="team-tabs">
+        <button class="team-tab active" data-team="A">A팀</button>
+        <button class="team-tab" data-team="B">B팀</button>
+        <button class="team-tab" data-team="C">C팀</button>
+      </div>
+      <div class="team-table-container">
+        <table class="team-table">
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>이름</th>
+              <th>출석</th>
+              <th>누적득점</th>
+            </tr>
+          </thead>
+          <tbody id="teamTableBody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -1752,6 +2036,11 @@
     const saveApiKey = document.getElementById('saveApiKey');
     const cancelApiKey = document.getElementById('cancelApiKey');
     const themeToggle = document.getElementById('themeToggle');
+    const teamViewBtn = document.getElementById('teamViewBtn');
+    const teamModal = document.getElementById('teamModal');
+    const closeTeamModal = document.getElementById('closeTeamModal');
+    const teamTabs = document.querySelectorAll('.team-tab');
+    const teamTableBody = document.getElementById('teamTableBody');
 
     // 테마 토글 기능
     function initTheme() {
@@ -1912,6 +2201,45 @@
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value;
       renderTable();
+    });
+
+    // 팀 모달 기능
+    function renderTeamTable(team) {
+      const teamPlayers = leagueData.선수목록.filter(p => p.팀 === team);
+      teamPlayers.sort((a, b) => a.번호 - b.번호);
+      teamTableBody.innerHTML = teamPlayers.map(p => `
+        <tr>
+          <td>${p.번호}</td>
+          <td>${p.선수명}</td>
+          <td>${p.출석}</td>
+          <td>${p.득점.누적득점}</td>
+        </tr>
+      `).join('');
+    }
+
+    teamViewBtn.addEventListener('click', () => {
+      teamModal.classList.add('open');
+      teamTabs.forEach(t => t.classList.remove('active'));
+      teamTabs[0].classList.add('active');
+      renderTeamTable('A');
+    });
+
+    closeTeamModal.addEventListener('click', () => {
+      teamModal.classList.remove('open');
+    });
+
+    teamModal.addEventListener('click', (e) => {
+      if (e.target === teamModal) {
+        teamModal.classList.remove('open');
+      }
+    });
+
+    teamTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        teamTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        renderTeamTable(tab.dataset.team);
+      });
     });
 
     // 채팅 모달 토글
