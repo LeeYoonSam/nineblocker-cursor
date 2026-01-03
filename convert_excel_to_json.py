@@ -7,6 +7,7 @@
 
 import json
 import sys
+import re
 import openpyxl
 from pathlib import Path
 
@@ -105,6 +106,147 @@ def count_rounds(ws):
     return round_count
 
 
+def parse_record(record_str):
+    """'1승 1패' 형식의 문자열을 파싱하여 승/패 수를 반환"""
+    wins = 0
+    losses = 0
+    if record_str:
+        win_match = re.search(r'(\d+)승', str(record_str))
+        loss_match = re.search(r'(\d+)패', str(record_str))
+        if win_match:
+            wins = int(win_match.group(1))
+        if loss_match:
+            losses = int(loss_match.group(1))
+    return wins, losses
+
+
+def extract_name(text, prefix):
+    """'MOM: 권인회' 형식에서 이름을 추출"""
+    if text and prefix in str(text):
+        clean = re.sub(r'[👑✌️🏀]', '', str(text)).strip()
+        match = re.search(prefix + r'\s*(.+)', clean)
+        if match:
+            return match.group(1).strip()
+    return None
+
+
+def extract_scorer(text):
+    """'오늘 득점왕: 강재훈(66점)' 형식에서 이름과 점수를 추출"""
+    if text and '득점왕' in str(text):
+        clean = re.sub(r'[👑✌️🏀]', '', str(text)).strip()
+        match = re.search(r'득점왕:\s*(\S+)\((\d+)점\)', clean)
+        if match:
+            return match.group(1), int(match.group(2))
+    return None, None
+
+
+def parse_gbl_standings(wb):
+    """GBL 승점 시트에서 팀 순위와 어워드 데이터를 파싱"""
+    if 'GBL 승점' not in wb.sheetnames:
+        return None
+
+    ws = wb['GBL 승점']
+    rounds = []
+
+    for row in range(1, ws.max_row + 1):
+        cell_a = ws.cell(row=row, column=1).value
+        if cell_a and '라운드 리그 누적 결과' in str(cell_a):
+            match = re.search(r'(\d+)라운드', str(cell_a))
+            if match:
+                current_round = int(match.group(1))
+
+                round_info = {
+                    'round': current_round,
+                    'teams': [],
+                    'awards': {}
+                }
+
+                # 팀 데이터 읽기 (행 +2 ~ +4)
+                for team_row in range(row + 2, row + 5):
+                    team_name = ws.cell(row=team_row, column=1).value
+                    win_lose = ws.cell(row=team_row, column=2).value
+                    points = ws.cell(row=team_row, column=3).value
+
+                    if team_name and team_name in ['A팀', 'B팀', 'C팀']:
+                        wins, losses = parse_record(win_lose)
+                        team_code = team_name[0]
+                        round_info['teams'].append({
+                            'team': team_code,
+                            'name': team_name,
+                            'record': str(win_lose) if win_lose else '0승 0패',
+                            'wins': wins,
+                            'losses': losses,
+                            'points': float(points) if points else 0
+                        })
+
+                # 어워드 찾기
+                for search_row in range(row, min(row + 15, ws.max_row + 1)):
+                    for col in range(1, ws.max_column + 1):
+                        cell_val = ws.cell(row=search_row, column=col).value
+                        if cell_val:
+                            cell_str = str(cell_val)
+
+                            # MOM
+                            if 'MOM:' in cell_str:
+                                mom = extract_name(cell_str, 'MOM:')
+                                if mom:
+                                    round_info['awards']['mom'] = mom
+
+                            # 더블더블
+                            if '더블더블:' in cell_str:
+                                dd = extract_name(cell_str, '더블더블:')
+                                if dd:
+                                    round_info['awards']['doubleDouble'] = dd
+
+                            # 득점왕
+                            if '득점왕:' in cell_str:
+                                scorer, pts = extract_scorer(cell_str)
+                                if scorer:
+                                    round_info['awards']['topScorer'] = {
+                                        'name': scorer,
+                                        'points': pts
+                                    }
+
+                rounds.append(round_info)
+
+    return rounds
+
+
+def generate_metadata(season_name, total_rounds, rounds_data):
+    """메타데이터 JSON 생성"""
+    if not rounds_data:
+        return None
+
+    # 현재 진행 라운드 (가장 최신 라운드)
+    current_round = len(rounds_data)
+
+    # 최신 라운드의 팀 순위
+    latest_round = rounds_data[-1]
+    standings = []
+
+    for team_data in latest_round.get('teams', []):
+        standings.append({
+            'team': team_data['team'],
+            'name': team_data['name'],
+            'wins': team_data['wins'],
+            'losses': team_data['losses'],
+            'points': team_data['points']
+        })
+
+    # 승점 순으로 정렬
+    standings = sorted(standings, key=lambda x: x['points'], reverse=True)
+
+    metadata = {
+        'season': season_name,
+        'currentRound': current_round,
+        'totalRounds': total_rounds,
+        'standings': standings,
+        'roundHistory': rounds_data
+    }
+
+    return metadata
+
+
 def convert_excel_to_json(excel_path, season_code):
     """엑셀 파일을 JSON으로 변환"""
     wb = openpyxl.load_workbook(excel_path, data_only=True)
@@ -180,17 +322,52 @@ def main():
         print(f"오류: 파일을 찾을 수 없습니다 - {excel_path}")
         sys.exit(1)
 
+    # 엑셀 파일 로드
+    wb = openpyxl.load_workbook(excel_path, data_only=True)
+
+    # 선수 통계 JSON 생성
     result = convert_excel_to_json(excel_path, season_code)
 
-    # JSON 파일로 저장
+    # 선수 통계 JSON 저장
     output_path = Path(__file__).parent / f"league_stats_{season_code}.json"
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
 
-    print(f"변환 완료: {output_path}")
-    print(f"시즌: {result['시즌']}")
-    print(f"총 라운드: {result['총라운드']}")
-    print(f"총 선수 수: {result['총선수수']}")
+    print(f"선수 통계 저장: {output_path}")
+    print(f"  시즌: {result['시즌']}")
+    print(f"  총 라운드: {result['총라운드']}")
+    print(f"  총 선수 수: {result['총선수수']}")
+
+    # GBL 승점 시트에서 메타데이터 추출
+    rounds_data = parse_gbl_standings(wb)
+
+    if rounds_data:
+        metadata = generate_metadata(result['시즌'], result['총라운드'], rounds_data)
+
+        if metadata:
+            # 메타데이터 JSON 저장
+            metadata_path = Path(__file__).parent / f"league_metadata_{season_code}.json"
+            with open(metadata_path, 'w', encoding='utf-8') as f:
+                json.dump(metadata, f, ensure_ascii=False, indent=2)
+
+            print(f"\n메타데이터 저장: {metadata_path}")
+            print(f"  현재 라운드: {metadata['currentRound']}/{metadata['totalRounds']}")
+            print(f"  팀 순위:")
+            for i, team in enumerate(metadata['standings'], 1):
+                print(f"    {i}위: {team['name']} ({team['wins']}승 {team['losses']}패, {team['points']}점)")
+
+            latest = metadata['roundHistory'][-1]
+            if latest.get('awards'):
+                print(f"  최신 라운드 어워드:")
+                if latest['awards'].get('mom'):
+                    print(f"    MOM: {latest['awards']['mom']}")
+                if latest['awards'].get('doubleDouble'):
+                    print(f"    더블더블: {latest['awards']['doubleDouble']}")
+                if latest['awards'].get('topScorer'):
+                    scorer = latest['awards']['topScorer']
+                    print(f"    득점왕: {scorer['name']}({scorer['points']}점)")
+    else:
+        print("\n메타데이터: GBL 승점 시트를 찾을 수 없거나 데이터가 없습니다.")
 
 
 if __name__ == '__main__':

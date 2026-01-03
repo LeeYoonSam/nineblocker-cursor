@@ -1,0 +1,67 @@
+{
+  "season": "2026년 1월",
+  "currentRound": 1,
+  "totalRounds": 15,
+  "standings": [
+    {
+      "team": "C",
+      "name": "C팀",
+      "wins": 2,
+      "losses": 0,
+      "points": 6.0
+    },
+    {
+      "team": "A",
+      "name": "A팀",
+      "wins": 1,
+      "losses": 1,
+      "points": 3.0
+    },
+    {
+      "team": "B",
+      "name": "B팀",
+      "wins": 0,
+      "losses": 2,
+      "points": 1.0
+    }
+  ],
+  "roundHistory": [
+    {
+      "round": 1,
+      "teams": [
+        {
+          "team": "A",
+          "name": "A팀",
+          "record": "1승 1패",
+          "wins": 1,
+          "losses": 1,
+          "points": 3.0
+        },
+        {
+          "team": "B",
+          "name": "B팀",
+          "record": "2패",
+          "wins": 0,
+          "losses": 2,
+          "points": 1.0
+        },
+        {
+          "team": "C",
+          "name": "C팀",
+          "record": "2승",
+          "wins": 2,
+          "losses": 0,
+          "points": 6.0
+        }
+      ],
+      "awards": {
+        "mom": "권인회",
+        "doubleDouble": "이승현",
+        "topScorer": {
+          "name": "강재훈",
+          "points": 66
+        }
+      }
+    }
+  ]
+}

@@ -362,6 +362,171 @@
       margin-top: var(--space-xs);
     }
 
+    /* ===== League Info (Standings & Awards) ===== */
+    .league-info {
+      margin-top: var(--space-xl);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .current-round-row {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .current-round-badge {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-lg);
+      background: linear-gradient(135deg, var(--accent) 0%, #ff8555 100%);
+      border-radius: var(--radius-full);
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
+
+    .round-label {
+      font-size: var(--font-size-xs);
+      color: rgba(255, 255, 255, 0.8);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .round-value {
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      color: white;
+    }
+
+    .round-total {
+      font-size: var(--font-size-sm);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .standings-row {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-lg);
+    }
+
+    .standing-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--btn-glass-bg);
+      backdrop-filter: blur(10px) saturate(140%);
+      -webkit-backdrop-filter: blur(10px) saturate(140%);
+      border: 1px solid var(--btn-glass-border);
+      border-radius: var(--radius-md);
+    }
+
+    .standing-rank {
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: var(--font-size-sm);
+    }
+
+    .standing-item:first-child .standing-rank {
+      color: var(--medal-gold);
+    }
+
+    .standing-item:nth-child(2) .standing-rank {
+      color: var(--medal-silver);
+    }
+
+    .standing-item:nth-child(3) .standing-rank {
+      color: var(--medal-bronze);
+    }
+
+    .standing-record {
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+    }
+
+    .standing-points {
+      font-weight: 600;
+      font-size: var(--font-size-sm);
+      color: var(--accent);
+    }
+
+    .awards-row {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .award-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--btn-glass-bg);
+      backdrop-filter: blur(10px) saturate(140%);
+      -webkit-backdrop-filter: blur(10px) saturate(140%);
+      border: 1px solid var(--btn-glass-border);
+      border-radius: var(--radius-md);
+    }
+
+    .award-icon {
+      font-size: var(--font-size-lg);
+    }
+
+    .award-label {
+      font-size: var(--font-size-xs);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .award-value {
+      font-weight: 600;
+      font-size: var(--font-size-sm);
+      color: var(--text-primary);
+    }
+
+    .excel-link-row {
+      display: flex;
+      justify-content: center;
+      margin-top: var(--space-lg);
+    }
+
+    .excel-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--btn-glass-bg);
+      backdrop-filter: blur(10px) saturate(140%);
+      -webkit-backdrop-filter: blur(10px) saturate(140%);
+      border: 1px solid var(--btn-glass-border);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: var(--font-size-sm);
+      text-decoration: none;
+      transition: all var(--transition-normal);
+    }
+
+    .excel-link-btn:hover {
+      background: var(--glass-bg-hover);
+      border-color: var(--glass-border-hover);
+      color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--glass-shadow);
+    }
+
+    .excel-link-btn svg {
+      opacity: 0.7;
+      transition: opacity var(--transition-fast);
+    }
+
+    .excel-link-btn:hover svg {
+      opacity: 1;
+    }
+
     /* ===== Controls ===== */
     .controls {
       display: flex;
@@ -1251,6 +1416,64 @@
           <div class="stat-label">팀</div>
         </div>
       </div>
+
+      <!-- 팀 순위 및 어워드 (메타데이터에서 동적 로딩) -->
+      <div class="league-info" id="leagueInfo" style="display: none;">
+        <div class="current-round-row">
+          <div class="current-round-badge" id="currentRoundBadge">
+            <span class="round-label">현재</span>
+            <span class="round-value" id="currentRoundValue">1</span>
+            <span class="round-total">/ 15 라운드</span>
+          </div>
+        </div>
+        <div class="standings-row">
+          <div class="standing-item" id="standing1">
+            <span class="standing-rank">1위</span>
+            <span class="standing-team team-badge team-C">C팀</span>
+            <span class="standing-record">2승 0패</span>
+            <span class="standing-points">6점</span>
+          </div>
+          <div class="standing-item" id="standing2">
+            <span class="standing-rank">2위</span>
+            <span class="standing-team team-badge team-A">A팀</span>
+            <span class="standing-record">1승 1패</span>
+            <span class="standing-points">3점</span>
+          </div>
+          <div class="standing-item" id="standing3">
+            <span class="standing-rank">3위</span>
+            <span class="standing-team team-badge team-B">B팀</span>
+            <span class="standing-record">0승 2패</span>
+            <span class="standing-points">1점</span>
+          </div>
+        </div>
+        <div class="awards-row" id="awardsRow">
+          <div class="award-item">
+            <span class="award-icon">👑</span>
+            <span class="award-label">MOM</span>
+            <span class="award-value" id="awardMom">권인회</span>
+          </div>
+          <div class="award-item">
+            <span class="award-icon">✌️</span>
+            <span class="award-label">더블더블</span>
+            <span class="award-value" id="awardDD">이승현</span>
+          </div>
+          <div class="award-item">
+            <span class="award-icon">🏀</span>
+            <span class="award-label">득점왕</span>
+            <span class="award-value" id="awardScorer">강재훈(66점)</span>
+          </div>
+        </div>
+        <div class="excel-link-row">
+          <a href="https://docs.google.com/spreadsheets/d/1sZtdJ9ErOeu4UuOQqHI9ganqCD4ZuP2ETr904emxnfQ/edit?usp=sharing" target="_blank" class="excel-link-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            원본 엑셀 바로가기
+          </a>
+        </div>
+      </div>
     </header>
 
     <div class="controls">
@@ -1377,8 +1600,28 @@
       return data;
     }
 
+    // 메타데이터 로딩 함수
+    async function loadSeasonMetadata(seasonId) {
+      try {
+        const response = await fetch(`league_metadata_${seasonId}.json`);
+        if (!response.ok) return null;
+        return await response.json();
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function loadAllMetadata() {
+      const data = {};
+      await Promise.all(SEASONS.map(async (seasonId) => {
+        data[seasonId] = await loadSeasonMetadata(seasonId);
+      }));
+      return data;
+    }
+
     // 시즌별 데이터 (JSON 파일에서 동적 로딩)
     let seasonsData = {};
+    let metadataCache = {};
 
     // 현재 선택된 시즌 데이터
     let currentSeason = '202601';
@@ -1410,6 +1653,82 @@
       document.querySelector('header p').textContent = `${leagueData.시즌} 시즌 선수 통계`;
       document.getElementById('totalRounds').textContent = leagueData.총라운드;
       document.getElementById('totalPlayers').textContent = leagueData.총선수수;
+
+      // 메타데이터 표시
+      updateLeagueInfo();
+    }
+
+    // 리그 정보(순위, 어워드) 업데이트
+    function updateLeagueInfo() {
+      const metadata = metadataCache[currentSeason];
+      const leagueInfo = document.getElementById('leagueInfo');
+
+      if (!metadata) {
+        if (leagueInfo) leagueInfo.style.display = 'none';
+        return;
+      }
+
+      if (leagueInfo) leagueInfo.style.display = 'block';
+
+      // 현재 라운드 표시
+      const currentRoundValue = document.getElementById('currentRoundValue');
+      const roundTotalEl = document.querySelector('.round-total');
+      if (currentRoundValue) {
+        currentRoundValue.textContent = metadata.currentRound || 1;
+      }
+      if (roundTotalEl) {
+        roundTotalEl.textContent = `/ ${metadata.totalRounds || 15} 라운드`;
+      }
+
+      // 팀 순위 표시
+      const standings = metadata.standings || [];
+      for (let i = 0; i < 3; i++) {
+        const standingEl = document.getElementById(`standing${i + 1}`);
+        if (standingEl && standings[i]) {
+          const team = standings[i];
+          const record = `${team.wins}승 ${team.losses}패`;
+          standingEl.querySelector('.standing-team').textContent = team.name;
+          standingEl.querySelector('.standing-team').className = `standing-team team-badge team-${team.team}`;
+          standingEl.querySelector('.standing-record').textContent = record;
+          standingEl.querySelector('.standing-points').textContent = `${team.points}점`;
+        }
+      }
+
+      // 최신 라운드의 어워드 표시
+      const roundHistory = metadata.roundHistory || [];
+      const latestRound = roundHistory[roundHistory.length - 1];
+      const awardsRow = document.getElementById('awardsRow');
+
+      if (latestRound && latestRound.awards) {
+        awardsRow.style.display = 'flex';
+        const awards = latestRound.awards;
+
+        // MOM
+        const momEl = document.getElementById('awardMom');
+        if (momEl && awards.mom) {
+          momEl.textContent = awards.mom;
+        } else if (momEl) {
+          momEl.textContent = '-';
+        }
+
+        // 더블더블
+        const ddEl = document.getElementById('awardDD');
+        if (ddEl && awards.doubleDouble) {
+          ddEl.textContent = awards.doubleDouble;
+        } else if (ddEl) {
+          ddEl.textContent = '-';
+        }
+
+        // 득점왕
+        const scorerEl = document.getElementById('awardScorer');
+        if (scorerEl && awards.topScorer) {
+          scorerEl.textContent = `${awards.topScorer.name}(${awards.topScorer.points}점)`;
+        } else if (scorerEl) {
+          scorerEl.textContent = '-';
+        }
+      } else {
+        awardsRow.style.display = 'none';
+      }
     }
 
     // 상태 관리
@@ -1874,9 +2193,16 @@ ${playersSummary}
     // 앱 초기화 (비동기)
     async function initApp() {
       try {
-        seasonsData = await loadAllSeasons();
+        // 시즌 데이터와 메타데이터 병렬 로딩
+        const [seasons, metadata] = await Promise.all([
+          loadAllSeasons(),
+          loadAllMetadata()
+        ]);
+        seasonsData = seasons;
+        metadataCache = metadata;
         leagueData = seasonsData[currentSeason];
         initGemini();
+        updateHeader();
         renderTable();
         updateSortHeaders();
       } catch (error) {
