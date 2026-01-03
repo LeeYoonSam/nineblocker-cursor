@@ -80,9 +80,15 @@ python3 convert_excel_to_json.py "/Users/user/Downloads/2026-01-recording.xlsx" 
 
 **시즌코드 형식:** `YYYYMM` (예: 202601 = 2026년 1월)
 
-### 2. index.html에 데이터 반영
+### 2. 새 시즌 추가 시
 
-변환된 JSON 파일의 내용을 `index.html`의 `seasonsData` 객체에 복사합니다.
+1. 변환된 JSON 파일(`league_stats_YYYYMM.json`)이 프로젝트 루트에 생성됩니다.
+2. `index.html`의 `SEASONS` 배열에 시즌 코드를 추가합니다:
+   ```javascript
+   const SEASONS = ['202701', '202601', '202508', ...];  // 새 시즌을 배열 앞에 추가
+   ```
+
+> **참고:** JSON 파일은 앱 실행 시 자동으로 로딩되므로 별도의 복사 작업이 필요 없습니다.
 
 ### 엑셀 파일 요구사항
 
