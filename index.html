@@ -1351,6 +1351,14 @@
       overflow: auto;
       flex: 1;
       -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    /* 모달 열릴 때 body 스크롤 방지 */
+    body.modal-open {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
     }
 
     .team-table {
@@ -2217,20 +2225,31 @@
       `).join('');
     }
 
+    // 스크롤 위치 저장 변수
+    let savedScrollPosition = 0;
+
     teamViewBtn.addEventListener('click', () => {
+      savedScrollPosition = window.scrollY;
+      document.body.style.top = `-${savedScrollPosition}px`;
+      document.body.classList.add('modal-open');
       teamModal.classList.add('open');
       teamTabs.forEach(t => t.classList.remove('active'));
       teamTabs[0].classList.add('active');
       renderTeamTable('A');
     });
 
-    closeTeamModal.addEventListener('click', () => {
+    function closeTeamModalHandler() {
       teamModal.classList.remove('open');
-    });
+      document.body.classList.remove('modal-open');
+      document.body.style.top = '';
+      window.scrollTo(0, savedScrollPosition);
+    }
+
+    closeTeamModal.addEventListener('click', closeTeamModalHandler);
 
     teamModal.addEventListener('click', (e) => {
       if (e.target === teamModal) {
-        teamModal.classList.remove('open');
+        closeTeamModalHandler();
       }
     });
 
