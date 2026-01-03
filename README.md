@@ -4,7 +4,7 @@
 
 [![Live Demo](https://img.shields.io/badge/🔗_Live_Demo-Click_Here-ff6b35?style=for-the-badge)](https://leeyoonsam.github.io/nineblocker-cursor/)
 
-![Preview](https://img.shields.io/badge/Season-2025.08-orange)
+![Preview](https://img.shields.io/badge/Season-2026.01-orange)
 ![Tech](https://img.shields.io/badge/Tech-HTML%20%7C%20CSS%20%7C%20JS-blue)
 ![AI](https://img.shields.io/badge/AI-Gemini%202.0-green)
 
@@ -54,10 +54,41 @@
 
 ```
 nineblockers-cursor/
-├── index.html              # 메인 애플리케이션 (HTML + CSS + JS 통합)
-├── league_stats_202508.json # 시즌 통계 데이터
-└── README.md               # 프로젝트 문서
+├── index.html               # 메인 애플리케이션 (HTML + CSS + JS 통합)
+├── convert_excel_to_json.py # 엑셀→JSON 변환 스크립트
+├── league_stats_202601.json # 2026년 1월 시즌 데이터
+├── league_stats_202508.json # 2025년 8월 시즌 데이터
+├── league_stats_202409.json # 2024년 9월 시즌 데이터
+├── league_stats_202402.json # 2024년 2월 시즌 데이터
+└── README.md                # 프로젝트 문서
 ```
+
+## 📥 시즌 데이터 업데이트 방법
+
+매주 새로운 리그 기록이 업데이트되면 엑셀 파일을 JSON으로 변환하여 적용합니다.
+
+### 1. 엑셀 파일을 JSON으로 변환
+
+```bash
+python3 convert_excel_to_json.py "<엑셀파일경로>" <시즌코드>
+```
+
+**예시:**
+```bash
+python3 convert_excel_to_json.py "/Users/user/Downloads/2026-01-recording.xlsx" 202601
+```
+
+**시즌코드 형식:** `YYYYMM` (예: 202601 = 2026년 1월)
+
+### 2. index.html에 데이터 반영
+
+변환된 JSON 파일의 내용을 `index.html`의 `seasonsData` 객체에 복사합니다.
+
+### 엑셀 파일 요구사항
+
+엑셀 파일은 다음 시트를 포함해야 합니다:
+- **전체득점**: 팀, 선수명, 번호, 라운드별 득점, 참석수, 총득점, 평균득점
+- **부가기록 계산**: 선수명, 번호, 누적/평균 부가기록(리바운드, 어시스트, 스틸, 블록, 3점슛)
 
 ---
 
