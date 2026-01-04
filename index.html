@@ -1224,7 +1224,7 @@
     }
 
     .team-view-btn:hover::after {
-      background: var(--btn-glass-bg-hover);
+      background: var(--glass-bg-hover);
     }
 
     .team-view-btn:active {
@@ -1577,14 +1577,14 @@
         right: 0;
         width: 100%;
         max-width: 100%;
-        height: calc(100vh - 80px);
-        max-height: calc(100vh - 80px);
+        height: calc(100dvh - 80px);
+        max-height: calc(100dvh - 80px);
         border-radius: var(--radius-lg) var(--radius-lg) 0 0;
       }
 
       .team-table {
-        width: 280px;
-        min-width: 280px;
+        width: 100%;
+        min-width: 260px;
       }
 
       .team-table th,
@@ -2629,9 +2629,12 @@ ${playersSummary}
       const shouldFix = theadRect.top <= 0 && wrapperRect.bottom > theadRect.height;
 
       if (shouldFix) {
+        // 컨테이너 패딩 동적 계산 (반응형 지원)
+        const containerPadding = window.innerWidth <= 768 ? 16 : 24;
+
         // 고정 헤더 표시
         fixedHeaderContainer.style.display = 'block';
-        fixedHeaderContainer.style.top = '16px';
+        fixedHeaderContainer.style.top = containerPadding + 'px';
         fixedHeaderContainer.style.left = wrapperRect.left + 'px';
         fixedHeaderContainer.style.width = wrapperRect.width + 'px';
 
@@ -2640,7 +2643,7 @@ ${playersSummary}
         fixedHeaderOverlay.style.display = 'block';
         fixedHeaderOverlay.style.left = wrapperRect.left + 'px';
         fixedHeaderOverlay.style.width = wrapperRect.width + 'px';
-        fixedHeaderOverlay.style.height = (16 + fixedHeaderHeight) + 'px';
+        fixedHeaderOverlay.style.height = (containerPadding + fixedHeaderHeight) + 'px';
 
         // 가로 스크롤 동기화
         const scrollLeft = tableScroll.scrollLeft;
