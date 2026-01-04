@@ -1384,13 +1384,15 @@
     .team-table th {
       font-weight: 600;
       color: var(--text-secondary);
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgb(20, 20, 25);
       position: sticky;
       top: 0;
       z-index: 1;
       font-size: 11px;
+    }
+
+    [data-theme="light"] .team-table th {
+      background: rgb(245, 245, 250);
     }
 
     .team-table td {
