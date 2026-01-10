@@ -106,6 +106,33 @@ def count_rounds(ws):
     return round_count
 
 
+def get_current_round(ws):
+    """전체득점 시트에서 현재 진행된 라운드를 계산
+
+    2행(첫 번째 선수 데이터)의 각 라운드 컬럼에 값이 있는지 확인하여
+    값이 있는 마지막 라운드를 현재 라운드로 판단
+    """
+    header = list(ws.iter_rows(min_row=1, max_row=1, values_only=True))[0]
+    data_row = list(ws.iter_rows(min_row=2, max_row=2, values_only=True))[0]
+
+    # 라운드 컬럼 인덱스와 라운드 번호 매핑
+    round_columns = []
+    for i, cell in enumerate(header):
+        if cell and '라운드' in str(cell):
+            match = re.search(r'(\d+)라운드', str(cell))
+            if match:
+                round_num = int(match.group(1))
+                round_columns.append((i, round_num))
+
+    # 값이 있는 마지막 라운드 찾기
+    current_round = 0
+    for col_idx, round_num in round_columns:
+        if col_idx < len(data_row) and data_row[col_idx] is not None:
+            current_round = round_num
+
+    return current_round
+
+
 def parse_record(record_str):
     """'1승 1패' 형식의 문자열을 파싱하여 승/패 수를 반환"""
     wins = 0
@@ -212,16 +239,28 @@ def parse_gbl_standings(wb):
     return rounds
 
 
-def generate_metadata(season_name, total_rounds, rounds_data):
-    """메타데이터 JSON 생성"""
+def generate_metadata(season_name, total_rounds, rounds_data, current_round):
+    """메타데이터 JSON 생성
+
+    Args:
+        season_name: 시즌 이름 (예: "2026년 1월")
+        total_rounds: 총 라운드 수
+        rounds_data: GBL 승점 시트에서 파싱한 라운드별 데이터
+        current_round: 전체득점 시트 기준 현재 진행된 라운드
+    """
     if not rounds_data:
         return None
 
-    # 현재 진행 라운드 (가장 최신 라운드)
-    current_round = len(rounds_data)
+    # 현재 라운드에 해당하는 데이터 찾기
+    latest_round = None
+    for rd in rounds_data:
+        if rd['round'] == current_round:
+            latest_round = rd
+            break
 
-    # 최신 라운드의 팀 순위
-    latest_round = rounds_data[-1]
+    # 못 찾으면 가장 최신 라운드 사용
+    if latest_round is None:
+        latest_round = rounds_data[-1]
     standings = []
 
     for team_data in latest_round.get('teams', []):
@@ -325,6 +364,10 @@ def main():
     # 엑셀 파일 로드
     wb = openpyxl.load_workbook(excel_path, data_only=True)
 
+    # 전체득점 시트에서 현재 라운드 가져오기
+    ws_score = wb['전체득점']
+    current_round = get_current_round(ws_score)
+
     # 선수 통계 JSON 생성
     result = convert_excel_to_json(excel_path, season_code)
 
@@ -336,13 +379,14 @@ def main():
     print(f"선수 통계 저장: {output_path}")
     print(f"  시즌: {result['시즌']}")
     print(f"  총 라운드: {result['총라운드']}")
+    print(f"  현재 라운드: {current_round}")
     print(f"  총 선수 수: {result['총선수수']}")
 
     # GBL 승점 시트에서 메타데이터 추출
     rounds_data = parse_gbl_standings(wb)
 
     if rounds_data:
-        metadata = generate_metadata(result['시즌'], result['총라운드'], rounds_data)
+        metadata = generate_metadata(result['시즌'], result['총라운드'], rounds_data, current_round)
 
         if metadata:
             # 메타데이터 JSON 저장
@@ -356,15 +400,21 @@ def main():
             for i, team in enumerate(metadata['standings'], 1):
                 print(f"    {i}위: {team['name']} ({team['wins']}승 {team['losses']}패, {team['points']}점)")
 
-            latest = metadata['roundHistory'][-1]
-            if latest.get('awards'):
-                print(f"  최신 라운드 어워드:")
-                if latest['awards'].get('mom'):
-                    print(f"    MOM: {latest['awards']['mom']}")
-                if latest['awards'].get('doubleDouble'):
-                    print(f"    더블더블: {latest['awards']['doubleDouble']}")
-                if latest['awards'].get('topScorer'):
-                    scorer = latest['awards']['topScorer']
+            # 현재 라운드에 해당하는 어워드 찾기
+            current_round_data = None
+            for rd in metadata['roundHistory']:
+                if rd['round'] == current_round:
+                    current_round_data = rd
+                    break
+
+            if current_round_data and current_round_data.get('awards'):
+                print(f"  {current_round}라운드 어워드:")
+                if current_round_data['awards'].get('mom'):
+                    print(f"    MOM: {current_round_data['awards']['mom']}")
+                if current_round_data['awards'].get('doubleDouble'):
+                    print(f"    더블더블: {current_round_data['awards']['doubleDouble']}")
+                if current_round_data['awards'].get('topScorer'):
+                    scorer = current_round_data['awards']['topScorer']
                     print(f"    득점왕: {scorer['name']}({scorer['points']}점)")
     else:
         print("\n메타데이터: GBL 승점 시트를 찾을 수 없거나 데이터가 없습니다.")
