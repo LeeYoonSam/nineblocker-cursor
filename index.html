@@ -491,6 +491,7 @@
     .excel-link-row {
       display: flex;
       justify-content: center;
+      gap: var(--space-md);
       margin-top: var(--space-lg);
     }
 
@@ -525,6 +526,10 @@
 
     .excel-link-btn:hover svg {
       opacity: 1;
+    }
+
+    button.excel-link-btn {
+      cursor: pointer;
     }
 
     /* ===== Controls ===== */
@@ -1636,6 +1641,7 @@
       background: var(--text-muted);
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
   <!-- Background -->
@@ -1736,6 +1742,14 @@
             </svg>
             원본 엑셀 바로가기
           </a>
+          <button class="excel-link-btn share-btn" onclick="shareLeagueInfo()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+              <polyline points="16 6 12 2 8 6"></polyline>
+              <line x1="12" y1="2" x2="12" y2="15"></line>
+            </svg>
+            라운드 정보 공유
+          </button>
         </div>
       </div>
     </header>
@@ -2683,6 +2697,52 @@ ${playersSummary}
       updateFixedHeaderSort();
     });
     observer.observe(originalThead, { childList: true, subtree: true, attributes: true });
+
+    // 라운드 정보 공유 (스크린샷 다운로드)
+    async function shareLeagueInfo() {
+      const leagueInfo = document.getElementById('leagueInfo');
+      if (!leagueInfo) {
+        alert('공유할 라운드 정보가 없습니다.');
+        return;
+      }
+
+      // 공유 버튼 숨기기 (스크린샷에서 제외)
+      const shareBtn = document.querySelector('.share-btn');
+      const excelBtn = document.querySelector('.excel-link-btn:not(.share-btn)');
+      if (shareBtn) shareBtn.style.display = 'none';
+      if (excelBtn) excelBtn.style.display = 'none';
+
+      try {
+        const canvas = await html2canvas(leagueInfo, {
+          backgroundColor: '#1a1a2e',
+          scale: 2,
+          logging: false,
+          useCORS: true
+        });
+
+        // 버튼 다시 표시
+        if (shareBtn) shareBtn.style.display = '';
+        if (excelBtn) excelBtn.style.display = '';
+
+        // 현재 라운드 가져오기
+        const currentRound = document.getElementById('currentRoundValue')?.textContent || '0';
+
+        // 이미지 다운로드
+        const link = document.createElement('a');
+        link.download = `GBL_${currentSeason}_R${currentRound}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      } catch (error) {
+        // 버튼 다시 표시
+        if (shareBtn) shareBtn.style.display = '';
+        if (excelBtn) excelBtn.style.display = '';
+        console.error('스크린샷 생성 실패:', error);
+        alert('스크린샷 생성에 실패했습니다.');
+      }
+    }
+
+    // 전역으로 노출 (onclick에서 사용)
+    window.shareLeagueInfo = shareLeagueInfo;
   </script>
 </body>
 </html>
