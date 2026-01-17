@@ -1475,7 +1475,29 @@
             renderEntryCards();
             renderPlayerList();
         }
-        
+
+        // 하이라이트 팝업 내용 업데이트 (쿼터 추가/삭제 시)
+        function updateHighlightInfo() {
+            if (highlightedPlayer === null) return;
+
+            const player = bTeamPlayers.find(p => p.number === highlightedPlayer);
+            if (!player) return;
+
+            const quarters = [];
+            ['q1', 'q2', 'q3', 'q4'].forEach(q => {
+                if (entryVsA[q].some(p => p.number === highlightedPlayer)) {
+                    quarters.push({ match: 'vsA', quarter: q, label: `A팀 ${q.toUpperCase()}` });
+                }
+                if (entryVsC[q].some(p => p.number === highlightedPlayer)) {
+                    quarters.push({ match: 'vsC', quarter: q, label: `C팀 ${q.toUpperCase()}` });
+                }
+            });
+
+            document.getElementById('highlightQuarters').innerHTML = quarters.length > 0
+                ? quarters.map(q => `<span class="quarter-badge ${q.match === 'vsA' ? 'vs-a' : 'vs-c'}">${q.label}</span>`).join('')
+                : '<span style="opacity: 0.7">배정된 쿼터 없음</span>';
+        }
+
         function getPositionBadgeClass(pos) {
             if (pos.includes('PG')) return 'pg';
             if (pos.includes('SG')) return 'sg';
@@ -1609,6 +1631,7 @@
             
             renderPlayerList();
             renderEntryCards();
+            updateHighlightInfo();
             showNotification(`${draggedPlayer.name} → ${match === 'vsA' ? 'A팀전' : 'C팀전'} ${quarter.toUpperCase()} 배치`);
         }
         
@@ -1698,6 +1721,7 @@
             const removed = entry[quarter].splice(index, 1)[0];
             renderPlayerList();
             renderEntryCards();
+            updateHighlightInfo();
             showNotification(`${removed.name} 제거됨`);
         }
         
