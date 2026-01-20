@@ -395,6 +395,21 @@ def main():
                 json.dump(metadata, f, ensure_ascii=False, indent=2)
 
             print(f"\n메타데이터 저장: {metadata_path}")
+
+            # manifest 업데이트
+            manifest_path = Path(__file__).parent / "metadata_manifest.json"
+            manifest = {"seasons": []}
+            if manifest_path.exists():
+                with open(manifest_path, 'r', encoding='utf-8') as f:
+                    manifest = json.load(f)
+
+            if season_code not in manifest["seasons"]:
+                manifest["seasons"].append(season_code)
+
+            with open(manifest_path, 'w', encoding='utf-8') as f:
+                json.dump(manifest, f, ensure_ascii=False, indent=2)
+
+            print(f"매니페스트 업데이트: {manifest_path}")
             print(f"  현재 라운드: {metadata['currentRound']}/{metadata['totalRounds']}")
             print(f"  팀 순위:")
             for i, team in enumerate(metadata['standings'], 1):

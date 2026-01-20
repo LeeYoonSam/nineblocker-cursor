@@ -1924,9 +1924,24 @@
 
     async function loadAllMetadata() {
       const data = {};
-      await Promise.all(SEASONS.map(async (seasonId) => {
+
+      // manifest 로드
+      let availableSeasons = [];
+      try {
+        const res = await fetch('metadata_manifest.json');
+        if (res.ok) {
+          const manifest = await res.json();
+          availableSeasons = manifest.seasons || [];
+        }
+      } catch (e) {
+        // manifest 없으면 빈 배열 유지
+      }
+
+      // manifest에 있는 시즌만 메타데이터 로드
+      await Promise.all(availableSeasons.map(async (seasonId) => {
         data[seasonId] = await loadSeasonMetadata(seasonId);
       }));
+
       return data;
     }
 
@@ -2700,29 +2715,28 @@ ${playersSummary}
 
     // 라운드 정보 공유 (스크린샷 다운로드)
     async function shareLeagueInfo() {
-      const leagueInfo = document.getElementById('leagueInfo');
-      if (!leagueInfo) {
+      const header = document.querySelector('header.glass');
+      if (!header) {
         alert('공유할 라운드 정보가 없습니다.');
         return;
       }
 
-      // 공유 버튼 숨기기 (스크린샷에서 제외)
-      const shareBtn = document.querySelector('.share-btn');
-      const excelBtn = document.querySelector('.excel-link-btn:not(.share-btn)');
-      if (shareBtn) shareBtn.style.display = 'none';
-      if (excelBtn) excelBtn.style.display = 'none';
+      // 버튼 행 숨기기 (스크린샷에서 제외)
+      const excelLinkRow = document.querySelector('.excel-link-row');
+      if (excelLinkRow) excelLinkRow.style.display = 'none';
 
       try {
-        const canvas = await html2canvas(leagueInfo, {
+        const canvas = await html2canvas(header, {
           backgroundColor: '#1a1a2e',
           scale: 2,
           logging: false,
-          useCORS: true
+          useCORS: true,
+          width: header.offsetWidth,
+          windowWidth: header.offsetWidth
         });
 
-        // 버튼 다시 표시
-        if (shareBtn) shareBtn.style.display = '';
-        if (excelBtn) excelBtn.style.display = '';
+        // 버튼 행 다시 표시
+        if (excelLinkRow) excelLinkRow.style.display = '';
 
         // 현재 라운드 가져오기
         const currentRound = document.getElementById('currentRoundValue')?.textContent || '0';
@@ -2733,9 +2747,8 @@ ${playersSummary}
         link.href = canvas.toDataURL('image/png');
         link.click();
       } catch (error) {
-        // 버튼 다시 표시
-        if (shareBtn) shareBtn.style.display = '';
-        if (excelBtn) excelBtn.style.display = '';
+        // 버튼 행 다시 표시
+        if (excelLinkRow) excelLinkRow.style.display = '';
         console.error('스크린샷 생성 실패:', error);
         alert('스크린샷 생성에 실패했습니다.');
       }
