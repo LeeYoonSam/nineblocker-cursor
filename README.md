@@ -56,13 +56,20 @@
 nineblockers-cursor/
 ├── .claude/
 │   └── commands/
-│       └── sync-league.md   # 리그 데이터 동기화 커맨드
+│       ├── sync-league.md   # 리그 데이터 동기화 커맨드
+│       └── sync-docs.md     # 문서 동기화 커맨드
+├── .github/
+│   └── ISSUE_TEMPLATE/
+│       └── feature_request.md  # 기능 요청 템플릿
+├── daily_entry/
+│   └── team_daily_entry.html   # 팀 데일리 엔트리 페이지
 ├── index.html               # 메인 애플리케이션 (HTML + CSS + JS 통합)
 ├── convert_excel_to_json.py # 엑셀→JSON 변환 스크립트
-├── league_stats_202601.json # 2026년 1월 시즌 데이터
-├── league_stats_202508.json # 2025년 8월 시즌 데이터
-├── league_stats_202409.json # 2024년 9월 시즌 데이터
-├── league_stats_202402.json # 2024년 2월 시즌 데이터
+├── config.example.js        # API 설정 예시 파일
+├── league_stats_YYYYMM.json # 시즌별 통계 데이터
+├── league_metadata_YYYYMM.json # 시즌별 메타데이터
+├── metadata_manifest.json   # 메타데이터 매니페스트
+├── CLAUDE.md                # Claude 규칙
 └── README.md                # 프로젝트 문서
 ```
 
@@ -112,6 +119,22 @@ const SEASONS = ['202701', '202601', '202508', ...];  // 새 시즌을 배열 �
 엑셀 파일은 다음 시트를 포함해야 합니다:
 - **전체득점**: 팀, 선수명, 번호, 라운드별 득점, 참석수, 총득점, 평균득점
 - **부가기록 계산**: 선수명, 번호, 누적/평균 부가기록(리바운드, 어시스트, 스틸, 블록, 3점슛)
+
+## 📄 문서 동기화
+
+프로젝트 변경사항과 문서가 잘 맞는지 확인하고 자동으로 업데이트합니다.
+
+### Claude Code 슬래시 커맨드
+
+```
+/sync-docs
+```
+
+**자동 처리 내용:**
+1. 프로젝트 파일 구조와 README.md 비교
+2. 새로 추가된 파일/커맨드 감지
+3. 삭제된 파일 감지
+4. README.md 파일 구조 섹션 자동 업데이트
 
 ---
 
