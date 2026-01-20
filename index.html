@@ -2244,6 +2244,8 @@
       for (let i = 1; i < rows.length; i++) {
         const row = rows[i];
         if (!row || !row[COL.name]) continue;
+        // "고득점"은 라운드별 최고 득점자 필터이므로 선수 목록에서 제외
+        if (row[COL.name] === '고득점') continue;
 
         // 팀이 있으면 업데이트, 없으면 이전 팀 유지
         if (row[COL.team]) {
