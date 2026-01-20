@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" data-theme="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,7 +57,7 @@
       --glass-border-hover: rgba(255, 255, 255, 0.25);
       --glass-shadow: rgba(0, 0, 0, 0.5);
       --glass-highlight: rgba(255, 255, 255, 0.08);
-      --glass-shine: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 40%);
+      --glass-shine: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
 
       /* Button/Filter glass */
       --btn-glass-bg: rgba(255, 255, 255, 0.03);
@@ -105,7 +106,7 @@
       --glass-border-hover: rgba(255, 255, 255, 0.95);
       --glass-shadow: rgba(0, 0, 0, 0.08);
       --glass-highlight: rgba(255, 255, 255, 0.95);
-      --glass-shine: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, transparent 50%);
+      --glass-shine: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, transparent 50%);
 
       /* Button/Filter glass */
       --btn-glass-bg: rgba(255, 255, 255, 0.5);
@@ -286,11 +287,21 @@
       transition: transform var(--transition-normal);
     }
 
-    .sun-icon { display: none; }
-    .moon-icon { display: block; }
+    .sun-icon {
+      display: none;
+    }
 
-    [data-theme="light"] .sun-icon { display: block; }
-    [data-theme="light"] .moon-icon { display: none; }
+    .moon-icon {
+      display: block;
+    }
+
+    [data-theme="light"] .sun-icon {
+      display: block;
+    }
+
+    [data-theme="light"] .moon-icon {
+      display: none;
+    }
 
     /* ===== Header ===== */
     header {
@@ -317,8 +328,15 @@
     }
 
     @keyframes gradient-shift {
-      0%, 100% { background-position: 0% center; }
-      50% { background-position: 100% center; }
+
+      0%,
+      100% {
+        background-position: 0% center;
+      }
+
+      50% {
+        background-position: 100% center;
+      }
     }
 
     header p {
@@ -532,6 +550,62 @@
       cursor: pointer;
     }
 
+    /* Data Source Badge */
+    .data-source-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--btn-glass-bg);
+      backdrop-filter: blur(10px) saturate(140%);
+      -webkit-backdrop-filter: blur(10px) saturate(140%);
+      border: 1px solid var(--btn-glass-border);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      color: var(--text-muted);
+    }
+
+    .data-source-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: background var(--transition-fast);
+    }
+
+    .data-source-badge[data-source="sheets"] .data-source-dot {
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+    }
+
+    .data-source-badge[data-source="cache"] .data-source-dot {
+      background: #f59e0b;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+    }
+
+    .data-source-badge[data-source="json"] .data-source-dot {
+      background: #3b82f6;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+    }
+
+    .refresh-btn svg {
+      transition: transform var(--transition-normal);
+    }
+
+    .refresh-btn.loading svg {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     /* ===== Controls ===== */
     .controls {
       display: flex;
@@ -639,7 +713,8 @@
       min-width: 900px;
     }
 
-    th, td {
+    th,
+    td {
       padding: var(--space-md);
       text-align: center;
       white-space: nowrap;
@@ -805,10 +880,12 @@
       background: var(--team-a-bg);
       color: var(--team-a);
     }
+
     .team-B {
       background: var(--team-b-bg);
       color: var(--team-b);
     }
+
     .team-C {
       background: var(--team-c-bg);
       color: var(--team-c);
@@ -829,10 +906,12 @@
       color: var(--medal-gold);
       text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     }
+
     .rank-2 {
       color: var(--medal-silver);
       text-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
     }
+
     .rank-3 {
       color: var(--medal-bronze);
       text-shadow: 0 0 10px rgba(205, 127, 50, 0.5);
@@ -863,8 +942,15 @@
     }
 
     @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 8px 32px var(--accent-glow); }
-      50% { box-shadow: 0 8px 48px var(--accent-glow), 0 0 60px var(--accent-glow); }
+
+      0%,
+      100% {
+        box-shadow: 0 8px 32px var(--accent-glow);
+      }
+
+      50% {
+        box-shadow: 0 8px 48px var(--accent-glow), 0 0 60px var(--accent-glow);
+      }
     }
 
     .chat-fab:hover {
@@ -910,6 +996,7 @@
         opacity: 0;
         transform: translateY(20px) scale(0.95);
       }
+
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -1008,7 +1095,8 @@
       font-weight: 600;
     }
 
-    .message.ai ul, .message.ai ol {
+    .message.ai ul,
+    .message.ai ol {
       margin: 8px 0;
       padding-left: 20px;
     }
@@ -1032,7 +1120,8 @@
       white-space: nowrap;
     }
 
-    .message.ai th, .message.ai td {
+    .message.ai th,
+    .message.ai td {
       padding: var(--space-xs) var(--space-sm);
       text-align: left;
       border: 1px solid var(--glass-border);
@@ -1075,7 +1164,8 @@
         font-size: 0.72rem;
       }
 
-      .message.ai th, .message.ai td {
+      .message.ai th,
+      .message.ai td {
         padding: 4px 5px;
       }
 
@@ -1084,13 +1174,15 @@
       }
     }
 
-    .message.ai h3, .message.ai h4 {
+    .message.ai h3,
+    .message.ai h4 {
       margin: 12px 0 8px 0;
       color: var(--accent);
       font-weight: 600;
     }
 
-    .message.ai h3:first-child, .message.ai h4:first-child {
+    .message.ai h3:first-child,
+    .message.ai h4:first-child {
       margin-top: 0;
     }
 
@@ -1203,7 +1295,7 @@
       inset: -2px;
       border-radius: calc(var(--radius-md) + 2px);
       background: linear-gradient(90deg,
-        var(--team-a), var(--team-b), var(--team-c), var(--team-a));
+          var(--team-a), var(--team-b), var(--team-c), var(--team-a));
       background-size: 300% 100%;
       animation: gradientFlow 3s linear infinite;
       z-index: -1;
@@ -1219,8 +1311,13 @@
     }
 
     @keyframes gradientFlow {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 300% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+
+      100% {
+        background-position: 300% 50%;
+      }
     }
 
     .team-view-btn:hover {
@@ -1256,8 +1353,13 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
     .team-modal-content {
@@ -1381,10 +1483,21 @@
       font-size: 15px;
     }
 
-    .team-table th:nth-child(1) { width: 80px; }
-    .team-table th:nth-child(2) { width: 150px; }
-    .team-table th:nth-child(3) { width: 80px; }
-    .team-table th:nth-child(4) { width: 120px; }
+    .team-table th:nth-child(1) {
+      width: 80px;
+    }
+
+    .team-table th:nth-child(2) {
+      width: 150px;
+    }
+
+    .team-table th:nth-child(3) {
+      width: 80px;
+    }
+
+    .team-table th:nth-child(4) {
+      width: 120px;
+    }
 
     .team-table th {
       font-weight: 600;
@@ -1527,12 +1640,25 @@
       animation: bounce 1.4s infinite ease-in-out;
     }
 
-    .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-    .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+    .typing-indicator span:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+
+    .typing-indicator span:nth-child(2) {
+      animation-delay: -0.16s;
+    }
 
     @keyframes bounce {
-      0%, 80%, 100% { transform: scale(0); }
-      40% { transform: scale(1); }
+
+      0%,
+      80%,
+      100% {
+        transform: scale(0);
+      }
+
+      40% {
+        transform: scale(1);
+      }
     }
 
     /* ===== Responsive ===== */
@@ -1603,10 +1729,35 @@
         font-size: 13px;
       }
 
-      .team-table th:nth-child(1) { width: 50px; }
-      .team-table th:nth-child(2) { width: 80px; }
-      .team-table th:nth-child(3) { width: 50px; }
-      .team-table th:nth-child(4) { width: 100px; }
+      .team-table th:nth-child(1) {
+        width: 50px;
+      }
+
+      .team-table th:nth-child(2) {
+        width: 80px;
+      }
+
+      .team-table th:nth-child(3) {
+        width: 50px;
+      }
+
+      .team-table th:nth-child(4) {
+        width: 100px;
+      }
+
+      .excel-link-row {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .data-source-badge {
+        font-size: 10px;
+        padding: 2px 6px;
+      }
+
+      .refresh-btn {
+        font-size: 11px;
+      }
     }
 
     /* Empty State */
@@ -1642,7 +1793,9 @@
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="config.local.js"></script>
 </head>
+
 <body>
   <!-- Background -->
   <div class="bg-image"></div>
@@ -1651,7 +1804,8 @@
   <!-- Theme Toggle -->
   <div class="theme-toggle">
     <button class="theme-btn" id="themeToggle" title="Toggle theme">
-      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="5"></circle>
         <line x1="12" y1="1" x2="12" y2="3"></line>
         <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -1662,7 +1816,8 @@
         <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
       </svg>
-      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
       </svg>
     </button>
@@ -1734,8 +1889,10 @@
           </div>
         </div>
         <div class="excel-link-row">
-          <a href="https://docs.google.com/spreadsheets/d/1sZtdJ9ErOeu4UuOQqHI9ganqCD4ZuP2ETr904emxnfQ/edit?usp=sharing" target="_blank" class="excel-link-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <a href="https://docs.google.com/spreadsheets/d/1sZtdJ9ErOeu4UuOQqHI9ganqCD4ZuP2ETr904emxnfQ/edit?usp=sharing"
+            target="_blank" class="excel-link-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
               <line x1="10" y1="14" x2="21" y2="3"></line>
@@ -1743,13 +1900,27 @@
             원본 엑셀 바로가기
           </a>
           <button class="excel-link-btn share-btn" onclick="shareLeagueInfo()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
               <polyline points="16 6 12 2 8 6"></polyline>
               <line x1="12" y1="2" x2="12" y2="15"></line>
             </svg>
             라운드 정보 공유
           </button>
+          <button class="excel-link-btn refresh-btn" id="refreshDataBtn" onclick="refreshData()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 4v6h-6"></path>
+              <path d="M1 20v-6h6"></path>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            <span id="refreshBtnText">새로고침</span>
+          </button>
+          <span class="data-source-badge" id="dataSourceBadge" title="데이터 소스">
+            <span class="data-source-dot"></span>
+            <span class="data-source-text">로딩중...</span>
+          </span>
         </div>
       </div>
     </header>
@@ -1762,7 +1933,8 @@
         <button class="toggle-btn active" data-season="202601">2026년 1월</button>
       </div>
       <div class="search-box">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
@@ -1776,22 +1948,70 @@
           <thead>
             <tr>
               <th>순위</th>
-              <th data-sort="번호">번호<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="팀">팀<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="선수명">선수명<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="출석">출석<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="누적득점" class="sorted desc">누적득점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="평균득점">평균득점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="누적어시">누적어시<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="평균어시">평균어시<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="누적리바">누적리바<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="평균리바">평균리바<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="누적스틸">누적스틸<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="평균스틸">평균스틸<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="누적블록">누적블록<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="평균블록">평균블록<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="누적3점">누적3점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
-              <th data-sort="평균3점">평균3점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg></span></th>
+              <th data-sort="번호">번호<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="팀">팀<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="선수명">선수명<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="출석">출석<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="누적득점" class="sorted desc">누적득점<span class="sort-icon"><svg width="12" height="12"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="평균득점">평균득점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="누적어시">누적어시<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="평균어시">평균어시<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="누적리바">누적리바<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="평균리바">평균리바<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="누적스틸">누적스틸<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="평균스틸">평균스틸<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="누적블록">누적블록<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="평균블록">평균블록<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="누적3점">누적3점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
+              <th data-sort="평균3점">평균3점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7-7 7 7" />
+                  </svg></span></th>
             </tr>
           </thead>
           <tbody id="tableBody">
@@ -1803,7 +2023,8 @@
 
   <!-- Chat FAB -->
   <button class="chat-fab" id="chatFab" title="AI에게 질문하기">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
     </svg>
   </button>
@@ -1894,32 +2115,429 @@
     // 시즌 목록 (새 시즌 추가 시 배열 앞에 추가)
     const SEASONS = ['202601', '202508', '202409', '202402'];
 
-    // JSON 데이터 로딩 함수
-    async function loadSeasonData(seasonId) {
-      const response = await fetch(`league_stats_${seasonId}.json`);
-      if (!response.ok) {
-        throw new Error(`Failed to load season ${seasonId}`);
+    // ===== Google Sheets API 설정 =====
+    const SHEETS_CONFIG = {
+      enabled: true,
+      spreadsheetId: window.NINEBLOCKER_CONFIG?.googleSheets?.spreadsheetId || '',
+      apiKey: window.NINEBLOCKER_CONFIG?.googleSheets?.apiKey || '',
+      sheets: {
+        scores: '전체득점',
+        stats: '부가기록 계산',
+        standings: 'GBL 승점'
+      },
+      // 시즌별 시트 매핑 (시트 ID → 시즌 ID)
+      seasonMapping: {
+        '202601': { scores: '전체득점', stats: '부가기록 계산', standings: 'GBL 승점' }
+        // 다른 시즌은 JSON 폴백 사용
       }
-      return await response.json();
+    };
+
+    const CACHE_TTL = 5 * 60 * 1000;  // 5분 캐시
+
+    // ===== Google Sheets API 클래스 =====
+    class GoogleSheetsAPI {
+      constructor(config) {
+        this.spreadsheetId = config.spreadsheetId;
+        this.apiKey = config.apiKey;
+        this.baseUrl = `https://sheets.googleapis.com/v4/spreadsheets/${this.spreadsheetId}`;
+      }
+
+      async getSheet(sheetName) {
+        if (!this.apiKey) {
+          throw new Error('API key not configured');
+        }
+        const url = `${this.baseUrl}/values/${encodeURIComponent(sheetName)}?key=${this.apiKey}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Sheets API error: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.values || [];
+      }
+
+      async getMultipleSheets(sheetNames) {
+        const ranges = sheetNames.map(name => encodeURIComponent(name)).join('&ranges=');
+        const url = `${this.baseUrl}/values:batchGet?ranges=${ranges}&key=${this.apiKey}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Sheets API error: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.valueRanges || [];
+      }
+    }
+
+    // ===== 데이터 캐시 클래스 =====
+    class DataCache {
+      constructor(prefix = 'league_cache_') {
+        this.prefix = prefix;
+      }
+
+      get(key) {
+        try {
+          const item = localStorage.getItem(this.prefix + key);
+          if (!item) return null;
+
+          const { data, timestamp } = JSON.parse(item);
+          if (Date.now() - timestamp > CACHE_TTL) {
+            localStorage.removeItem(this.prefix + key);
+            return null;
+          }
+          return data;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      set(key, data) {
+        try {
+          const item = { data, timestamp: Date.now() };
+          localStorage.setItem(this.prefix + key, JSON.stringify(item));
+        } catch (e) {
+          console.warn('Cache write failed:', e);
+        }
+      }
+
+      clear() {
+        const keys = Object.keys(localStorage).filter(k => k.startsWith(this.prefix));
+        keys.forEach(k => localStorage.removeItem(k));
+      }
+
+      getAge(key) {
+        try {
+          const item = localStorage.getItem(this.prefix + key);
+          if (!item) return null;
+          const { timestamp } = JSON.parse(item);
+          return Date.now() - timestamp;
+        } catch (e) {
+          return null;
+        }
+      }
+    }
+
+    // ===== 데이터 변환 함수 =====
+    // 전체득점 시트 → 선수 목록 배열
+    // 실제 시트 구조:
+    // Col 0: 팀 (첫 선수만 표시, 이후 빈칸)
+    // Col 1: 선수명
+    // Col 2: 번호
+    // Col 3-17: 라운드별 득점
+    // Col 18: 참석 수
+    // Col 19: 총득점
+    // Col 21: 평균득점
+    function transformScoreData(rows) {
+      if (!rows || rows.length < 2) return [];
+
+      const players = [];
+      let currentTeam = '';  // 팀은 첫 선수만 표시되므로 이월
+
+      // 고정 컬럼 인덱스 (실제 시트 구조 기반)
+      const COL = {
+        team: 0,
+        name: 1,
+        number: 2,
+        attendance: 18,
+        totalPoints: 19,
+        avgPoints: 21
+      };
+
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        if (!row || !row[COL.name]) continue;
+
+        // 팀이 있으면 업데이트, 없으면 이전 팀 유지
+        if (row[COL.team]) {
+          currentTeam = row[COL.team];
+        }
+
+        players.push({
+          번호: parseInt(row[COL.number]) || 0,
+          팀: currentTeam,
+          선수명: row[COL.name] || '',
+          득점: {
+            누적득점: parseInt(row[COL.totalPoints]) || 0,
+            평균득점: parseFloat(row[COL.avgPoints]) || 0
+          },
+          출석: parseInt(row[COL.attendance]) || 0,
+          부가기록: {
+            어시스트: { 누적: 0, 평균: 0 },
+            리바운드: { 누적: 0, 평균: 0 },
+            스틸: { 누적: 0, 평균: 0 },
+            블록: { 누적: 0, 평균: 0 },
+            '3점슛': { 누적: 0, 평균: 0 }
+          }
+        });
+      }
+
+      return players;
+    }
+
+    // 부가기록 시트 → 부가기록 객체 (선수명 기준)
+    // 실제 시트 구조:
+    // Row 0-1: 헤더
+    // Col 0: 선수명
+    // Col 1: 번호
+    // Col 2-6: 누적 (리바운드, 어시스트, 스틸, 블록, 3점슛)
+    // Col 7-11: 평균 (리바운드, 어시스트, 스틸, 블록, 3점슛)
+    function transformStatsData(rows) {
+      if (!rows || rows.length < 3) return {};  // 헤더 2줄 + 데이터
+
+      const stats = {};
+
+      // 고정 컬럼 인덱스
+      const COL = {
+        name: 0,
+        // 누적
+        reboundsTotal: 2,
+        assistsTotal: 3,
+        stealsTotal: 4,
+        blocksTotal: 5,
+        threePointersTotal: 6,
+        // 평균
+        reboundsAvg: 7,
+        assistsAvg: 8,
+        stealsAvg: 9,
+        blocksAvg: 10,
+        threePointersAvg: 11
+      };
+
+      // 데이터는 row 2부터 시작 (row 0, 1은 헤더)
+      for (let i = 2; i < rows.length; i++) {
+        const row = rows[i];
+        if (!row || !row[COL.name]) continue;
+
+        const name = row[COL.name];
+        stats[name] = {
+          리바운드: {
+            누적: parseInt(row[COL.reboundsTotal]) || 0,
+            평균: parseFloat(row[COL.reboundsAvg]) || 0
+          },
+          어시스트: {
+            누적: parseInt(row[COL.assistsTotal]) || 0,
+            평균: parseFloat(row[COL.assistsAvg]) || 0
+          },
+          스틸: {
+            누적: parseInt(row[COL.stealsTotal]) || 0,
+            평균: parseFloat(row[COL.stealsAvg]) || 0
+          },
+          블록: {
+            누적: parseInt(row[COL.blocksTotal]) || 0,
+            평균: parseFloat(row[COL.blocksAvg]) || 0
+          },
+          '3점슛': {
+            누적: parseInt(row[COL.threePointersTotal]) || 0,
+            평균: parseFloat(row[COL.threePointersAvg]) || 0
+          }
+        };
+      }
+
+      return stats;
+    }
+
+    // GBL 승점 시트 → 순위/어워드 객체
+    function transformStandingsData(rows) {
+      if (!rows || rows.length < 2) return { standings: [], awards: null };
+
+      const header = rows[0];
+      const standings = [];
+
+      const colIndex = {
+        team: header.findIndex(h => h === '팀'),
+        wins: header.findIndex(h => h && h.includes('승')),
+        losses: header.findIndex(h => h && h.includes('패')),
+        points: header.findIndex(h => h && (h.includes('승점') || h.includes('점수')))
+      };
+
+      for (let i = 1; i < rows.length && i <= 3; i++) {
+        const row = rows[i];
+        if (!row || !row[colIndex.team]) continue;
+
+        const teamLetter = row[colIndex.team];
+        standings.push({
+          team: teamLetter,
+          name: `${teamLetter}팀`,
+          wins: parseInt(row[colIndex.wins]) || 0,
+          losses: parseInt(row[colIndex.losses]) || 0,
+          points: parseFloat(row[colIndex.points]) || 0
+        });
+      }
+
+      // 승점 기준 정렬
+      standings.sort((a, b) => b.points - a.points);
+
+      return { standings };
+    }
+
+    // 선수 목록과 부가기록 병합
+    function mergePlayerData(players, stats) {
+      return players.map(player => {
+        const playerStats = stats[player.선수명];
+        if (playerStats) {
+          player.부가기록 = playerStats;
+        }
+        return player;
+      });
+    }
+
+    // ===== 통합 데이터 로더 =====
+    class LeagueDataLoader {
+      constructor() {
+        this.cache = new DataCache();
+        this.sheetsApi = new GoogleSheetsAPI(SHEETS_CONFIG);
+        this.dataSource = 'unknown';  // 'sheets', 'cache', 'json'
+      }
+
+      async loadSeasonData(seasonId) {
+        // 1. 캐시 확인
+        const cached = this.cache.get(`season_${seasonId}`);
+        if (cached) {
+          this.dataSource = 'cache';
+          console.log(`[DataLoader] Season ${seasonId}: loaded from cache`);
+          return cached;
+        }
+
+        // 2. Sheets API 시도 (현재 시즌만)
+        if (SHEETS_CONFIG.enabled && SHEETS_CONFIG.apiKey && SHEETS_CONFIG.seasonMapping[seasonId]) {
+          try {
+            const data = await this.loadFromSheets(seasonId);
+            this.cache.set(`season_${seasonId}`, data);
+            this.dataSource = 'sheets';
+            console.log(`[DataLoader] Season ${seasonId}: loaded from Google Sheets`);
+            return data;
+          } catch (e) {
+            console.warn(`[DataLoader] Sheets API failed for ${seasonId}:`, e.message);
+          }
+        }
+
+        // 3. JSON 폴백
+        const data = await this.loadFromJSON(seasonId);
+        this.cache.set(`season_${seasonId}`, data);
+        this.dataSource = 'json';
+        console.log(`[DataLoader] Season ${seasonId}: loaded from JSON`);
+        return data;
+      }
+
+      async loadFromSheets(seasonId) {
+        const sheetMapping = SHEETS_CONFIG.seasonMapping[seasonId];
+        if (!sheetMapping) {
+          throw new Error(`No sheet mapping for season ${seasonId}`);
+        }
+
+        // 시트 데이터 병렬 로드
+        const [scoresData, statsData] = await Promise.all([
+          this.sheetsApi.getSheet(sheetMapping.scores),
+          this.sheetsApi.getSheet(sheetMapping.stats)
+        ]);
+
+        // 데이터 변환
+        let players = transformScoreData(scoresData);
+        const stats = transformStatsData(statsData);
+        players = mergePlayerData(players, stats);
+
+        // 시즌 정보 생성
+        const seasonInfo = this.parseSeasonId(seasonId);
+
+        return {
+          시즌: seasonInfo.label,
+          총라운드: 15,
+          총선수수: players.length,
+          선수목록: players
+        };
+      }
+
+      async loadFromJSON(seasonId) {
+        const response = await fetch(`league_stats_${seasonId}.json`);
+        if (!response.ok) {
+          throw new Error(`Failed to load JSON for season ${seasonId}`);
+        }
+        return await response.json();
+      }
+
+      async loadMetadata(seasonId) {
+        // 1. 캐시 확인
+        const cached = this.cache.get(`metadata_${seasonId}`);
+        if (cached) {
+          return cached;
+        }
+
+        // 2. Sheets API 시도 (현재 시즌만)
+        if (SHEETS_CONFIG.enabled && SHEETS_CONFIG.apiKey && SHEETS_CONFIG.seasonMapping[seasonId]) {
+          try {
+            const sheetMapping = SHEETS_CONFIG.seasonMapping[seasonId];
+            const standingsData = await this.sheetsApi.getSheet(sheetMapping.standings);
+            const { standings } = transformStandingsData(standingsData);
+
+            // 기존 JSON 메타데이터와 병합
+            const jsonMeta = await this.loadMetadataFromJSON(seasonId);
+            const merged = {
+              ...jsonMeta,
+              standings: standings.length > 0 ? standings : jsonMeta?.standings
+            };
+
+            this.cache.set(`metadata_${seasonId}`, merged);
+            return merged;
+          } catch (e) {
+            console.warn(`[DataLoader] Metadata Sheets API failed for ${seasonId}:`, e.message);
+          }
+        }
+
+        // 3. JSON 폴백
+        const data = await this.loadMetadataFromJSON(seasonId);
+        if (data) {
+          this.cache.set(`metadata_${seasonId}`, data);
+        }
+        return data;
+      }
+
+      async loadMetadataFromJSON(seasonId) {
+        try {
+          const response = await fetch(`league_metadata_${seasonId}.json`);
+          if (!response.ok) return null;
+          return await response.json();
+        } catch (e) {
+          return null;
+        }
+      }
+
+      parseSeasonId(seasonId) {
+        const year = seasonId.substring(0, 4);
+        const month = parseInt(seasonId.substring(4, 6));
+        const monthNames = ['', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+        return {
+          year,
+          month,
+          label: `${year}년 ${monthNames[month]}`
+        };
+      }
+
+      getDataSource() {
+        return this.dataSource;
+      }
+
+      clearCache() {
+        this.cache.clear();
+      }
+    }
+
+    // 전역 데이터 로더 인스턴스
+    const dataLoader = new LeagueDataLoader();
+
+    // JSON 데이터 로딩 함수 (dataLoader 사용)
+    async function loadSeasonData(seasonId) {
+      return await dataLoader.loadSeasonData(seasonId);
     }
 
     async function loadAllSeasons() {
       const data = {};
       await Promise.all(SEASONS.map(async (seasonId) => {
-        data[seasonId] = await loadSeasonData(seasonId);
+        data[seasonId] = await dataLoader.loadSeasonData(seasonId);
       }));
       return data;
     }
 
-    // 메타데이터 로딩 함수
+    // 메타데이터 로딩 함수 (dataLoader 사용)
     async function loadSeasonMetadata(seasonId) {
-      try {
-        const response = await fetch(`league_metadata_${seasonId}.json`);
-        if (!response.ok) return null;
-        return await response.json();
-      } catch (e) {
-        return null;
-      }
+      return await dataLoader.loadMetadata(seasonId);
     }
 
     async function loadAllMetadata() {
@@ -1939,7 +2557,7 @@
 
       // manifest에 있는 시즌만 메타데이터 로드
       await Promise.all(availableSeasons.map(async (seasonId) => {
-        data[seasonId] = await loadSeasonMetadata(seasonId);
+        data[seasonId] = await dataLoader.loadMetadata(seasonId);
       }));
 
       return data;
@@ -2126,21 +2744,21 @@
     // 정렬된 전체 선수 목록 반환
     function getSortedPlayers() {
       let players = [...leagueData.선수목록];
-      
+
       // 정렬
       players.sort((a, b) => {
         const aVal = getPlayerValue(a, currentSort.field);
         const bVal = getPlayerValue(b, currentSort.field);
-        
+
         if (typeof aVal === 'string') {
-          return currentSort.order === 'asc' 
-            ? aVal.localeCompare(bVal) 
+          return currentSort.order === 'asc'
+            ? aVal.localeCompare(bVal)
             : bVal.localeCompare(aVal);
         }
-        
+
         return currentSort.order === 'asc' ? aVal - bVal : bVal - aVal;
       });
-      
+
       return players;
     }
 
@@ -2149,8 +2767,8 @@
       if (!searchQuery) {
         return sortedPlayers;
       }
-      
-      return sortedPlayers.filter(p => 
+
+      return sortedPlayers.filter(p =>
         p.선수명.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
@@ -2164,13 +2782,13 @@
     function renderTable() {
       const sortedPlayers = getSortedPlayers();
       const filteredPlayers = getFilteredPlayers(sortedPlayers);
-      
+
       // 정렬된 전체 목록에서 각 선수의 순위 맵 생성
       const rankMap = new Map();
       sortedPlayers.forEach((player, index) => {
         rankMap.set(player.선수명, index + 1);
       });
-      
+
       if (filteredPlayers.length === 0) {
         tableBody.innerHTML = `
           <tr>
@@ -2187,7 +2805,7 @@
         `;
         return;
       }
-      
+
       tableBody.innerHTML = filteredPlayers.map(player => {
         const rank = rankMap.get(player.선수명);
         const rankClass = rank <= 3 ? `rank rank-${rank}` : 'rank';
@@ -2211,7 +2829,8 @@
           <td class="${getHighlightClass('누적3점')}">${player.부가기록['3점슛'].누적}</td>
           <td class="${getHighlightClass('평균3점')}">${player.부가기록['3점슛'].평균.toFixed(1)}</td>
         </tr>
-      `;}).join('');
+      `;
+      }).join('');
     }
 
     // 정렬 헤더 업데이트
@@ -2404,10 +3023,10 @@ ${playersSummary}
       // 테이블 파싱 (스크롤 가능한 wrapper로 감싸기)
       text = text.replace(/\n?\|(.+)\|\n\|[-\s|]+\|\n((?:\|.+\|\n?)+)/g, (match, header, body) => {
         const headers = header.split('|').map(h => h.trim()).filter(h => h);
-        const rows = body.trim().split('\n').map(row => 
+        const rows = body.trim().split('\n').map(row =>
           row.split('|').map(cell => cell.trim()).filter(cell => cell)
         );
-        
+
         let table = '<div class="table-wrapper"><table><thead><tr>';
         headers.forEach(h => table += `<th>${h}</th>`);
         table += '</tr></thead><tbody>';
@@ -2422,42 +3041,42 @@ ${playersSummary}
 
       // 볼드 처리
       text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-      
+
       // 이탤릭 처리
       text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
-      
+
       // 인라인 코드
       text = text.replace(/`(.+?)`/g, '<code>$1</code>');
-      
+
       // 헤더 처리
       text = text.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
       text = text.replace(/^### (.+)$/gm, '<h3>$1</h3>');
-      
+
       // 수평선
       text = text.replace(/^---$/gm, '<hr>');
-      
+
       // 순서 있는 리스트
       text = text.replace(/^(\d+)\. (.+)$/gm, '<li data-num="$1">$2</li>');
       text = text.replace(/(<li data-num="\d+">.+<\/li>\n?)+/g, (match) => `<ol>${match}</ol>`);
       text = text.replace(/ data-num="\d+"/g, '');
-      
+
       // 순서 없는 리스트
       text = text.replace(/^- (.+)$/gm, '<li>$1</li>');
       text = text.replace(/(<li>.+<\/li>\n?)+/g, (match) => {
         if (!match.includes('<ol>')) return `<ul>${match}</ul>`;
         return match;
       });
-      
+
       // 줄바꿈을 <br>로 변환 (리스트/테이블/헤더 태그 뒤는 제외)
       text = text.replace(/\n(?!<)/g, '<br>');
-      
+
       // 연속된 <br> 정리
       text = text.replace(/(<br>){3,}/g, '<br><br>');
-      
+
       // 태그 뒤 불필요한 <br> 제거
       text = text.replace(/<\/(table|ul|ol|h3|h4|hr)><br>/g, '</$1>');
       text = text.replace(/<br><(table|ul|ol|h3|h4|hr)/g, '<$1');
-      
+
       return text;
     }
 
@@ -2465,14 +3084,14 @@ ${playersSummary}
     function addMessage(content, type) {
       const div = document.createElement('div');
       div.className = `message ${type}`;
-      
+
       if (type === 'ai') {
         // AI 메시지는 마크다운 파싱
         div.innerHTML = parseMarkdown(content);
       } else {
         div.textContent = content;
       }
-      
+
       chatMessages.appendChild(div);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
@@ -2505,7 +3124,7 @@ ${playersSummary}
 
       try {
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-        
+
         // 대화 히스토리 구성
         const historyFormatted = chatHistory.map(h => ({
           role: h.role,
@@ -2532,7 +3151,7 @@ ${playersSummary}
       } catch (error) {
         console.error('Gemini API Error:', error);
         removeTypingIndicator();
-        
+
         let errorMsg = '오류가 발생했습니다.';
         if (error.message) {
           if (error.message.includes('API_KEY_INVALID') || error.message.includes('API key not valid')) {
@@ -2571,6 +3190,69 @@ ${playersSummary}
       });
     });
 
+    // 데이터 소스 배지 업데이트
+    function updateDataSourceBadge() {
+      const badge = document.getElementById('dataSourceBadge');
+      const textEl = badge?.querySelector('.data-source-text');
+      if (!badge || !textEl) return;
+
+      const source = dataLoader.getDataSource();
+      badge.setAttribute('data-source', source);
+
+      const sourceLabels = {
+        sheets: '실시간',
+        cache: '캐시',
+        json: 'JSON',
+        unknown: '로딩중...'
+      };
+
+      textEl.textContent = sourceLabels[source] || source;
+    }
+
+    // 데이터 새로고침 함수
+    async function refreshData() {
+      const btn = document.getElementById('refreshDataBtn');
+      const btnText = document.getElementById('refreshBtnText');
+
+      if (btn.classList.contains('loading')) return;
+
+      btn.classList.add('loading');
+      btnText.textContent = '로딩중...';
+
+      try {
+        // 캐시 삭제
+        dataLoader.clearCache();
+
+        // 현재 시즌 데이터 다시 로드
+        seasonsData[currentSeason] = await dataLoader.loadSeasonData(currentSeason);
+        leagueData = seasonsData[currentSeason];
+
+        // 메타데이터도 다시 로드
+        metadataCache[currentSeason] = await dataLoader.loadMetadata(currentSeason);
+
+        // UI 업데이트
+        updateHeader();
+        renderTable();
+        updateDataSourceBadge();
+
+        btnText.textContent = '완료!';
+        setTimeout(() => {
+          btnText.textContent = '새로고침';
+        }, 2000);
+      } catch (error) {
+        console.error('데이터 새로고침 실패:', error);
+        btnText.textContent = '실패';
+        setTimeout(() => {
+          btnText.textContent = '새로고침';
+        }, 2000);
+      } finally {
+        btn.classList.remove('loading');
+      }
+    }
+
+    // 전역 함수로 노출 (onclick에서 사용)
+    window.refreshData = refreshData;
+
     // 앱 초기화 (비동기)
     async function initApp() {
       try {
@@ -2586,6 +3268,7 @@ ${playersSummary}
         updateHeader();
         renderTable();
         updateSortHeaders();
+        updateDataSourceBadge();  // 데이터 소스 표시
       } catch (error) {
         console.error('데이터 로딩 실패:', error);
         document.querySelector('.container').innerHTML = `
@@ -2758,5 +3441,5 @@ ${playersSummary}
     window.shareLeagueInfo = shareLeagueInfo;
   </script>
 </body>
-</html>
 
+</html>
