@@ -2101,6 +2101,9 @@
                 el.addEventListener('dragover', handleDragOver);
                 el.addEventListener('dragleave', handleDragLeave);
             });
+
+            // 운영진 슬롯 다시 렌더링 (배정된 선수 유지)
+            renderStaffSlots();
         }
         
         function renderQuarterRow(match, quarter, title, players) {
