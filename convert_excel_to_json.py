@@ -95,12 +95,16 @@ def parse_additional_stats(ws):
 
 
 def count_rounds(ws):
-    """전체득점 시트 헤더에서 라운드 수를 계산"""
+    """전체득점 시트 헤더에서 라운드 수를 계산
+
+    정확히 'N라운드' 형식의 컬럼만 카운트 (예: 1라운드, 2라운드, ...)
+    '라운드 합계' 같은 컬럼은 제외
+    """
     header = list(ws.iter_rows(min_row=1, max_row=1, values_only=True))[0]
     round_count = 0
 
     for cell in header:
-        if cell and '라운드' in str(cell):
+        if cell and re.match(r'^\d+라운드$', str(cell).strip()):
             round_count += 1
 
     return round_count
@@ -364,9 +368,15 @@ def main():
     # 엑셀 파일 로드
     wb = openpyxl.load_workbook(excel_path, data_only=True)
 
-    # 전체득점 시트에서 현재 라운드 가져오기
-    ws_score = wb['전체득점']
-    current_round = get_current_round(ws_score)
+    # GBL 승점 시트에서 현재 라운드 가져오기 (가장 신뢰할 수 있는 소스)
+    rounds_data = parse_gbl_standings(wb)
+    if rounds_data:
+        # 가장 최신 라운드 사용
+        current_round = max(rd['round'] for rd in rounds_data)
+    else:
+        # GBL 승점 시트가 없으면 전체득점 시트 기준 폴백
+        ws_score = wb['전체득점']
+        current_round = get_current_round(ws_score)
 
     # 선수 통계 JSON 생성
     result = convert_excel_to_json(excel_path, season_code)
@@ -382,9 +392,7 @@ def main():
     print(f"  현재 라운드: {current_round}")
     print(f"  총 선수 수: {result['총선수수']}")
 
-    # GBL 승점 시트에서 메타데이터 추출
-    rounds_data = parse_gbl_standings(wb)
-
+    # GBL 승점 시트 데이터로 메타데이터 생성
     if rounds_data:
         metadata = generate_metadata(result['시즌'], result['총라운드'], rounds_data, current_round)
 
