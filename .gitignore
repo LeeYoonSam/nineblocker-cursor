@@ -6,7 +6,6 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
-config.local.js
 
 # IDE
 .idea/
