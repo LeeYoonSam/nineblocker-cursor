@@ -1405,6 +1405,94 @@
       overscroll-behavior: contain;
     }
 
+    /* 트레이드 모달 */
+    .trade-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .trade-modal.open {
+      display: flex;
+    }
+    .trade-modal-content {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 500px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 24px;
+    }
+    .trade-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .trade-modal-header h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .trade-team-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .trade-team-card.team-a { border-left: 4px solid var(--team-a); }
+    .trade-team-card.team-b { border-left: 4px solid var(--team-b); }
+    .trade-team-card.team-c { border-left: 4px solid var(--team-c); }
+    .trade-team-name {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+    .trade-team-card.team-a .trade-team-name { color: var(--team-a); }
+    .trade-team-card.team-b .trade-team-name { color: var(--team-b); }
+    .trade-team-card.team-c .trade-team-name { color: var(--team-c); }
+    .trade-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      font-size: 0.9rem;
+    }
+    .trade-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      min-width: 40px;
+      justify-content: center;
+    }
+    .trade-badge.in {
+      background: rgba(74, 222, 128, 0.15);
+      color: #4ade80;
+    }
+    .trade-badge.out {
+      background: rgba(248, 113, 113, 0.15);
+      color: #f87171;
+    }
+    .trade-player-name {
+      color: var(--text);
+    }
+    .trade-player-from {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-left: auto;
+    }
+
     /* 모달 열릴 때 body 스크롤 방지 */
     body.modal-open {
       overflow: hidden;
@@ -1842,6 +1930,16 @@
             </svg>
             라운드 정보 공유
           </button>
+          <button class="excel-link-btn" onclick="openTradeModal()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="17 1 21 5 17 9"></polyline>
+              <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+              <polyline points="7 23 3 19 7 15"></polyline>
+              <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+            </svg>
+            트레이드 현황
+          </button>
         </div>
       </div>
     </header>
@@ -2013,6 +2111,90 @@
           </thead>
           <tbody id="teamTableBody"></tbody>
         </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trade Modal -->
+  <div class="trade-modal" id="tradeModal">
+    <div class="trade-modal-content">
+      <div class="trade-modal-header">
+        <h3>8라운드 후 트레이드</h3>
+        <button class="close-btn" id="closeTradeModal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="trade-team-card team-a">
+        <div class="trade-team-name">A팀</div>
+        <div class="trade-row">
+          <span class="trade-badge in">IN</span>
+          <span class="trade-player-name">유지형(24)</span>
+          <span class="trade-player-from">← B팀</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-badge in">IN</span>
+          <span class="trade-player-name">강효진(28)</span>
+          <span class="trade-player-from">← C팀</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-badge out">OUT</span>
+          <span class="trade-player-name">김정호(32)</span>
+          <span class="trade-player-from">→ B팀</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-badge out">OUT</span>
+          <span class="trade-player-name">최효림(36)</span>
+          <span class="trade-player-from">→ C팀</span>
+        </div>
+      </div>
+      <div class="trade-team-card team-b">
+        <div class="trade-team-name">B팀</div>
+        <div class="trade-row">
+          <span class="trade-badge in">IN</span>
+          <span class="trade-player-name">김정호(32)</span>
+          <span class="trade-player-from">← A팀</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-badge in">IN</span>
+          <span class="trade-player-name">김주철(72)</span>
+          <span class="trade-player-from">← C팀</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-badge out">OUT</span>
+          <span class="trade-player-name">유지형(24)</span>
+          <span class="trade-player-from">→ A팀</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-badge out">OUT</span>
+          <span class="trade-player-name">김동광(30)</span>
+          <span class="trade-player-from">→ C팀</span>
+        </div>
+      </div>
+      <div class="trade-team-card team-c">
+        <div class="trade-team-name">C팀</div>
+        <div class="trade-row">
+          <span class="trade-badge in">IN</span>
+          <span class="trade-player-name">최효림(36)</span>
+          <span class="trade-player-from">← A팀</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-badge in">IN</span>
+          <span class="trade-player-name">김동광(30)</span>
+          <span class="trade-player-from">← B팀</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-badge out">OUT</span>
+          <span class="trade-player-name">강효진(28)</span>
+          <span class="trade-player-from">→ A팀</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-badge out">OUT</span>
+          <span class="trade-player-name">김주철(72)</span>
+          <span class="trade-player-from">→ B팀</span>
+        </div>
       </div>
     </div>
   </div>
@@ -2452,6 +2634,41 @@
         renderTeamTable(tab.dataset.team);
       });
     });
+
+    // 트레이드 모달
+    const tradeModal = document.getElementById('tradeModal');
+    const closeTradeModal = document.getElementById('closeTradeModal');
+    let tradeScrollPosition = 0;
+
+    function openTradeModal() {
+      tradeScrollPosition = window.pageYOffset;
+      document.body.style.top = `-${tradeScrollPosition}px`;
+      document.body.classList.add('modal-open');
+      tradeModal.classList.add('open');
+    }
+
+    function closeTradeModalHandler() {
+      tradeModal.classList.remove('open');
+      document.body.classList.remove('modal-open');
+      document.body.style.top = '';
+      window.scrollTo(0, tradeScrollPosition);
+    }
+
+    closeTradeModal.addEventListener('click', closeTradeModalHandler);
+
+    tradeModal.addEventListener('click', (e) => {
+      if (e.target === tradeModal) {
+        closeTradeModalHandler();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && tradeModal.classList.contains('open')) {
+        closeTradeModalHandler();
+      }
+    });
+
+    window.openTradeModal = openTradeModal;
 
     // 채팅 모달 토글
     chatFab.addEventListener('click', () => {
