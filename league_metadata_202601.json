@@ -1,65 +1,65 @@
 {
   "season": "2026년 1월",
-  "currentRound": 6,
+  "currentRound": 8,
   "totalRounds": 15,
   "standings": [
     {
-      "team": "A",
-      "name": "A팀",
-      "wins": 7,
-      "losses": 5,
-      "points": 22.0
-    },
-    {
       "team": "B",
       "name": "B팀",
-      "wins": 6,
-      "losses": 6,
-      "points": 20.0
+      "wins": 9,
+      "losses": 7,
+      "points": 30.0
+    },
+    {
+      "team": "A",
+      "name": "A팀",
+      "wins": 9,
+      "losses": 7,
+      "points": 28.0
     },
     {
       "team": "C",
       "name": "C팀",
-      "wins": 5,
-      "losses": 7,
-      "points": 15.0
+      "wins": 6,
+      "losses": 10,
+      "points": 18.0
     }
   ],
   "roundHistory": [
     {
-      "round": 6,
+      "round": 8,
       "teams": [
         {
           "team": "A",
           "name": "A팀",
-          "record": "7승 5패",
-          "wins": 7,
-          "losses": 5,
-          "points": 22.0
+          "record": "9승 7패",
+          "wins": 9,
+          "losses": 7,
+          "points": 28.0
         },
         {
           "team": "B",
           "name": "B팀",
-          "record": "6승 6패",
-          "wins": 6,
-          "losses": 6,
-          "points": 20.0
+          "record": "9승 7패",
+          "wins": 9,
+          "losses": 7,
+          "points": 30.0
         },
         {
           "team": "C",
           "name": "C팀",
-          "record": "5승 7패",
-          "wins": 5,
-          "losses": 7,
-          "points": 15.0
+          "record": "6승 10패",
+          "wins": 6,
+          "losses": 10,
+          "points": 18.0
         }
       ],
       "awards": {
-        "mom": "강권열",
-        "doubleDouble": "x",
+        "mom": "김동광",
+        "doubleDouble": "김정호, 김돈규",
         "topScorer": {
-          "name": "유지형",
-          "points": 41
+          "name": "채영진",
+          "points": 49
         }
       }
     }

@@ -31,8 +31,8 @@ def parse_team_from_rows(ws, start_row, end_row):
         if player_name is None or player_number is None:
             continue
 
-        # 참석수 (S열, 인덱스 18)
-        attendance = row[18] if len(row) > 18 and row[18] is not None else 0
+        # 총 참석수 (Y열, 인덱스 24)
+        attendance = row[24] if len(row) > 24 and row[24] is not None else 0
         attendance = int(attendance) if attendance else 0
 
         # 총득점 (T열, 인덱스 19)
