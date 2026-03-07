@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -19,19 +20,19 @@
             padding: 20px;
             color: #fff;
         }
-        
+
         .container {
             max-width: 1600px;
             margin: 0 auto;
         }
-        
+
         h1 {
             text-align: center;
             margin-bottom: 8px;
             font-size: 1.8rem;
             color: #feca57;
         }
-        
+
         .round-selector {
             display: flex;
             justify-content: center;
@@ -39,12 +40,12 @@
             gap: 15px;
             margin-bottom: 25px;
         }
-        
+
         .round-selector label {
             font-size: 1rem;
             color: #aaa;
         }
-        
+
         .round-selector input {
             width: 80px;
             padding: 8px 12px;
@@ -55,7 +56,7 @@
             font-size: 1.2rem;
             text-align: center;
         }
-        
+
         .round-selector select {
             padding: 8px 12px;
             border: 2px solid #feca57;
@@ -65,18 +66,18 @@
             font-size: 1rem;
             cursor: pointer;
         }
-        
+
         .round-selector select option {
             background: #1a1a2e;
             color: #fff;
         }
-        
+
         .uniform-selector {
             display: flex;
             gap: 8px;
             margin-left: 5px;
         }
-        
+
         .uniform-btn {
             width: 40px;
             height: 40px;
@@ -89,36 +90,36 @@
             font-size: 1.3rem;
             transition: all 0.2s ease;
         }
-        
+
         .uniform-btn.white {
             background: #ffffff;
             color: #333;
         }
-        
+
         .uniform-btn.red {
             background: #e74c3c;
             color: #fff;
         }
-        
+
         .uniform-btn.black {
             background: #2c3e50;
             color: #fff;
         }
-        
+
         .uniform-btn:hover {
             transform: scale(1.1);
         }
-        
+
         .uniform-btn.selected {
             border-color: #feca57;
             box-shadow: 0 0 10px rgba(254, 202, 87, 0.5);
             transform: scale(1.1);
         }
-        
+
         .uniform-btn .uniform-icon {
-            filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.3));
+            filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
         }
-        
+
         .match-order-info {
             display: flex;
             justify-content: center;
@@ -126,7 +127,7 @@
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
-        
+
         .match-slot {
             display: flex;
             flex-direction: column;
@@ -136,33 +137,33 @@
             border-radius: 10px;
             min-width: 120px;
         }
-        
+
         .match-slot.current {
             background: rgba(254, 202, 87, 0.2);
             border: 2px solid #feca57;
         }
-        
+
         .match-slot .slot-label {
             font-size: 0.75rem;
             color: #888;
             margin-bottom: 5px;
         }
-        
+
         .match-slot .slot-teams {
             font-weight: 600;
             font-size: 0.95rem;
         }
-        
+
         .match-slot .slot-quarters {
             font-size: 0.7rem;
             color: #aaa;
             margin-top: 3px;
         }
-        
+
         .b-highlight {
             color: #feca57;
         }
-        
+
         .stamina-warning {
             background: rgba(255, 107, 107, 0.1);
             border: 1px solid rgba(255, 107, 107, 0.3);
@@ -172,13 +173,13 @@
             font-size: 0.85rem;
             color: #ff6b6b;
         }
-        
+
         .stamina-ok {
             background: rgba(76, 175, 80, 0.1);
             border: 1px solid rgba(76, 175, 80, 0.3);
             color: #4caf50;
         }
-        
+
         /* 운영진 섹션 */
         .staff-section {
             background: rgba(255, 255, 255, 0.05);
@@ -187,32 +188,32 @@
             margin-top: 15px;
             border-top: 4px solid #9b59b6;
         }
-        
+
         .staff-title {
             font-size: 1.1rem;
             font-weight: 600;
             color: #9b59b6;
             margin-bottom: 15px;
         }
-        
+
         .staff-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
         }
-        
+
         @media (max-width: 800px) {
             .staff-grid {
                 grid-template-columns: 1fr;
             }
         }
-        
+
         .staff-category {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 10px;
             padding: 12px;
         }
-        
+
         .staff-category-title {
             font-size: 0.9rem;
             font-weight: 600;
@@ -221,13 +222,13 @@
             padding-bottom: 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .staff-slots {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
-        
+
         .staff-slot {
             display: flex;
             align-items: center;
@@ -237,34 +238,34 @@
             border: 2px dashed rgba(255, 255, 255, 0.1);
             transition: all 0.2s ease;
         }
-        
+
         .staff-slot.drag-over {
             background: rgba(155, 89, 182, 0.2);
             border-color: #9b59b6;
         }
-        
+
         .staff-slot.filled {
             border-style: solid;
             border-color: #9b59b6;
             background: rgba(155, 89, 182, 0.1);
         }
-        
+
         .staff-slot .slot-role {
             min-width: 60px;
             font-size: 0.8rem;
             color: #888;
         }
-        
+
         .staff-slot .slot-player {
             flex: 1;
             font-weight: 600;
             color: #fff;
         }
-        
+
         .staff-slot .slot-player.empty {
             color: #555;
         }
-        
+
         .staff-slot .remove-staff {
             width: 20px;
             height: 20px;
@@ -279,28 +280,28 @@
             transition: all 0.2s ease;
             font-size: 0.8rem;
         }
-        
+
         .staff-slot:hover .remove-staff {
             opacity: 1;
         }
-        
+
         .staff-slot .remove-staff:hover {
             background: #ff6b6b;
             color: #fff;
         }
-        
+
         .main-layout {
             display: grid;
             grid-template-columns: 350px 1fr;
             gap: 25px;
         }
-        
+
         @media (max-width: 1200px) {
             .main-layout {
                 grid-template-columns: 1fr;
             }
         }
-        
+
         /* 선수 패널 */
         .player-panel {
             background: rgba(255, 255, 255, 0.05);
@@ -311,7 +312,7 @@
             position: sticky;
             top: 20px;
         }
-        
+
         .panel-title {
             font-size: 1.1rem;
             font-weight: 600;
@@ -321,20 +322,20 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .attendance-count {
             font-size: 0.85rem;
             background: rgba(254, 202, 87, 0.2);
             padding: 4px 10px;
             border-radius: 12px;
         }
-        
+
         .player-list {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
-        
+
         .player-chip {
             display: flex;
             align-items: center;
@@ -346,22 +347,22 @@
             border: 2px solid transparent;
             user-select: none;
         }
-        
+
         .player-chip:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateX(5px);
         }
-        
+
         .player-chip.selected {
             background: rgba(76, 175, 80, 0.2);
             border-color: #4caf50;
         }
-        
+
         .player-chip.dragging {
             opacity: 0.5;
             cursor: grabbing;
         }
-        
+
         .player-chip .number {
             width: 36px;
             height: 36px;
@@ -375,22 +376,22 @@
             margin-right: 12px;
             color: #feca57;
         }
-        
+
         .player-chip .info {
             flex: 1;
         }
-        
+
         .player-chip .name {
             font-weight: 600;
             font-size: 1rem;
             margin-bottom: 2px;
         }
-        
+
         .player-chip .position {
             font-size: 0.75rem;
             color: #888;
         }
-        
+
         .player-chip .quarter-count {
             background: rgba(255, 255, 255, 0.1);
             padding: 4px 10px;
@@ -399,33 +400,33 @@
             font-weight: 600;
             margin-left: 8px;
         }
-        
+
         .player-chip .quarter-count.high {
             background: rgba(76, 175, 80, 0.3);
             color: #4caf50;
         }
-        
+
         .player-chip .quarter-count.medium {
             background: rgba(254, 202, 87, 0.3);
             color: #feca57;
         }
-        
+
         .player-chip .quarter-count.low {
             background: rgba(255, 107, 107, 0.3);
             color: #ff6b6b;
         }
-        
+
         .player-chip .check {
             color: #4caf50;
             font-size: 1.3rem;
             opacity: 0;
             margin-left: 8px;
         }
-        
+
         .player-chip.selected .check {
             opacity: 1;
         }
-        
+
         .position-badge {
             display: inline-block;
             padding: 2px 6px;
@@ -434,26 +435,37 @@
             font-weight: 600;
             margin-left: 4px;
         }
-        
-        .position-badge.pg { background: #e74c3c; }
-        .position-badge.sg { background: #e67e22; }
-        .position-badge.fw { background: #27ae60; }
-        .position-badge.c { background: #3498db; }
-        
+
+        .position-badge.pg {
+            background: #e74c3c;
+        }
+
+        .position-badge.sg {
+            background: #e67e22;
+        }
+
+        .position-badge.fw {
+            background: #27ae60;
+        }
+
+        .position-badge.c {
+            background: #3498db;
+        }
+
         /* 엔트리 영역 */
         .entry-area {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-        
+
         .action-bar {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
             align-items: center;
         }
-        
+
         .action-btn {
             padding: 12px 24px;
             border: none;
@@ -463,58 +475,58 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        
+
         .action-btn.primary {
             background: #feca57;
             color: #1a1a2e;
         }
-        
+
         .action-btn.primary:hover {
             background: #fed87a;
             transform: translateY(-2px);
         }
-        
+
         .action-btn.secondary {
             background: rgba(255, 255, 255, 0.1);
             color: #fff;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
+
         .action-btn.secondary:hover {
             background: rgba(255, 255, 255, 0.2);
         }
-        
+
         .action-btn.success {
             background: #4caf50;
             color: #fff;
         }
-        
+
         .action-btn.success:hover {
             background: #5cbf60;
         }
-        
+
         /* 엔트리 카드 - 세로 배치 */
         .entry-cards {
             display: flex;
             flex-direction: column;
             gap: 25px;
         }
-        
+
         .entry-card {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 16px;
             padding: 24px;
             border-left: 5px solid;
         }
-        
+
         .entry-card.vs-a {
             border-left-color: #ff6b6b;
         }
-        
+
         .entry-card.vs-c {
             border-left-color: #48dbfb;
         }
-        
+
         .entry-card-title {
             font-size: 1.4rem;
             font-weight: 700;
@@ -523,22 +535,22 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .entry-card.vs-a .entry-card-title {
             color: #ff6b6b;
         }
-        
+
         .entry-card.vs-c .entry-card-title {
             color: #48dbfb;
         }
-        
+
         /* 쿼터 - 가로 배치 */
         .quarters-container {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
-        
+
         .quarter-row {
             display: flex;
             align-items: stretch;
@@ -547,7 +559,7 @@
             border-radius: 12px;
             padding: 15px;
         }
-        
+
         .quarter-label {
             min-width: 80px;
             display: flex;
@@ -560,7 +572,7 @@
             border-radius: 8px;
             padding: 10px;
         }
-        
+
         .quarter-players {
             flex: 1;
             display: flex;
@@ -573,44 +585,44 @@
             border: 2px dashed rgba(255, 255, 255, 0.1);
             transition: all 0.2s ease;
         }
-        
+
         .quarter-players.drag-over {
             background: rgba(254, 202, 87, 0.1);
             border-color: #feca57;
         }
-        
+
         .quarter-players.full {
             border-color: #4caf50;
             border-style: solid;
         }
-        
+
         .quarter-players.over {
             border-color: #ff6b6b;
         }
-        
+
         /* 엔트리 선수 카드 - 가독성 향상 */
         .entry-player {
             display: flex;
             align-items: center;
             padding: 10px 14px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
             border-radius: 10px;
             cursor: grab;
             transition: all 0.2s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
             min-width: 140px;
         }
-        
+
         .entry-player:hover {
             background: rgba(255, 255, 255, 0.12);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        
+
         .entry-player.dragging {
             opacity: 0.5;
         }
-        
+
         .entry-player .num {
             width: 40px;
             height: 40px;
@@ -625,23 +637,23 @@
             margin-right: 10px;
             flex-shrink: 0;
         }
-        
+
         .entry-player .player-details {
             flex: 1;
         }
-        
+
         .entry-player .player-name {
             font-weight: 600;
             font-size: 1rem;
             color: #fff;
         }
-        
+
         .entry-player .player-pos {
             font-size: 0.7rem;
             color: #aaa;
             margin-top: 2px;
         }
-        
+
         .entry-player .remove-btn {
             width: 24px;
             height: 24px;
@@ -656,16 +668,16 @@
             transition: all 0.2s ease;
             margin-left: 8px;
         }
-        
+
         .entry-player:hover .remove-btn {
             opacity: 1;
         }
-        
+
         .entry-player .remove-btn:hover {
             background: #ff6b6b;
             color: #fff;
         }
-        
+
         /* 선수 하이라이트 */
         .entry-player.highlighted {
             background: linear-gradient(135deg, rgba(254, 202, 87, 0.3) 0%, rgba(254, 202, 87, 0.15) 100%);
@@ -673,13 +685,13 @@
             box-shadow: 0 0 15px rgba(254, 202, 87, 0.4);
             transform: scale(1.05);
         }
-        
+
         .player-chip.highlighted {
             background: rgba(254, 202, 87, 0.2);
             border-color: #feca57;
             box-shadow: 0 0 10px rgba(254, 202, 87, 0.3);
         }
-        
+
         .highlight-info {
             position: fixed;
             top: 80px;
@@ -697,48 +709,48 @@
             align-items: center;
             gap: 15px;
         }
-        
+
         .highlight-info.show {
             display: flex;
         }
-        
+
         .highlight-info .player-name {
             font-size: 1.1rem;
         }
-        
+
         .highlight-info .quarter-list {
             display: flex;
             gap: 8px;
         }
-        
+
         .highlight-info .quarter-badge {
             padding: 4px 10px;
             border-radius: 15px;
             font-size: 0.85rem;
             font-weight: 600;
         }
-        
+
         .highlight-info .quarter-badge.vs-a {
             background: rgba(255, 107, 107, 0.3);
             color: #ff6b6b;
         }
-        
+
         .highlight-info .quarter-badge.vs-c {
             background: rgba(72, 219, 251, 0.3);
             color: #48dbfb;
         }
-        
+
         .highlight-info .close-btn {
             margin-left: 10px;
             cursor: pointer;
             opacity: 0.7;
             font-size: 1.2rem;
         }
-        
+
         .highlight-info .close-btn:hover {
             opacity: 1;
         }
-        
+
         .quarter-count-display {
             min-width: 50px;
             display: flex;
@@ -747,10 +759,15 @@
             font-size: 0.9rem;
             color: #888;
         }
-        
-        .quarter-count-display.ok { color: #4caf50; }
-        .quarter-count-display.warn { color: #ff6b6b; }
-        
+
+        .quarter-count-display.ok {
+            color: #4caf50;
+        }
+
+        .quarter-count-display.warn {
+            color: #ff6b6b;
+        }
+
         /* 선수별 출전 통계 */
         .stats-summary {
             background: rgba(255, 255, 255, 0.05);
@@ -758,20 +775,20 @@
             padding: 15px;
             margin-top: 15px;
         }
-        
+
         .stats-title {
             font-size: 0.9rem;
             color: #feca57;
             margin-bottom: 10px;
             font-weight: 600;
         }
-        
+
         .stats-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
         }
-        
+
         .stat-item {
             display: flex;
             align-items: center;
@@ -780,32 +797,32 @@
             border-radius: 8px;
             font-size: 0.85rem;
         }
-        
+
         .stat-item .stat-name {
             margin-right: 8px;
         }
-        
+
         .stat-item .stat-value {
             font-weight: 700;
             padding: 2px 8px;
             border-radius: 10px;
         }
-        
+
         .stat-item .stat-value.high {
             background: rgba(76, 175, 80, 0.3);
             color: #4caf50;
         }
-        
+
         .stat-item .stat-value.medium {
             background: rgba(254, 202, 87, 0.3);
             color: #feca57;
         }
-        
+
         .stat-item .stat-value.low {
             background: rgba(255, 107, 107, 0.3);
             color: #ff6b6b;
         }
-        
+
         /* 미리보기 & 다운로드 영역 */
         .preview-section {
             margin-top: 30px;
@@ -813,21 +830,21 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 16px;
         }
-        
+
         .preview-title {
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 15px;
             color: #4caf50;
         }
-        
+
         .preview-container {
             background: #1a1a2e;
             border-radius: 12px;
             padding: 10px;
             overflow-x: auto;
         }
-        
+
         /* 공유 이미지 스타일 */
         .share-card {
             width: 900px;
@@ -836,7 +853,7 @@
             color: #fff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         .share-title {
             text-align: center;
             font-size: 2.2rem;
@@ -846,11 +863,11 @@
             padding-bottom: 15px;
             border-bottom: 3px solid #feca57;
         }
-        
+
         .share-match {
             margin-bottom: 30px;
         }
-        
+
         .share-match-title {
             font-size: 1.4rem;
             font-weight: 700;
@@ -858,17 +875,17 @@
             padding: 10px 15px;
             border-radius: 8px;
         }
-        
+
         .share-match.vs-a .share-match-title {
             background: rgba(255, 107, 107, 0.2);
             color: #ff6b6b;
         }
-        
+
         .share-match.vs-c .share-match-title {
             background: rgba(72, 219, 251, 0.2);
             color: #48dbfb;
         }
-        
+
         .share-quarter-row {
             display: flex;
             align-items: center;
@@ -877,21 +894,21 @@
             background: rgba(255, 255, 255, 0.03);
             border-radius: 8px;
         }
-        
+
         .share-quarter-label {
             min-width: 70px;
             font-weight: 700;
             font-size: 1.1rem;
             color: #feca57;
         }
-        
+
         .share-players {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             flex: 1;
         }
-        
+
         .share-player {
             display: flex;
             align-items: center;
@@ -899,7 +916,7 @@
             background: rgba(255, 255, 255, 0.08);
             border-radius: 8px;
         }
-        
+
         .share-player .num {
             width: 32px;
             height: 32px;
@@ -913,12 +930,12 @@
             font-size: 0.95rem;
             margin-right: 10px;
         }
-        
+
         .share-player .name {
             font-weight: 600;
             font-size: 1rem;
         }
-        
+
         .share-info-bar {
             display: flex;
             justify-content: center;
@@ -929,39 +946,39 @@
             border-radius: 10px;
             border: 1px solid rgba(254, 202, 87, 0.3);
         }
-        
+
         .share-info-item {
             font-size: 1.1rem;
             font-weight: 600;
             color: #feca57;
         }
-        
+
         .share-stats {
             margin-top: 20px;
             padding: 15px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 8px;
         }
-        
+
         .share-stats-title {
             font-size: 1rem;
             color: #feca57;
             margin-bottom: 10px;
         }
-        
+
         .share-stats-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
-        
+
         .share-stat-item {
             padding: 6px 12px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 6px;
             font-size: 0.9rem;
         }
-        
+
         .notification {
             position: fixed;
             top: 20px;
@@ -975,14 +992,14 @@
             transform: translateX(100px);
             transition: all 0.3s ease;
             z-index: 1001;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
-        
+
         .notification.show {
             opacity: 1;
             transform: translateX(0);
         }
-        
+
         .empty-state {
             text-align: center;
             padding: 60px 40px;
@@ -990,7 +1007,7 @@
             font-size: 1.1rem;
             line-height: 1.8;
         }
-        
+
         .legend {
             display: flex;
             gap: 15px;
@@ -1000,7 +1017,7 @@
             border-radius: 8px;
             flex-wrap: wrap;
         }
-        
+
         .legend-item {
             display: flex;
             align-items: center;
@@ -1008,23 +1025,23 @@
             font-size: 0.8rem;
             color: #aaa;
         }
-        
+
         .legend-color {
             width: 12px;
             height: 12px;
             border-radius: 3px;
         }
-        
+
         .drag-hint {
             text-align: center;
             padding: 10px;
             color: #666;
             font-size: 0.85rem;
-            border: 2px dashed rgba(255,255,255,0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             margin-top: 15px;
         }
-        
+
         /* 상대팀 명단 */
         .opponent-teams {
             display: grid;
@@ -1032,42 +1049,42 @@
             gap: 15px;
             margin-bottom: 20px;
         }
-        
+
         .opponent-card {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 12px;
             padding: 15px;
             border-left: 4px solid;
         }
-        
+
         .opponent-card.team-a {
             border-left-color: #ff6b6b;
         }
-        
+
         .opponent-card.team-c {
             border-left-color: #48dbfb;
         }
-        
+
         .opponent-title {
             font-size: 0.95rem;
             font-weight: 600;
             margin-bottom: 10px;
         }
-        
+
         .opponent-card.team-a .opponent-title {
             color: #ff6b6b;
         }
-        
+
         .opponent-card.team-c .opponent-title {
             color: #48dbfb;
         }
-        
+
         .opponent-players {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
         }
-        
+
         .opponent-player {
             display: inline-flex;
             align-items: center;
@@ -1076,18 +1093,18 @@
             border-radius: 15px;
             font-size: 0.8rem;
         }
-        
+
         .opponent-player .opp-num {
             font-weight: 700;
             margin-right: 5px;
             opacity: 0.7;
         }
-        
+
         .opponent-player.key-player {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
+
         .opponent-player.key-player::after {
             content: '⚡';
             margin-left: 4px;
@@ -1095,21 +1112,22 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>🏀 B팀 (이윤삼) 엔트리 구성</h1>
-        
+
         <div class="round-selector">
             <label>라운드:</label>
             <input type="number" id="roundNumber" value="1" min="1" max="20">
-            
+
             <label style="margin-left: 20px;">경기 순서:</label>
             <select id="matchOrder" onchange="updateMatchOrderDisplay()">
                 <option value="1">1번: A-B → B-C → C-A</option>
                 <option value="2">2번: B-C → C-A → A-B</option>
                 <option value="3">3번: C-A → A-B → B-C</option>
             </select>
-            
+
             <label style="margin-left: 20px;">당번팀:</label>
             <select id="dutyTeam">
                 <option value="">해당없음</option>
@@ -1117,7 +1135,7 @@
                 <option value="A">A팀</option>
                 <option value="C">C팀</option>
             </select>
-            
+
             <label style="margin-left: 20px;">유니폼:</label>
             <div class="uniform-selector">
                 <button class="uniform-btn white" onclick="selectUniform('white')" title="화이트">
@@ -1131,11 +1149,11 @@
                 </button>
             </div>
         </div>
-        
+
         <div class="match-order-info" id="matchOrderInfo">
             <!-- 경기 순서 표시 -->
         </div>
-        
+
         <div class="main-layout">
             <!-- 선수 패널 -->
             <div class="player-panel">
@@ -1144,19 +1162,27 @@
                     <span class="attendance-count" id="attendanceCount">참석: 0명</span>
                 </div>
                 <div class="player-list" id="playerList"></div>
-                
+
                 <div class="legend">
-                    <div class="legend-item"><div class="legend-color" style="background:#e74c3c"></div>PG</div>
-                    <div class="legend-item"><div class="legend-color" style="background:#e67e22"></div>SG</div>
-                    <div class="legend-item"><div class="legend-color" style="background:#27ae60"></div>FW</div>
-                    <div class="legend-item"><div class="legend-color" style="background:#3498db"></div>C</div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#e74c3c"></div>PG
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#e67e22"></div>SG
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#27ae60"></div>FW
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#3498db"></div>C
+                    </div>
                 </div>
-                
+
                 <div class="drag-hint">
                     ✋ 선수를 드래그하여<br>엔트리에 직접 배치하세요
                 </div>
             </div>
-            
+
             <!-- 엔트리 영역 -->
             <div class="entry-area">
                 <div class="action-bar">
@@ -1164,7 +1190,7 @@
                     <button class="action-btn secondary" onclick="clearEntry()">🗑️ 엔트리 초기화</button>
                     <button class="action-btn success" onclick="generateShareImage()">📸 이미지 미리보기 & 저장</button>
                 </div>
-                
+
                 <!-- 상대팀 명단 -->
                 <div class="opponent-teams">
                     <div class="opponent-card team-a">
@@ -1176,7 +1202,7 @@
                         <div class="opponent-players" id="teamCPlayers"></div>
                     </div>
                 </div>
-                
+
                 <div class="entry-cards" id="entryCards">
                     <div class="empty-state">
                         왼쪽에서 참석 선수를 클릭하여 선택하거나<br>
@@ -1185,7 +1211,7 @@
                         포지션 밸런스를 고려하여 자동 편성됩니다
                     </div>
                 </div>
-                
+
                 <!-- 미리보기 영역 -->
                 <div class="preview-section" id="previewSection" style="display:none;">
                     <div class="preview-title">📸 공유 이미지 미리보기 (아래 이미지를 우클릭하여 저장)</div>
@@ -1196,32 +1222,32 @@
             </div>
         </div>
     </div>
-    
+
     <div class="notification" id="notification"></div>
     <div class="highlight-info" id="highlightInfo">
         <span class="player-name" id="highlightPlayerName"></span>
         <div class="quarter-list" id="highlightQuarters"></div>
         <span class="close-btn" onclick="clearHighlight()">✕</span>
     </div>
-    
+
     <script>
         // B팀 선수 데이터 (포지션 포함)
         const bTeamPlayers = [
             { number: 4, name: '김돈규', position: 'C', positionFull: '센터', priority: true },
-            { number: 18, name: '김승민', position: 'FW', positionFull: '포워드' },
+            { number: 18, name: '김승민', position: 'FW', positionFull: '포워드', priority: true },
             { number: 20, name: '정희원', position: 'PG', positionFull: '포인트가드' },
             { number: 21, name: '권기현', position: 'FW', positionFull: '포워드' },
             { number: 22, name: '이윤삼', position: 'SG', positionFull: '슈팅가드', priority: true },
             { number: 23, name: '백경준', position: 'FW/C', positionFull: '포워드/센터', priority: true },
             { number: 31, name: '김준환', position: 'FW', positionFull: '포워드' },
-            { number: 32, name: '김정호', position: 'FW', positionFull: '포워드', priority: true },
+            { number: 32, name: '김정호', position: 'PG', positionFull: '포인트가드', priority: true },
             { number: 35, name: '강권열', position: 'FW', positionFull: '포워드' },
             { number: 47, name: '송성일', position: 'FW', positionFull: '포워드' },
             { number: 50, name: '이종혁', position: 'FW/C', positionFull: '포워드/센터' },
             { number: 72, name: '김주철', position: 'SG', positionFull: '슈팅가드', priority: true },
             { number: 78, name: '송진수', position: 'FW', positionFull: '포워드' }
         ];
-        
+
         // A팀 선수 데이터 (채영진팀)
         const aTeamPlayers = [
             { number: 6, name: '안병웅', key: true },
@@ -1229,7 +1255,7 @@
             { number: 10, name: '안병영' },
             { number: 17, name: '채영진', key: true },
             { number: 19, name: '정용주' },
-            { number: 24, name: '유지형' },
+            { number: 24, name: '유지형', key: true },
             { number: 27, name: '신준현' },
             { number: 28, name: '강효진' },
             { number: 40, name: '정문관' },
@@ -1238,7 +1264,7 @@
             { number: 80, name: '최재민' },
             { number: 93, name: '강재훈', key: true }
         ];
-        
+
         // C팀 선수 데이터 (심창현팀)
         const cTeamPlayers = [
             { number: 0, name: '이장원', key: true },
@@ -1247,20 +1273,20 @@
             { number: 14, name: '고민근' },
             { number: 16, name: '김현준' },
             { number: 25, name: '손재민' },
-            { number: 30, name: '김동광' },
+            { number: 30, name: '김동광', key: true },
             { number: 34, name: '이승현', key: true },
-            { number: 36, name: '최효림' },
+            { number: 36, name: '최효림', key: true },
             { number: 38, name: '길을섭' },
             { number: 45, name: '김원범' },
             { number: 46, name: '심창현', key: true },
             { number: 92, name: '박문용' }
         ];
-        
+
         // 상대팀 명단 렌더링
         function renderOpponentTeams() {
             const teamAContainer = document.getElementById('teamAPlayers');
             const teamCContainer = document.getElementById('teamCPlayers');
-            
+
             teamAContainer.innerHTML = aTeamPlayers
                 .sort((a, b) => a.number - b.number)
                 .map(p => `
@@ -1268,7 +1294,7 @@
                         <span class="opp-num">${p.number}</span>${p.name}
                     </span>
                 `).join('');
-            
+
             teamCContainer.innerHTML = cTeamPlayers
                 .sort((a, b) => a.number - b.number)
                 .map(p => `
@@ -1277,13 +1303,13 @@
                     </span>
                 `).join('');
         }
-        
+
         // 경기 순서 정보
         // B팀 기준 쿼터 진행 순서 (실제 시간 순서)
         // 경기 순서 1: A-B(1,2Q) → B-C(1,2Q) → A-B(3,4Q) → B-C(3,4Q)
         // 경기 순서 2: B-C(1,2Q) → B-C(3,4Q) → A-B(1,2Q) → A-B(3,4Q) (B팀 먼저 2경기 연속)
         // 경기 순서 3: A-B(1,2Q) → A-B(3,4Q) → B-C(1,2Q) → B-C(3,4Q) (A팀 먼저)
-        
+
         const matchOrders = {
             '1': {
                 name: 'A-B → B-C → C-A',
@@ -1360,17 +1386,17 @@
                 ]
             }
         };
-        
+
         function updateMatchOrderDisplay() {
             const orderNum = document.getElementById('matchOrder').value;
             const order = matchOrders[orderNum];
             const container = document.getElementById('matchOrderInfo');
-            
+
             container.innerHTML = order.display.map((slot, idx) => {
-                const teamsHtml = slot.teams.split('-').map(t => 
+                const teamsHtml = slot.teams.split('-').map(t =>
                     t === 'B' ? `<span class="b-highlight">B</span>` : t
                 ).join('-');
-                
+
                 return `
                     <div class="match-slot ${slot.bPlays ? 'current' : ''}">
                         <span class="slot-label">${slot.label}</span>
@@ -1380,13 +1406,13 @@
                 `;
             }).join('');
         }
-        
+
         let selectedPlayers = [];
         let entryVsA = { q1: [], q2: [], q3: [], q4: [] };
         let entryVsC = { q1: [], q2: [], q3: [], q4: [] };
         let draggedPlayer = null;
         let dragSource = null;
-        
+
         // 운영진 배정
         let staffAssignments = {
             referee_outer: null,
@@ -1397,7 +1423,7 @@
             sub_record: null,
             camera: null
         };
-        
+
         const staffRoleNames = {
             referee_outer: '심판(외측)',
             referee_center: '심판(중앙)',
@@ -1407,7 +1433,7 @@
             sub_record: '부가기록',
             camera: '촬영'
         };
-        
+
         // 유니폼 색상
         let selectedUniform = null;
         const uniformNames = {
@@ -1415,22 +1441,22 @@
             'red': '레드',
             'black': '블랙'
         };
-        
+
         // 하이라이트된 선수
         let highlightedPlayer = null;
-        
+
         function selectUniform(color) {
             selectedUniform = color;
-            
+
             // 버튼 상태 업데이트
             document.querySelectorAll('.uniform-btn').forEach(btn => {
                 btn.classList.remove('selected');
             });
             document.querySelector(`.uniform-btn.${color}`).classList.add('selected');
-            
+
             showNotification(`유니폼: ${uniformNames[color]} 선택`);
         }
-        
+
         // 선수 하이라이트 토글
         function toggleHighlight(playerNumber) {
             if (highlightedPlayer === playerNumber) {
@@ -1439,12 +1465,12 @@
                 highlightPlayer(playerNumber);
             }
         }
-        
+
         // 선수 하이라이트
         function highlightPlayer(playerNumber) {
             highlightedPlayer = playerNumber;
             const player = bTeamPlayers.find(p => p.number === playerNumber);
-            
+
             // 해당 선수가 있는 쿼터 찾기
             const quarters = [];
             ['q1', 'q2', 'q3', 'q4'].forEach(q => {
@@ -1455,19 +1481,19 @@
                     quarters.push({ match: 'vsC', quarter: q, label: `C팀 ${q.toUpperCase()}` });
                 }
             });
-            
+
             // 하이라이트 정보 표시
             document.getElementById('highlightPlayerName').textContent = `#${player.number} ${player.name}`;
-            document.getElementById('highlightQuarters').innerHTML = quarters.length > 0 
+            document.getElementById('highlightQuarters').innerHTML = quarters.length > 0
                 ? quarters.map(q => `<span class="quarter-badge ${q.match === 'vsA' ? 'vs-a' : 'vs-c'}">${q.label}</span>`).join('')
                 : '<span style="opacity: 0.7">배정된 쿼터 없음</span>';
             document.getElementById('highlightInfo').classList.add('show');
-            
+
             // 엔트리 카드 다시 렌더링 (하이라이트 적용)
             renderEntryCards();
             renderPlayerList();
         }
-        
+
         // 하이라이트 해제
         function clearHighlight() {
             highlightedPlayer = null;
@@ -1504,12 +1530,12 @@
             if (pos.includes('C') && !pos.includes('FW')) return 'c';
             return 'fw';
         }
-        
+
         // 선수별 총 쿼터 수 계산
         function getPlayerQuarterCounts() {
             const counts = {};
             bTeamPlayers.forEach(p => counts[p.number] = 0);
-            
+
             ['q1', 'q2', 'q3', 'q4'].forEach(q => {
                 entryVsA[q].forEach(p => {
                     if (counts[p.number] !== undefined) counts[p.number]++;
@@ -1518,27 +1544,27 @@
                     if (counts[p.number] !== undefined) counts[p.number]++;
                 });
             });
-            
+
             return counts;
         }
-        
+
         function getQuarterCountClass(count) {
             if (count >= 6) return 'high';
             if (count >= 3) return 'medium';
             return 'low';
         }
-        
+
         function renderPlayerList() {
             const container = document.getElementById('playerList');
             const quarterCounts = getPlayerQuarterCounts();
-            
+
             container.innerHTML = bTeamPlayers.map(player => {
                 const isSelected = selectedPlayers.some(p => p.number === player.number);
                 const isHighlighted = highlightedPlayer === player.number;
                 const badgeClass = getPositionBadgeClass(player.position);
                 const qCount = quarterCounts[player.number];
                 const qCountClass = getQuarterCountClass(qCount);
-                
+
                 return `
                     <div class="player-chip ${isSelected ? 'selected' : ''} ${isHighlighted ? 'highlighted' : ''}" 
                          draggable="true"
@@ -1558,23 +1584,23 @@
                     </div>
                 `;
             }).join('');
-            
+
             document.getElementById('attendanceCount').textContent = `참석: ${selectedPlayers.length}명`;
         }
-        
+
         function togglePlayer(number) {
             const player = bTeamPlayers.find(p => p.number === number);
             const index = selectedPlayers.findIndex(p => p.number === number);
-            
+
             if (index === -1) {
                 selectedPlayers.push(player);
             } else {
                 selectedPlayers.splice(index, 1);
             }
-            
+
             renderPlayerList();
         }
-        
+
         function handleDragStart(event, playerNumber, source) {
             const player = bTeamPlayers.find(p => p.number === playerNumber);
             draggedPlayer = player;
@@ -1582,7 +1608,7 @@
             event.target.classList.add('dragging');
             event.dataTransfer.effectAllowed = 'move';
         }
-        
+
         function handleDragEnd(event) {
             event.target.classList.remove('dragging');
             draggedPlayer = null;
@@ -1591,83 +1617,83 @@
                 el.classList.remove('drag-over');
             });
         }
-        
+
         function handleDragOver(event) {
             event.preventDefault();
             event.currentTarget.classList.add('drag-over');
         }
-        
+
         function handleDragLeave(event) {
             event.currentTarget.classList.remove('drag-over');
         }
-        
+
         function handleDrop(event, match, quarter) {
             event.preventDefault();
             event.currentTarget.classList.remove('drag-over');
-            
+
             if (!draggedPlayer) return;
-            
+
             const entry = match === 'vsA' ? entryVsA : entryVsC;
-            
+
             // 이미 해당 쿼터에 있는지 확인
             if (entry[quarter].some(p => p.number === draggedPlayer.number)) {
                 showNotification('이미 해당 쿼터에 있습니다', 'warn');
                 return;
             }
-            
+
             // 5명 제한
             if (entry[quarter].length >= 5) {
                 showNotification('쿼터당 5명까지만 가능합니다', 'warn');
                 return;
             }
-            
+
             // 선수 추가
-            entry[quarter].push({...draggedPlayer});
-            
+            entry[quarter].push({ ...draggedPlayer });
+
             // 참석 선수에 없으면 추가
             if (!selectedPlayers.some(p => p.number === draggedPlayer.number)) {
                 selectedPlayers.push(draggedPlayer);
             }
-            
+
             renderPlayerList();
             renderEntryCards();
             updateHighlightInfo();
             showNotification(`${draggedPlayer.name} → ${match === 'vsA' ? 'A팀전' : 'C팀전'} ${quarter.toUpperCase()} 배치`);
         }
-        
+
         // 운영진 드롭 처리
         function handleStaffDrop(event, role) {
             event.preventDefault();
             event.currentTarget.classList.remove('drag-over');
-            
+
             if (!draggedPlayer) return;
-            
+
             // 이미 다른 역할에 배정되어 있으면 제거
             Object.keys(staffAssignments).forEach(key => {
                 if (staffAssignments[key] && staffAssignments[key].number === draggedPlayer.number) {
                     staffAssignments[key] = null;
                 }
             });
-            
+
             // 새 역할에 배정
-            staffAssignments[role] = {...draggedPlayer};
-            
+            staffAssignments[role] = { ...draggedPlayer };
+
             renderStaffSlots();
             showNotification(`${draggedPlayer.name} → ${staffRoleNames[role]} 배정`);
         }
-        
+
         // 운영진 슬롯 렌더링
         function renderStaffSlots() {
             Object.keys(staffAssignments).forEach(role => {
                 const player = staffAssignments[role];
                 const slotElement = document.getElementById(`staff_${role}`);
                 const slotContainer = slotElement.parentElement;
-                
+
                 if (player) {
                     slotElement.innerHTML = `${player.number} ${player.name}`;
                     slotElement.classList.remove('empty');
                     slotContainer.classList.add('filled');
-                    
+
                     // 삭제 버튼 추가
                     if (!slotContainer.querySelector('.remove-staff')) {
                         const removeBtn = document.createElement('span');
@@ -1683,13 +1709,13 @@
                     slotElement.innerHTML = '-';
                     slotElement.classList.add('empty');
                     slotContainer.classList.remove('filled');
-                    
+
                     const removeBtn = slotContainer.querySelector('.remove-staff');
                     if (removeBtn) removeBtn.remove();
                 }
             });
         }
-        
+
         // 운영진 제거
         function removeStaff(role) {
             const player = staffAssignments[role];
@@ -1699,7 +1725,7 @@
                 showNotification(`${player.name} 운영진 해제`);
             }
         }
-        
+
         // 운영진 전체 초기화
         function clearStaff() {
             Object.keys(staffAssignments).forEach(key => {
@@ -1708,14 +1734,14 @@
             renderStaffSlots();
             showNotification('운영진 초기화 완료');
         }
-        
+
         function handleEntryDragStart(event, match, quarter, index) {
             const entry = match === 'vsA' ? entryVsA : entryVsC;
             draggedPlayer = entry[quarter][index];
             dragSource = { match, quarter, index };
             event.target.classList.add('dragging');
         }
-        
+
         function removeFromQuarter(match, quarter, index) {
             const entry = match === 'vsA' ? entryVsA : entryVsC;
             const removed = entry[quarter].splice(index, 1)[0];
@@ -1724,29 +1750,29 @@
             updateHighlightInfo();
             showNotification(`${removed.name} 제거됨`);
         }
-        
+
         function generateEntry() {
             if (selectedPlayers.length < 5) {
                 showNotification('최소 5명 이상 선택해주세요', 'warn');
                 return;
             }
-            
+
             const orderNum = document.getElementById('matchOrder').value;
             const order = matchOrders[orderNum];
-            
+
             const totalSlots = 8 * 5; // 8쿼터 x 5명
             const playerCount = selectedPlayers.length;
             const baseQuarters = Math.floor(totalSlots / playerCount);
             const extraSlots = totalSlots % playerCount;
-            
+
             // 우선 편성 선수
             const priorityPlayers = selectedPlayers.filter(p => p.priority);
             const normalPlayers = selectedPlayers.filter(p => !p.priority);
-            
+
             // 목표 쿼터 수 설정
             const targetQuarters = {};
             let extraRemaining = extraSlots;
-            
+
             priorityPlayers.forEach(p => {
                 if (extraRemaining > 0) {
                     targetQuarters[p.number] = baseQuarters + 1;
@@ -1755,7 +1781,7 @@
                     targetQuarters[p.number] = baseQuarters;
                 }
             });
-            
+
             normalPlayers.forEach(p => {
                 if (extraRemaining > 0) {
                     targetQuarters[p.number] = baseQuarters + 1;
@@ -1764,24 +1790,24 @@
                     targetQuarters[p.number] = baseQuarters;
                 }
             });
-            
+
             // 현재 배정된 쿼터 추적
             const currentQuarters = {};
             selectedPlayers.forEach(p => currentQuarters[p.number] = 0);
-            
+
             // 연속 출전 추적 (체력 관리)
-            const consecutivePlay = {};
-            selectedPlayers.forEach(p => consecutivePlay[p.number] = 0);
-            
-            // 마지막 출전 슬롯 추적
-            const lastPlaySlot = {};
-            selectedPlayers.forEach(p => lastPlaySlot[p.number] = -999);
-            
+            const consecutiveCount = {};
+            selectedPlayers.forEach(p => consecutiveCount[p.number] = 0);
+
+            // 마지막 출전 시퀀스 인덱스 추적
+            const lastPlaySeqIndex = {};
+            selectedPlayers.forEach(p => lastPlaySeqIndex[p.number] = -999);
+
             // 포지션별 분류
             const guards = selectedPlayers.filter(p => p.position.includes('PG') || p.position.includes('SG'));
             const centers = selectedPlayers.filter(p => p.position.includes('C') && !p.position.includes('FW'));
             const forwardCenters = selectedPlayers.filter(p => p.position.includes('FW') && p.position.includes('C'));
-            
+
             // 배열 셔플 함수
             function shuffleArray(array) {
                 const shuffled = [...array];
@@ -1791,169 +1817,197 @@
                 }
                 return shuffled;
             }
-            
+
             // 쿼터 중요도 (4Q > 3Q > 1Q > 2Q)
             function getQuarterImportance(quarter) {
-                const importance = { 'q4': 4, 'q3': 3, 'q1': 2, 'q2': 1 };
+                const importance = { 'q4': 4, 'q3': 3, 'q1': 3, 'q2': 1 };
                 return importance[quarter] || 0;
             }
-            
-            // 슬롯 간 거리 계산 (휴식 고려)
-            function getSlotDistance(slot1, slot2) {
-                return Math.abs(slot2 - slot1);
-            }
-            
+
             // 선수 선택 함수 (체력 안배 고려)
-            function getAvailablePlayers(exclude, currentSlot, isImportantQuarter, positionGroup = null) {
+            function getAvailablePlayers(exclude, currentSeqIndex, isImportantQuarter, currentQuarterName = '', positionGroup = null) {
                 let pool = positionGroup || selectedPlayers;
                 const filtered = pool
                     .filter(p => !exclude.some(e => e.number === p.number))
-                    .filter(p => currentQuarters[p.number] < targetQuarters[p.number]);
-                
+                    .filter(p => currentQuarters[p.number] < targetQuarters[p.number])
+                    .filter(p => consecutiveCount[p.number] < 4); // 4연속 출전 하드 필터
+
                 // 점수 계산 함수
                 function calculateScore(player) {
                     let score = 0;
-                    
+
                     // 1. 목표 대비 남은 쿼터 (높을수록 우선)
                     const remaining = targetQuarters[player.number] - currentQuarters[player.number];
                     score += remaining * 100;
-                    
-                    // 2. 우선 선수 가산점 (중요 쿼터일 때만)
-                    if (isImportantQuarter && player.priority) {
-                        score += 50;
+
+                    // 2. 우선 선수 가산점 (쿼터별 차등)
+                    if (player.priority) {
+                        if (currentQuarterName === 'q4') {
+                            score += 60;
+                        } else if (currentQuarterName === 'q1') {
+                            score += 40;
+                        } else if (currentQuarterName === 'q3') {
+                            score += 40;
+                        } else {
+                            score -= 30; // Q2: 일반 선수 우선
+                        }
                     }
-                    if (!isImportantQuarter && player.priority) {
-                        score -= 30; // 덜 중요한 쿼터에서는 일반 선수 우선
+
+                    // 3. 연속 출전 페널티
+                    const seqDistance = currentSeqIndex - lastPlaySeqIndex[player.number];
+                    if (seqDistance === 1) {
+                        score -= 80; // 직전 출전 페널티
+                    } else if (seqDistance === 2) {
+                        score -= 40; // 2쿼터 전 출전 페널티
                     }
-                    
-                    // 3. 연속 출전 페널티 (2연속 이상이면 감점)
-                    const slotDistance = getSlotDistance(lastPlaySlot[player.number], currentSlot);
-                    if (slotDistance === 1) {
-                        // 바로 직전 슬롯에서 뛰었음 (연속 출전)
-                        score -= 80; // 큰 페널티
-                    } else if (slotDistance === 0) {
-                        // 같은 슬롯 (2쿼터 연속) - 약간의 페널티
-                        score -= 20;
+
+                    // 4. 연속 출전 횟수 기반 페널티
+                    if (consecutiveCount[player.number] >= 3) {
+                        score -= 500; // 3연속 이상: 사실상 차단
+                    } else if (consecutiveCount[player.number] >= 2) {
+                        score -= 150; // 2연속: 억제
                     }
-                    
-                    // 4. 너무 오래 쉰 선수 가산점
-                    if (slotDistance >= 3 && currentQuarters[player.number] > 0) {
-                        score += 30; // 오래 쉬었으면 가산점
+
+                    // 5. 너무 오래 쉰 선수 가산점
+                    if (seqDistance >= 4 && currentQuarters[player.number] > 0) {
+                        score += 40;
                     }
-                    
-                    // 5. 랜덤 요소 (같은 조건에서 변화)
+
+                    // 6. 랜덤 요소 (같은 조건에서 변화)
                     score += Math.random() * 20;
-                    
+
                     return score;
                 }
-                
+
                 // 점수순 정렬
                 return filtered.sort((a, b) => calculateScore(b) - calculateScore(a));
             }
-            
-            function fillQuarter(quarterPlayers, currentSlot, isImportantQuarter) {
+
+            function fillQuarter(quarterPlayers, currentSeqIndex, isImportantQuarter, currentQuarterName) {
                 const needed = 5 - quarterPlayers.length;
                 if (needed <= 0) return;
-                
-                const available = getAvailablePlayers(quarterPlayers, currentSlot, isImportantQuarter);
-                
+
+                const available = getAvailablePlayers(quarterPlayers, currentSeqIndex, isImportantQuarter, currentQuarterName);
+
                 for (let i = 0; i < needed && i < available.length; i++) {
                     quarterPlayers.push(available[i]);
                     currentQuarters[available[i].number]++;
                 }
-                
-                // 그래도 부족하면 아무나 추가
+
+                // 1차 폴백: 4연속 필터 유지하면서 목표 쿼터 초과 허용
                 if (quarterPlayers.length < 5) {
-                    const anyAvailable = shuffleArray(
+                    const fallback1 = shuffleArray(
+                        selectedPlayers.filter(p => !quarterPlayers.some(q => q.number === p.number))
+                            .filter(p => consecutiveCount[p.number] < 4)
+                    ).sort((a, b) => currentQuarters[a.number] - currentQuarters[b.number]);
+
+                    while (quarterPlayers.length < 5 && fallback1.length > 0) {
+                        const player = fallback1.shift();
+                        quarterPlayers.push(player);
+                        currentQuarters[player.number]++;
+                    }
+                }
+
+                // 최종 폴백: 제한 해제 (5명 보장)
+                if (quarterPlayers.length < 5) {
+                    const fallback2 = shuffleArray(
                         selectedPlayers.filter(p => !quarterPlayers.some(q => q.number === p.number))
                     ).sort((a, b) => currentQuarters[a.number] - currentQuarters[b.number]);
-                    
-                    while (quarterPlayers.length < 5 && anyAvailable.length > 0) {
-                        const player = anyAvailable.shift();
+
+                    while (quarterPlayers.length < 5 && fallback2.length > 0) {
+                        const player = fallback2.shift();
                         quarterPlayers.push(player);
                         currentQuarters[player.number]++;
                     }
                 }
             }
-            
-            function createBalancedQuarter(currentSlot, isImportantQuarter) {
+
+            function createBalancedQuarter(currentSeqIndex, isImportantQuarter, currentQuarterName) {
                 const quarterPlayers = [];
-                
+
                 // 1. 가드 1-2명
-                const availableGuards = getAvailablePlayers(quarterPlayers, currentSlot, isImportantQuarter, guards);
+                const availableGuards = getAvailablePlayers(quarterPlayers, currentSeqIndex, isImportantQuarter, currentQuarterName, guards);
                 const guardCount = Math.min(2, availableGuards.length);
                 for (let i = 0; i < guardCount; i++) {
                     quarterPlayers.push(availableGuards[i]);
                     currentQuarters[availableGuards[i].number]++;
                 }
-                
+
                 // 2. 센터 1명
-                const availableCenters = getAvailablePlayers(quarterPlayers, currentSlot, isImportantQuarter, [...centers, ...forwardCenters]);
+                const availableCenters = getAvailablePlayers(quarterPlayers, currentSeqIndex, isImportantQuarter, currentQuarterName, [...centers, ...forwardCenters]);
                 if (availableCenters.length > 0) {
                     quarterPlayers.push(availableCenters[0]);
                     currentQuarters[availableCenters[0].number]++;
                 }
-                
+
                 // 3. 나머지 채우기
-                fillQuarter(quarterPlayers, currentSlot, isImportantQuarter);
-                
+                fillQuarter(quarterPlayers, currentSeqIndex, isImportantQuarter, currentQuarterName);
+
                 // 출전 기록 업데이트
                 quarterPlayers.forEach(p => {
-                    lastPlaySlot[p.number] = currentSlot;
+                    const seqDistance = currentSeqIndex - lastPlaySeqIndex[p.number];
+                    if (seqDistance === 1) {
+                        consecutiveCount[p.number]++;
+                    } else {
+                        consecutiveCount[p.number] = 1;
+                    }
+                    lastPlaySeqIndex[p.number] = currentSeqIndex;
                 });
-                
+
                 return quarterPlayers;
             }
-            
+
             // 경기 순서에 따라 쿼터 생성
             const results = {
                 vsA: { q1: [], q2: [], q3: [], q4: [] },
                 vsC: { q1: [], q2: [], q3: [], q4: [] }
             };
-            
+
             // 중요도 순서로 생성하되, 경기 순서의 슬롯 정보 활용
-            // 먼저 전체 시퀀스를 중요도 순으로 정렬
-            const sortedSequence = [...order.sequence].sort((a, b) => {
-                const impA = getQuarterImportance(a.quarter);
-                const impB = getQuarterImportance(b.quarter);
-                return impB - impA; // 중요도 높은 순
-            });
-            
-            // 중요도 순서대로 생성
+            // 먼저 전체 시퀀스를 중요도 순으로 정렬 (같은 중요도면 시간순)
+            const sortedSequence = [...order.sequence].map((item, idx) => ({...item, origIndex: idx}))
+                .sort((a, b) => {
+                    const impA = getQuarterImportance(a.quarter);
+                    const impB = getQuarterImportance(b.quarter);
+                    if (impB !== impA) return impB - impA; // 중요도 높은 순
+                    return a.slot - b.slot; // 같은 중요도면 시간순
+                });
+
+            // 중요도 순서대로 생성 (연속 출전 추적은 원래 시퀀스 인덱스 사용)
             sortedSequence.forEach(item => {
-                const isImportant = getQuarterImportance(item.quarter) >= 3; // q3, q4가 중요
-                results[item.match][item.quarter] = createBalancedQuarter(item.slot, isImportant);
+                const isImportant = getQuarterImportance(item.quarter) >= 3; // q1, q3, q4가 중요
+                results[item.match][item.quarter] = createBalancedQuarter(item.origIndex, isImportant, item.quarter);
             });
-            
+
             entryVsA = results.vsA;
             entryVsC = results.vsC;
-            
+
             renderPlayerList();
             renderEntryCards();
-            
+
             // 체력 분석
             analyzeStamina();
-            
+
             showNotification(`🎲 체력 안배 적용 완료! (경기순서: ${order.name})`);
         }
-        
+
         // 체력 분석 함수
         function analyzeStamina() {
             const orderNum = document.getElementById('matchOrder').value;
             const order = matchOrders[orderNum];
-            
+
             // 선수별 연속 출전 체크
             const issues = [];
-            
+
             selectedPlayers.forEach(player => {
                 let consecutive = 0;
                 let maxConsecutive = 0;
                 let lastPlayed = false;
-                
+
                 order.sequence.forEach((item, idx) => {
                     const entry = item.match === 'vsA' ? entryVsA : entryVsC;
                     const isPlaying = entry[item.quarter].some(p => p.number === player.number);
-                    
+
                     if (isPlaying) {
                         if (lastPlayed) {
                             consecutive++;
@@ -1967,22 +2021,24 @@
                         consecutive = 0;
                     }
                 });
-                
+
                 if (maxConsecutive >= 4) {
-                    issues.push(`⚠️ ${player.name}: ${maxConsecutive}쿼터 연속 출전`);
+                    issues.push(`⚠️ ${player.name}: ${maxConsecutive}쿼터 연속 출전 (위험)`);
+                } else if (maxConsecutive >= 3) {
+                    issues.push(`⚠️ ${player.name}: ${maxConsecutive}쿼터 연속 출전 (주의)`);
                 }
             });
-            
-            // 문제가 있으면 표시
+
+            // 문제가 있으면 UI로 표시
             if (issues.length > 0) {
-                console.log('체력 경고:', issues);
+                showNotification(issues.join('\n'), 'warning');
             }
         }
-        
+
         function renderEntryCards() {
             const container = document.getElementById('entryCards');
             const quarterCounts = getPlayerQuarterCounts();
-            
+
             container.innerHTML = `
                 <!-- vs A팀 -->
                 <div class="entry-card vs-a">
@@ -2011,15 +2067,15 @@
                     <div class="stats-title">📊 선수별 총 출전 쿼터</div>
                     <div class="stats-grid">
                         ${selectedPlayers.map(p => {
-                            const count = quarterCounts[p.number] || 0;
-                            const countClass = getQuarterCountClass(count);
-                            return `
+                const count = quarterCounts[p.number] || 0;
+                const countClass = getQuarterCountClass(count);
+                return `
                                 <div class="stat-item">
                                     <span class="stat-name">${p.name}</span>
                                     <span class="stat-value ${countClass}">${count}쿼터</span>
                                 </div>
                             `;
-                        }).join('')}
+            }).join('')}
                     </div>
                 </div>
                 
@@ -2095,7 +2151,7 @@
                     <button class="action-btn secondary" onclick="clearStaff()" style="margin-top: 10px;">운영진 초기화</button>
                 </div>
             `;
-            
+
             // 드래그 이벤트 연결
             document.querySelectorAll('.quarter-players').forEach(el => {
                 el.addEventListener('dragover', handleDragOver);
@@ -2105,12 +2161,12 @@
             // 운영진 슬롯 다시 렌더링 (배정된 선수 유지)
             renderStaffSlots();
         }
-        
+
         function renderQuarterRow(match, quarter, title, players) {
             const count = players.length;
             const countClass = count === 5 ? 'ok' : 'warn';
             const boxClass = count === 5 ? 'full' : (count > 5 ? 'over' : '');
-            
+
             const playersHtml = players.map((p, idx) => {
                 const isHighlighted = highlightedPlayer === p.number;
                 return `
@@ -2127,7 +2183,7 @@
                     <div class="remove-btn" onclick="event.stopPropagation(); removeFromQuarter('${match}', '${quarter}', ${idx})">✕</div>
                 </div>
             `}).join('');
-            
+
             return `
                 <div class="quarter-row">
                     <div class="quarter-label">${title}</div>
@@ -2141,13 +2197,13 @@
                 </div>
             `;
         }
-        
+
         function clearEntry() {
             entryVsA = { q1: [], q2: [], q3: [], q4: [] };
             entryVsC = { q1: [], q2: [], q3: [], q4: [] };
-            
+
             renderPlayerList();
-            
+
             document.getElementById('entryCards').innerHTML = `
                 <div class="empty-state">
                     왼쪽에서 참석 선수를 클릭하여 선택하거나<br>
@@ -2156,31 +2212,31 @@
                     포지션 밸런스를 고려하여 자동 편성됩니다
                 </div>
             `;
-            
+
             document.getElementById('previewSection').style.display = 'none';
             showNotification('엔트리가 초기화되었습니다');
         }
-        
+
         function generateShareImage() {
             const round = document.getElementById('roundNumber').value;
             const dutyTeam = document.getElementById('dutyTeam').value;
             const shareCard = document.getElementById('shareCard');
             const quarterCounts = getPlayerQuarterCounts();
-            
+
             // 운영진 정보 생성
             const staffInfo = Object.keys(staffAssignments)
                 .filter(role => staffAssignments[role])
                 .map(role => `${staffRoleNames[role]}: ${staffAssignments[role].name}`)
                 .join(' | ');
-            
+
             // 당번팀 표시
             const dutyTeamNames = { 'A': 'A팀 (채영진)', 'B': 'B팀 (이윤삼)', 'C': 'C팀 (심창현)' };
             const dutyText = dutyTeam ? `당번: ${dutyTeamNames[dutyTeam]}` : '';
-            
+
             // 유니폼 표시
             const uniformText = selectedUniform ? `유니폼: ${uniformNames[selectedUniform]}` : '';
             const uniformEmoji = selectedUniform === 'white' ? '⚪' : selectedUniform === 'red' ? '🔴' : selectedUniform === 'black' ? '⚫' : '';
-            
+
             shareCard.innerHTML = `
                 <div class="share-title">🏀 ${round}라운드 B팀 (이윤삼) 엔트리</div>
                 
@@ -2205,9 +2261,9 @@
                     <div class="share-stats-title">📊 선수별 총 출전 쿼터</div>
                     <div class="share-stats-grid">
                         ${selectedPlayers.map(p => {
-                            const count = quarterCounts[p.number] || 0;
-                            return `<div class="share-stat-item">${p.name}: ${count}쿼터</div>`;
-                        }).join('')}
+                const count = quarterCounts[p.number] || 0;
+                return `<div class="share-stat-item">${p.name}: ${count}쿼터</div>`;
+            }).join('')}
                     </div>
                 </div>
                 
@@ -2216,20 +2272,20 @@
                     <div class="share-stats-title">🎽 운영진</div>
                     <div class="share-stats-grid">
                         ${Object.keys(staffAssignments)
-                            .filter(role => staffAssignments[role])
-                            .map(role => `<div class="share-stat-item">${staffRoleNames[role]}: ${staffAssignments[role].name}</div>`)
-                            .join('')}
+                        .filter(role => staffAssignments[role])
+                        .map(role => `<div class="share-stat-item">${staffRoleNames[role]}: ${staffAssignments[role].name}</div>`)
+                        .join('')}
                     </div>
                 </div>
                 ` : ''}
             `;
-            
+
             // 미리보기 표시
             document.getElementById('previewSection').style.display = 'block';
-            
+
             // 스크롤 이동
             document.getElementById('previewSection').scrollIntoView({ behavior: 'smooth' });
-            
+
             // 이미지 생성 및 다운로드
             setTimeout(() => {
                 html2canvas(shareCard, {
@@ -2240,16 +2296,16 @@
                     link.download = `B팀_${round}라운드_엔트리.png`;
                     link.href = canvas.toDataURL('image/png');
                     link.click();
-                    
+
                     showNotification('이미지가 다운로드 폴더에 저장되었습니다!');
                 });
             }, 100);
         }
-        
+
         function renderShareQuarters(entry) {
             const quarters = ['q1', 'q2', 'q3', 'q4'];
             const labels = ['1Q', '2Q', '3Q', '4Q'];
-            
+
             return quarters.map((q, i) => `
                 <div class="share-quarter-row">
                     <div class="share-quarter-label">${labels[i]}</div>
@@ -2264,21 +2320,22 @@
                 </div>
             `).join('');
         }
-        
+
         function showNotification(message, type = 'success') {
             const notif = document.getElementById('notification');
             notif.textContent = message;
             notif.className = `notification show`;
-            
+
             setTimeout(() => {
                 notif.classList.remove('show');
             }, 2500);
         }
-        
+
         // 초기 렌더링
         renderPlayerList();
         renderOpponentTeams();
         updateMatchOrderDisplay();
     </script>
 </body>
+
 </html>
