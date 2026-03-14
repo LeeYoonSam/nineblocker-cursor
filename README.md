@@ -11,7 +11,7 @@
 ## ✨ 주요 기능
 
 ### 📊 선수 통계 테이블
-- 42명 선수의 상세 기록 조회
+- 선수별 상세 기록 조회
 - 득점, 어시스트, 리바운드, 스틸, 블록, 3점슛 통계
 - 누적/평균 기록 표시
 - 팀별 구분 (A, B, C팀)
@@ -65,7 +65,6 @@ nineblockers-cursor/
 │   └── team_daily_entry.html   # 팀 데일리 엔트리 페이지
 ├── index.html               # 메인 애플리케이션 (HTML + CSS + JS 통합)
 ├── convert_excel_to_json.py # 엑셀→JSON 변환 스크립트
-├── config.example.js        # API 설정 예시 파일
 ├── league_stats_YYYYMM.json # 시즌별 통계 데이터
 ├── league_metadata_YYYYMM.json # 시즌별 메타데이터
 ├── metadata_manifest.json   # 메타데이터 매니페스트
