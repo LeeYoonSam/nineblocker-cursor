@@ -1,65 +1,65 @@
 {
   "season": "2026년 1월",
-  "currentRound": 10,
+  "currentRound": 11,
   "totalRounds": 15,
   "standings": [
     {
       "team": "B",
       "name": "B팀",
-      "wins": 12,
-      "losses": 8,
-      "points": 39.0
+      "wins": 13,
+      "losses": 9,
+      "points": 43.0
     },
     {
       "team": "A",
       "name": "A팀",
       "wins": 11,
-      "losses": 9,
+      "losses": 11,
       "points": 34.0
     },
     {
       "team": "C",
       "name": "C팀",
-      "wins": 7,
+      "wins": 9,
       "losses": 13,
-      "points": 21.0
+      "points": 27.0
     }
   ],
   "roundHistory": [
     {
-      "round": 10,
+      "round": 11,
       "teams": [
         {
           "team": "A",
           "name": "A팀",
-          "record": "11승 9패",
+          "record": "11승 11패",
           "wins": 11,
-          "losses": 9,
+          "losses": 11,
           "points": 34.0
         },
         {
           "team": "B",
           "name": "B팀",
-          "record": "12승 8패",
-          "wins": 12,
-          "losses": 8,
-          "points": 39.0
+          "record": "13승 9패",
+          "wins": 13,
+          "losses": 9,
+          "points": 43.0
         },
         {
           "team": "C",
           "name": "C팀",
-          "record": "7승 13패",
-          "wins": 7,
+          "record": "9승 13패",
+          "wins": 9,
           "losses": 13,
-          "points": 21.0
+          "points": 27.0
         }
       ],
       "awards": {
-        "mom": "유지형",
-        "doubleDouble": "강재훈",
+        "mom": "이승현",
+        "doubleDouble": "이장원, 김돈규",
         "topScorer": {
           "name": "강재훈",
-          "points": 57
+          "points": 82
         }
       }
     }
