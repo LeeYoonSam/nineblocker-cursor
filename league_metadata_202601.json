@@ -2,6 +2,8 @@
   "season": "2026년 1월",
   "currentRound": 14,
   "totalRounds": 15,
+  "excelUrl": "https://docs.google.com/spreadsheets/d/1sZtdJ9ErOeu4UuOQqHI9ganqCD4ZuP2ETr904emxnfQ/edit?usp=sharing",
+  "tradeRound": 8,
   "standings": [
     {
       "team": "B",

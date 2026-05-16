@@ -2059,8 +2059,8 @@
           </div>
         </div>
         <div class="excel-link-row">
-          <a href="https://docs.google.com/spreadsheets/d/1sZtdJ9ErOeu4UuOQqHI9ganqCD4ZuP2ETr904emxnfQ/edit?usp=sharing"
-            target="_blank" class="excel-link-btn">
+          <a id="excelLinkBtn" href="#"
+            target="_blank" rel="noopener" class="excel-link-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -2078,7 +2078,7 @@
             </svg>
             라운드 정보 공유
           </button>
-          <button class="excel-link-btn" onclick="openTradeModal()">
+          <button id="tradeBtn" class="excel-link-btn" onclick="openTradeModal()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <polyline points="17 1 21 5 17 9"></polyline>
@@ -2268,7 +2268,7 @@
   <div class="trade-modal" id="tradeModal">
     <div class="trade-modal-content">
       <div class="trade-modal-header">
-        <h3>8라운드 후 트레이드</h3>
+        <h3 id="tradeModalTitle">8라운드 후 트레이드</h3>
         <button class="close-btn" id="closeTradeModal">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -2386,7 +2386,7 @@
     // ===== 데이터 로더 (JSON 전용) =====
     class LeagueDataLoader {
       async loadSeasonData(seasonId) {
-        const response = await fetch(`league_stats_${seasonId}.json`);
+        const response = await fetch(`league_stats_${seasonId}.json`, { cache: 'no-store' });
         if (!response.ok) {
           throw new Error(`Failed to load JSON for season ${seasonId}`);
         }
@@ -2396,7 +2396,7 @@
 
       async loadMetadata(seasonId) {
         try {
-          const response = await fetch(`league_metadata_${seasonId}.json`);
+          const response = await fetch(`league_metadata_${seasonId}.json`, { cache: 'no-store' });
           if (!response.ok) return null;
           return await response.json();
         } catch (e) {
@@ -2432,7 +2432,7 @@
       // manifest 로드
       let availableSeasons = [];
       try {
-        const res = await fetch('metadata_manifest.json');
+        const res = await fetch('metadata_manifest.json', { cache: 'no-store' });
         if (res.ok) {
           const manifest = await res.json();
           availableSeasons = manifest.seasons || [];
@@ -2457,7 +2457,7 @@
     // 역대 시상 데이터 로딩 (실패해도 앱 동작에 영향 없음)
     async function loadSeasonAwards() {
       try {
-        const res = await fetch('season_awards.json');
+        const res = await fetch('season_awards.json', { cache: 'no-store' });
         if (!res.ok) return [];
         const json = await res.json();
         return json.seasonAwards || [];
@@ -2571,6 +2571,31 @@
         }
       } else {
         awardsRow.style.display = 'none';
+      }
+
+      // 원본 엑셀 링크 (시즌마다 URL이 다름)
+      const excelLinkBtn = document.getElementById('excelLinkBtn');
+      if (excelLinkBtn) {
+        if (metadata.excelUrl) {
+          excelLinkBtn.href = metadata.excelUrl;
+          excelLinkBtn.style.display = '';
+        } else {
+          excelLinkBtn.style.display = 'none';
+        }
+      }
+
+      // 트레이드 버튼 (트레이드가 진행된 시즌만 표시)
+      const tradeBtn = document.getElementById('tradeBtn');
+      const tradeModalTitle = document.getElementById('tradeModalTitle');
+      if (tradeBtn) {
+        if (metadata.tradeRound) {
+          tradeBtn.style.display = '';
+          if (tradeModalTitle) {
+            tradeModalTitle.textContent = `${metadata.tradeRound}라운드 후 트레이드`;
+          }
+        } else {
+          tradeBtn.style.display = 'none';
+        }
       }
     }
 
