@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>나인블로커스 리그 - 2026년 1월 시즌</title>
+  <title>나인블로커스 리그 - 2026년 5월 시즌</title>
   <style>
     /* ===== Design Tokens ===== */
     :root {
@@ -1848,7 +1848,7 @@
   <div class="container">
     <header class="glass">
       <h1>나인블로커스 리그</h1>
-      <p>2025년 8월 시즌 선수 통계</p>
+      <p>2026년 5월 시즌 선수 통계</p>
       <div class="stats-summary">
         <div class="stat-item">
           <div class="stat-value" id="totalRounds">12</div>
@@ -1949,7 +1949,8 @@
         <button class="toggle-btn" data-season="202402">2024년 2월</button>
         <button class="toggle-btn" data-season="202409">2024년 9월</button>
         <button class="toggle-btn" data-season="202508">2025년 8월</button>
-        <button class="toggle-btn active" data-season="202601">2026년 1월</button>
+        <button class="toggle-btn" data-season="202601">2026년 1월</button>
+        <button class="toggle-btn active" data-season="202605">2026년 5월</button>
       </div>
       <div class="search-box">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -2216,7 +2217,7 @@
     import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
     // 시즌 목록 (새 시즌 추가 시 배열 앞에 추가)
-    const SEASONS = ['202601', '202508', '202409', '202402'];
+    const SEASONS = ['202605', '202601', '202508', '202409', '202402'];
 
     // ===== 데이터 로더 (JSON 전용) =====
     class LeagueDataLoader {
@@ -2289,7 +2290,7 @@
     let metadataCache = {};
 
     // 현재 선택된 시즌 데이터
-    let currentSeason = '202601';
+    let currentSeason = '202605';
     let leagueData = seasonsData[currentSeason];
 
     // 시즌 전환 함수
