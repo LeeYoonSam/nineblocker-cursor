@@ -1,0 +1,16 @@
+{
+  "seasonAwards": [
+    {
+      "season": "202601",
+      "seasonName": "2026년 1월",
+      "awards": {
+        "mvp": "김정호",
+        "topScorer": "강재훈",
+        "rebound": "김돈규",
+        "assist": "최효림",
+        "steal": "채영진",
+        "block": "권인회"
+      }
+    }
+  ]
+}

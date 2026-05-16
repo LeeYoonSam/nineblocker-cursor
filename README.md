@@ -68,6 +68,7 @@ nineblockers-cursor/
 ├── league_stats_YYYYMM.json # 시즌별 통계 데이터
 ├── league_metadata_YYYYMM.json # 시즌별 메타데이터
 ├── metadata_manifest.json   # 메타데이터 매니페스트
+├── season_awards.json       # 시즌별 시상 내역 (역대 시상)
 ├── CLAUDE.md                # Claude 규칙
 └── README.md                # 프로젝트 문서
 ```

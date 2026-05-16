@@ -1277,6 +1277,150 @@
       transform: translateY(0);
     }
 
+    /* ===== 역대 시상 버튼 ===== */
+    .award-history-btn {
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      font-family: inherit;
+      border: 1px solid var(--btn-glass-border);
+    }
+
+    .award-history-btn .stat-value {
+      color: var(--medal-gold);
+      text-shadow: 0 0 16px rgba(255, 215, 0, 0.4);
+    }
+
+    .award-history-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.25);
+      background: var(--glass-bg-hover);
+    }
+
+    .award-history-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== 역대 시상 모달 ===== */
+    .awards-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: var(--space-lg);
+    }
+
+    .awards-modal.open {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .awards-modal-content {
+      background: var(--glass-bg);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      width: 560px;
+      max-width: calc(100vw - 32px);
+      max-height: 80vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 48px var(--glass-shadow);
+    }
+
+    .awards-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-md);
+    }
+
+    .awards-modal-header h3 {
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+    }
+
+    .awards-modal-body {
+      overflow-y: auto;
+      flex: 1;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .award-season-card {
+      border: 1px solid var(--btn-glass-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      background: var(--btn-glass-bg);
+    }
+
+    .award-season-title {
+      font-weight: 700;
+      font-size: var(--font-size-md);
+      color: var(--accent);
+      margin-bottom: var(--space-md);
+    }
+
+    .award-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-sm);
+    }
+
+    .award-cell {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+    }
+
+    .award-cell .award-icon {
+      font-size: var(--font-size-lg);
+    }
+
+    .award-cell-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.3;
+    }
+
+    .award-cell-label {
+      font-size: var(--font-size-xs);
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .award-cell-name {
+      font-weight: 600;
+      font-size: var(--font-size-sm);
+      color: var(--text-primary);
+    }
+
+    .awards-empty {
+      text-align: center;
+      color: var(--text-secondary);
+      padding: var(--space-xl);
+    }
+
+    @media (max-width: 768px) {
+      .award-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* ===== Team Modal ===== */
     .team-modal {
       position: fixed;
@@ -1862,6 +2006,10 @@
           <div class="stat-value" id="totalTeams">3</div>
           <div class="stat-label">팀 보기</div>
         </button>
+        <button class="stat-item award-history-btn" id="awardHistoryBtn">
+          <div class="stat-value">🏆</div>
+          <div class="stat-label">역대 시상</div>
+        </button>
       </div>
 
       <!-- 팀 순위 및 어워드 (메타데이터에서 동적 로딩) -->
@@ -2200,6 +2348,22 @@
     </div>
   </div>
 
+  <!-- 역대 시상 모달 -->
+  <div class="awards-modal" id="awardsModal">
+    <div class="awards-modal-content">
+      <div class="awards-modal-header">
+        <h3>🏆 역대 시상</h3>
+        <button class="close-btn" id="closeAwardsModal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="awards-modal-body" id="awardsModalBody"></div>
+    </div>
+  </div>
+
   <!-- API Key Modal -->
   <div class="api-key-modal" id="apiKeyModal">
     <div class="api-key-content">
@@ -2288,6 +2452,19 @@
     // 시즌별 데이터 (JSON 파일에서 동적 로딩)
     let seasonsData = {};
     let metadataCache = {};
+    let seasonAwardsData = [];
+
+    // 역대 시상 데이터 로딩 (실패해도 앱 동작에 영향 없음)
+    async function loadSeasonAwards() {
+      try {
+        const res = await fetch('season_awards.json');
+        if (!res.ok) return [];
+        const json = await res.json();
+        return json.seasonAwards || [];
+      } catch (e) {
+        return [];
+      }
+    }
 
     // 현재 선택된 시즌 데이터
     let currentSeason = '202605';
@@ -2671,6 +2848,98 @@
 
     window.openTradeModal = openTradeModal;
 
+    // 역대 시상 모달
+    const awardHistoryBtn = document.getElementById('awardHistoryBtn');
+    const awardsModal = document.getElementById('awardsModal');
+    const closeAwardsModal = document.getElementById('closeAwardsModal');
+    const awardsModalBody = document.getElementById('awardsModalBody');
+    let awardsScrollPosition = 0;
+
+    const AWARD_META = [
+      { key: 'mvp', icon: '🏆', label: 'MVP' },
+      { key: 'topScorer', icon: '🏀', label: '득점왕' },
+      { key: 'rebound', icon: '💪', label: '리바운드왕' },
+      { key: 'assist', icon: '🎯', label: '어시스트왕' },
+      { key: 'steal', icon: '🥷', label: '스틸왕' },
+      { key: 'block', icon: '🛡️', label: '블록왕' }
+    ];
+
+    // 텍스트 노드를 사용해 안전하게 DOM 구성 (innerHTML 미사용)
+    function el(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text != null) node.textContent = text;
+      return node;
+    }
+
+    function renderAwardsModal() {
+      awardsModalBody.replaceChildren();
+
+      if (!seasonAwardsData || seasonAwardsData.length === 0) {
+        awardsModalBody.appendChild(
+          el('div', 'awards-empty', '아직 등록된 시상 내역이 없습니다.'));
+        return;
+      }
+
+      // 최신 시즌이 위로 오도록 정렬
+      const sorted = [...seasonAwardsData].sort((a, b) =>
+        String(b.season).localeCompare(String(a.season)));
+
+      sorted.forEach(entry => {
+        const card = el('div', 'award-season-card');
+        card.appendChild(
+          el('div', 'award-season-title', entry.seasonName || entry.season));
+
+        const grid = el('div', 'award-grid');
+        const awards = entry.awards || {};
+        AWARD_META.forEach(meta => {
+          const cell = el('div', 'award-cell');
+          cell.appendChild(el('span', 'award-icon', meta.icon));
+
+          const textWrap = el('span', 'award-cell-text');
+          textWrap.appendChild(el('span', 'award-cell-label', meta.label));
+          textWrap.appendChild(
+            el('span', 'award-cell-name', awards[meta.key] || '-'));
+
+          cell.appendChild(textWrap);
+          grid.appendChild(cell);
+        });
+
+        card.appendChild(grid);
+        awardsModalBody.appendChild(card);
+      });
+    }
+
+    function openAwardsModal() {
+      renderAwardsModal();
+      awardsScrollPosition = window.pageYOffset;
+      document.body.style.top = `-${awardsScrollPosition}px`;
+      document.body.classList.add('modal-open');
+      awardsModal.classList.add('open');
+    }
+
+    function closeAwardsModalHandler() {
+      awardsModal.classList.remove('open');
+      document.body.classList.remove('modal-open');
+      document.body.style.top = '';
+      window.scrollTo(0, awardsScrollPosition);
+    }
+
+    awardHistoryBtn.addEventListener('click', openAwardsModal);
+    closeAwardsModal.addEventListener('click', closeAwardsModalHandler);
+
+    awardsModal.addEventListener('click', (e) => {
+      if (e.target === awardsModal) {
+        closeAwardsModalHandler();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && awardsModal.classList.contains('open')) {
+        closeAwardsModalHandler();
+      }
+    });
+
     // 채팅 모달 토글
     chatFab.addEventListener('click', () => {
       if (!apiKey) {
@@ -2951,12 +3220,14 @@ ${playersSummary}
     async function initApp() {
       try {
         // 시즌 데이터와 메타데이터 병렬 로딩
-        const [seasons, metadata] = await Promise.all([
+        const [seasons, metadata, awards] = await Promise.all([
           loadAllSeasons(),
-          loadAllMetadata()
+          loadAllMetadata(),
+          loadSeasonAwards()
         ]);
         seasonsData = seasons;
         metadataCache = metadata;
+        seasonAwardsData = awards;
         leagueData = seasonsData[currentSeason];
         initGemini();
         updateHeader();
