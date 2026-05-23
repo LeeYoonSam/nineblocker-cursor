@@ -1,66 +1,65 @@
 {
   "season": "2026년 5월",
-  "currentRound": 1,
+  "currentRound": 2,
   "totalRounds": 15,
-  "excelUrl": "https://docs.google.com/spreadsheets/d/1kUCYk-94vreWpihwAktxQ8_tialBtO7A/edit?usp=sharing&ouid=111318033770064294295&rtpof=true&sd=true",
   "standings": [
     {
       "team": "B",
       "name": "B팀",
-      "wins": 2,
+      "wins": 4,
       "losses": 0,
-      "points": 6.0
+      "points": 12.0
     },
     {
       "team": "A",
       "name": "A팀",
       "wins": 1,
-      "losses": 1,
+      "losses": 3,
       "points": 3.0
     },
     {
       "team": "C",
       "name": "C팀",
-      "wins": 0,
-      "losses": 2,
-      "points": 0.0
+      "wins": 1,
+      "losses": 3,
+      "points": 3.0
     }
   ],
   "roundHistory": [
     {
-      "round": 1,
+      "round": 2,
       "teams": [
         {
           "team": "A",
           "name": "A팀",
-          "record": "1승 1패",
+          "record": "1승 3패",
           "wins": 1,
-          "losses": 1,
+          "losses": 3,
           "points": 3.0
         },
         {
           "team": "B",
           "name": "B팀",
-          "record": "2승 0패",
-          "wins": 2,
+          "record": "4승",
+          "wins": 4,
           "losses": 0,
-          "points": 6.0
+          "points": 12.0
         },
         {
           "team": "C",
           "name": "C팀",
-          "record": "0승 2패",
-          "wins": 0,
-          "losses": 2,
-          "points": 0.0
+          "record": "1승 3패",
+          "wins": 1,
+          "losses": 3,
+          "points": 3.0
         }
       ],
       "awards": {
-        "mom": "민득수",
-        "doubleDouble": "이장원, 이민호",
+        "mom": "김승민",
+        "doubleDouble": "김승민, 이민호, 이승현",
         "topScorer": {
-          "name": "이장원",
-          "points": 39
+          "name": "강재훈",
+          "points": 50
         }
       }
     }
