@@ -1,64 +1,64 @@
 {
   "season": "2026년 5월",
-  "currentRound": 3,
+  "currentRound": 4,
   "totalRounds": 15,
   "standings": [
     {
       "team": "B",
       "name": "B팀",
-      "wins": 5,
+      "wins": 7,
       "losses": 1,
-      "points": 15.0
+      "points": 22.0
     },
     {
       "team": "C",
       "name": "C팀",
       "wins": 3,
-      "losses": 3,
+      "losses": 5,
       "points": 9.0
     },
     {
       "team": "A",
       "name": "A팀",
-      "wins": 1,
-      "losses": 5,
-      "points": 3.0
+      "wins": 2,
+      "losses": 6,
+      "points": 6.0
     }
   ],
   "roundHistory": [
     {
-      "round": 3,
+      "round": 4,
       "teams": [
         {
           "team": "A",
           "name": "A팀",
-          "record": "1승 5패",
-          "wins": 1,
-          "losses": 5,
-          "points": 3.0
+          "record": "2승 6패",
+          "wins": 2,
+          "losses": 6,
+          "points": 6.0
         },
         {
           "team": "B",
           "name": "B팀",
-          "record": "5승 1패",
-          "wins": 5,
+          "record": "7승 1패",
+          "wins": 7,
           "losses": 1,
-          "points": 15.0
+          "points": 22.0
         },
         {
           "team": "C",
           "name": "C팀",
-          "record": "3승 3패",
+          "record": "3승 5패",
           "wins": 3,
-          "losses": 3,
+          "losses": 5,
           "points": 9.0
         }
       ],
       "awards": {
-        "mom": "김현준",
-        "doubleDouble": "강재훈, 김돈규, 이승현, 최효림",
+        "mom": "이윤삼",
+        "doubleDouble": "-",
         "topScorer": {
-          "name": "강재훈",
+          "name": "유지형",
           "points": 41
         }
       }
