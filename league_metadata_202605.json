@@ -1,65 +1,65 @@
 {
   "season": "2026년 5월",
-  "currentRound": 4,
+  "currentRound": 5,
   "totalRounds": 15,
   "standings": [
     {
       "team": "B",
       "name": "B팀",
-      "wins": 7,
-      "losses": 1,
-      "points": 22.0
+      "wins": 8,
+      "losses": 2,
+      "points": 25.0
     },
     {
       "team": "C",
       "name": "C팀",
-      "wins": 3,
-      "losses": 5,
-      "points": 9.0
+      "wins": 4,
+      "losses": 6,
+      "points": 12.0
     },
     {
       "team": "A",
       "name": "A팀",
-      "wins": 2,
-      "losses": 6,
-      "points": 6.0
+      "wins": 3,
+      "losses": 7,
+      "points": 9.0
     }
   ],
   "roundHistory": [
     {
-      "round": 4,
+      "round": 5,
       "teams": [
         {
           "team": "A",
           "name": "A팀",
-          "record": "2승 6패",
-          "wins": 2,
-          "losses": 6,
-          "points": 6.0
+          "record": "3승 7패",
+          "wins": 3,
+          "losses": 7,
+          "points": 9.0
         },
         {
           "team": "B",
           "name": "B팀",
-          "record": "7승 1패",
-          "wins": 7,
-          "losses": 1,
-          "points": 22.0
+          "record": "8승 2패",
+          "wins": 8,
+          "losses": 2,
+          "points": 25.0
         },
         {
           "team": "C",
           "name": "C팀",
-          "record": "3승 5패",
-          "wins": 3,
-          "losses": 5,
-          "points": 9.0
+          "record": "4승 6패",
+          "wins": 4,
+          "losses": 6,
+          "points": 12.0
         }
       ],
       "awards": {
-        "mom": "이윤삼",
-        "doubleDouble": "-",
+        "mom": "유지형",
+        "doubleDouble": "김돈규, 안병웅",
         "topScorer": {
           "name": "유지형",
-          "points": 41
+          "points": 44
         }
       }
     }
