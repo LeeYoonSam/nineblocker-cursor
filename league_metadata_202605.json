@@ -1,65 +1,65 @@
 {
   "season": "2026년 5월",
-  "currentRound": 5,
+  "currentRound": 6,
   "totalRounds": 15,
   "standings": [
     {
       "team": "B",
       "name": "B팀",
-      "wins": 8,
-      "losses": 2,
-      "points": 25.0
+      "wins": 9,
+      "losses": 3,
+      "points": 28.0
+    },
+    {
+      "team": "A",
+      "name": "A팀",
+      "wins": 5,
+      "losses": 7,
+      "points": 15.0
     },
     {
       "team": "C",
       "name": "C팀",
       "wins": 4,
-      "losses": 6,
+      "losses": 8,
       "points": 12.0
-    },
-    {
-      "team": "A",
-      "name": "A팀",
-      "wins": 3,
-      "losses": 7,
-      "points": 9.0
     }
   ],
   "roundHistory": [
     {
-      "round": 5,
+      "round": 6,
       "teams": [
         {
           "team": "A",
           "name": "A팀",
-          "record": "3승 7패",
-          "wins": 3,
+          "record": "5승 7패",
+          "wins": 5,
           "losses": 7,
-          "points": 9.0
+          "points": 15.0
         },
         {
           "team": "B",
           "name": "B팀",
-          "record": "8승 2패",
-          "wins": 8,
-          "losses": 2,
-          "points": 25.0
+          "record": "9승 3패",
+          "wins": 9,
+          "losses": 3,
+          "points": 28.0
         },
         {
           "team": "C",
           "name": "C팀",
-          "record": "4승 6패",
+          "record": "4승 8패",
           "wins": 4,
-          "losses": 6,
+          "losses": 8,
           "points": 12.0
         }
       ],
       "awards": {
-        "mom": "유지형",
-        "doubleDouble": "김돈규, 안병웅",
+        "mom": "강재훈",
+        "doubleDouble": "이민호, 이승현",
         "topScorer": {
-          "name": "유지형",
-          "points": 44
+          "name": "강재훈",
+          "points": 51
         }
       }
     }
