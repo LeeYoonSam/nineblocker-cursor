@@ -1,65 +1,65 @@
 {
   "season": "2026년 5월",
-  "currentRound": 6,
+  "currentRound": 7,
   "totalRounds": 15,
   "standings": [
     {
       "team": "B",
       "name": "B팀",
-      "wins": 9,
+      "wins": 11,
       "losses": 3,
-      "points": 28.0
+      "points": 34.0
     },
     {
       "team": "A",
       "name": "A팀",
       "wins": 5,
-      "losses": 7,
+      "losses": 9,
       "points": 15.0
     },
     {
       "team": "C",
       "name": "C팀",
-      "wins": 4,
-      "losses": 8,
-      "points": 12.0
+      "wins": 5,
+      "losses": 9,
+      "points": 15.0
     }
   ],
   "roundHistory": [
     {
-      "round": 6,
+      "round": 7,
       "teams": [
         {
           "team": "A",
           "name": "A팀",
-          "record": "5승 7패",
+          "record": "5승 9패",
           "wins": 5,
-          "losses": 7,
+          "losses": 9,
           "points": 15.0
         },
         {
           "team": "B",
           "name": "B팀",
-          "record": "9승 3패",
-          "wins": 9,
+          "record": "11승 3패",
+          "wins": 11,
           "losses": 3,
-          "points": 28.0
+          "points": 34.0
         },
         {
           "team": "C",
           "name": "C팀",
-          "record": "4승 8패",
-          "wins": 4,
-          "losses": 8,
-          "points": 12.0
+          "record": "5승 9패",
+          "wins": 5,
+          "losses": 9,
+          "points": 15.0
         }
       ],
       "awards": {
-        "mom": "이장원",
-        "doubleDouble": "이민호, 이승현",
+        "mom": "최효림",
+        "doubleDouble": "이승현, 최효림",
         "topScorer": {
-          "name": "강재훈",
-          "points": 51
+          "name": "김주철",
+          "points": 41
         }
       }
     }
