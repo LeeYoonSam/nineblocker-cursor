@@ -1,65 +1,65 @@
 {
   "season": "2026년 5월",
-  "currentRound": 8,
+  "currentRound": 9,
   "totalRounds": 15,
   "standings": [
     {
       "team": "B",
       "name": "B팀",
-      "wins": 12,
-      "losses": 4,
-      "points": 38.0
+      "wins": 13,
+      "losses": 5,
+      "points": 42.0
+    },
+    {
+      "team": "C",
+      "name": "C팀",
+      "wins": 8,
+      "losses": 10,
+      "points": 24.0
     },
     {
       "team": "A",
       "name": "A팀",
       "wins": 6,
-      "losses": 10,
-      "points": 18.0
-    },
-    {
-      "team": "C",
-      "name": "C팀",
-      "wins": 6,
-      "losses": 10,
+      "losses": 12,
       "points": 18.0
     }
   ],
   "roundHistory": [
     {
-      "round": 8,
+      "round": 9,
       "teams": [
         {
           "team": "A",
           "name": "A팀",
-          "record": "6승 10패",
+          "record": "6승 12패",
           "wins": 6,
-          "losses": 10,
+          "losses": 12,
           "points": 18.0
         },
         {
           "team": "B",
           "name": "B팀",
-          "record": "12승 4패",
-          "wins": 12,
-          "losses": 4,
-          "points": 38.0
+          "record": "13승 5패",
+          "wins": 13,
+          "losses": 5,
+          "points": 42.0
         },
         {
           "team": "C",
           "name": "C팀",
-          "record": "6승 10패",
-          "wins": 6,
+          "record": "8승 10패",
+          "wins": 8,
           "losses": 10,
-          "points": 18.0
+          "points": 24.0
         }
       ],
       "awards": {
-        "mom": "오종필",
-        "doubleDouble": "김돈규, 이민호",
+        "mom": "김동광",
+        "doubleDouble": "-",
         "topScorer": {
-          "name": "이민호",
-          "points": 37
+          "name": "유지형",
+          "points": 48
         }
       }
     }
