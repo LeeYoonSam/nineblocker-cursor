@@ -1,6 +1,18 @@
 {
   "seasonAwards": [
     {
+      "season": "202605",
+      "seasonName": "2026년 5월",
+      "awards": {
+        "mvp": "최효림",
+        "topScorer": "이윤삼",
+        "rebound": "안병웅",
+        "assist": "김정호",
+        "steal": "김준환",
+        "block": "오종필"
+      }
+    },
+    {
       "season": "202601",
       "seasonName": "2026년 1월",
       "awards": {
