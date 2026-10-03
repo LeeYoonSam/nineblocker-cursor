@@ -165,14 +165,18 @@ def extract_scorer(text):
     """'오늘 득점왕: 강재훈(66점)' 형식에서 이름과 점수를 추출"""
     if text and '득점왕' in str(text):
         clean = re.sub(r'[👑✌️🏀]', '', str(text)).strip()
-        match = re.search(r'득점왕:\s*(\S+)\((\d+)점\)', clean)
+        match = re.search(r'득점왕:\s*(\S+?)\((\d+)\s*(?:득)?점\)', clean)
         if match:
             return match.group(1), int(match.group(2))
     return None, None
 
 
-def parse_gbl_standings(wb):
-    """GBL 승점 시트에서 팀 순위와 어워드 데이터를 파싱"""
+def parse_gbl_standings(wb, fallback_round=None):
+    """GBL 승점 시트에서 팀 순위와 어워드 데이터를 파싱
+
+    헤더가 'N라운드 리그 누적 결과'가 아닌 '리그 누적 결과'로만 되어 있으면
+    fallback_round(전체득점 시트 기준 현재 라운드)를 라운드 번호로 사용
+    """
     if 'GBL 승점' not in wb.sheetnames:
         return None
 
@@ -181,10 +185,10 @@ def parse_gbl_standings(wb):
 
     for row in range(1, ws.max_row + 1):
         cell_a = ws.cell(row=row, column=1).value
-        if cell_a and '라운드 리그 누적 결과' in str(cell_a):
+        if cell_a and '리그 누적 결과' in str(cell_a):
             match = re.search(r'(\d+)라운드', str(cell_a))
-            if match:
-                current_round = int(match.group(1))
+            if match or fallback_round:
+                current_round = int(match.group(1)) if match else fallback_round
 
                 round_info = {
                     'round': current_round,
@@ -369,7 +373,7 @@ def main():
     wb = openpyxl.load_workbook(excel_path, data_only=True)
 
     # GBL 승점 시트에서 현재 라운드 가져오기 (가장 신뢰할 수 있는 소스)
-    rounds_data = parse_gbl_standings(wb)
+    rounds_data = parse_gbl_standings(wb, get_current_round(wb['전체득점']))
     if rounds_data:
         # 가장 최신 라운드 사용
         current_round = max(rd['round'] for rd in rounds_data)
