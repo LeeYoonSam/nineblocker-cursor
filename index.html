@@ -2543,9 +2543,11 @@
       const latestRound = roundHistory[roundHistory.length - 1];
       const awardsRow = document.getElementById('awardsRow');
 
-      if (latestRound && latestRound.awards) {
+      // displayAwards: 여러 라운드가 한 번에 반영된 경우 '이름(N라)' 형식으로 합쳐진 어워드
+      const displayAwards = metadata.displayAwards || (latestRound && latestRound.awards);
+      if (displayAwards) {
         awardsRow.style.display = 'flex';
-        const awards = latestRound.awards;
+        const awards = displayAwards;
 
         // MOM
         const momEl = document.getElementById('awardMom');

@@ -247,6 +247,143 @@ def parse_gbl_standings(wb, fallback_round=None):
     return rounds
 
 
+def clean_award_names(text, prefix):
+    """'더블더블: 김돈규, \\n김승민' / 'MOM: 김준환 \\n9명+ (승점 +1)' 형식에서 이름 목록 추출"""
+    clean = re.sub(r'[👑✌️🏀]', '', str(text)).split(prefix, 1)[1]
+    names = []
+    for line in clean.split('\n'):
+        # '9명+ (승점 +1)' 같은 부가 설명 줄은 제외
+        if re.search(r'\d+\s*명\s*\+|승점', line):
+            continue
+        for name in line.split(','):
+            name = name.strip()
+            if name and name not in ('X', '-', 'x'):
+                names.append(name)
+    return names
+
+
+def parse_round_award_table(wb):
+    """GBL 승점 시트 하단의 라운드별 어워드 표('1 라운드', '2 라운드' ... 헤더)를 파싱
+
+    Returns:
+        {라운드번호: {'mom': [이름...], 'doubleDouble': [이름...]}}
+    """
+    if 'GBL 승점' not in wb.sheetnames:
+        return {}
+
+    ws = wb['GBL 승점']
+    for row in range(1, ws.max_row + 1):
+        header = {}
+        for col in range(1, ws.max_column + 1):
+            val = ws.cell(row=row, column=col).value
+            match = re.fullmatch(r'\s*(\d+)\s*라운드\s*', str(val)) if val else None
+            if match:
+                header[col] = int(match.group(1))
+        if len(header) < 2:
+            continue
+
+        table = {}
+        for col, round_num in header.items():
+            awards = {'mom': [], 'doubleDouble': []}
+            for r in range(row + 1, min(row + 11, ws.max_row + 1)):
+                val = ws.cell(row=r, column=col).value
+                if not val:
+                    continue
+                if 'MOM:' in str(val):
+                    awards['mom'] += clean_award_names(val, 'MOM:')
+                if '더블더블:' in str(val):
+                    awards['doubleDouble'] += clean_award_names(val, '더블더블:')
+            if awards['mom'] or awards['doubleDouble']:
+                table[round_num] = awards
+        return table
+
+    return {}
+
+
+def parse_previous_round_teams(wb):
+    """GBL 승점 시트의 '이전 라운드 누적 결과' 블록에서 팀 성적을 파싱 (I~K열)"""
+    if 'GBL 승점' not in wb.sheetnames:
+        return None
+
+    ws = wb['GBL 승점']
+    for row in range(1, ws.max_row + 1):
+        for col in range(1, ws.max_column + 1):
+            val = ws.cell(row=row, column=col).value
+            if val and '이전 라운드 누적 결과' in str(val):
+                teams = []
+                for team_row in range(row + 1, row + 4):
+                    team_name = ws.cell(row=team_row, column=col).value
+                    win_lose = ws.cell(row=team_row, column=col + 1).value
+                    points = ws.cell(row=team_row, column=col + 2).value
+                    if team_name in ['A팀', 'B팀', 'C팀']:
+                        wins, losses = parse_record(win_lose)
+                        pts_match = re.search(r'([\d.]+)', str(points)) if points is not None else None
+                        teams.append({
+                            'team': team_name[0],
+                            'name': team_name,
+                            'record': str(win_lose) if win_lose else '0승 0패',
+                            'wins': wins,
+                            'losses': losses,
+                            'points': float(pts_match.group(1)) if pts_match else 0
+                        })
+                return teams or None
+    return None
+
+
+def merge_round_history(existing_history, rounds_data, award_table, prev_teams, current_round):
+    """기존 roundHistory와 엑셀 데이터를 라운드 단위로 병합
+
+    한 번의 싱크로 여러 라운드가 동시에 업데이트될 수 있으므로,
+    1~현재 라운드 전부를 채운다. 우선순위: 엑셀 라운드별 어워드 표 > 엑셀 요약 > 기존 JSON
+    """
+    by_round = {rd['round']: rd for rd in existing_history}
+
+    for rd in rounds_data:
+        merged = by_round.get(rd['round'], {})
+        merged_awards = dict(merged.get('awards', {}))
+        merged_awards.update(rd.get('awards', {}))
+        by_round[rd['round']] = {**merged, **rd, 'awards': merged_awards}
+
+    # '이전 라운드 누적 결과'는 현재 라운드 직전 라운드의 팀 성적
+    if prev_teams and current_round > 1:
+        rd = by_round.setdefault(current_round - 1, {'round': current_round - 1, 'awards': {}})
+        rd['teams'] = prev_teams
+
+    for round_num in range(1, current_round + 1):
+        rd = by_round.setdefault(round_num, {'round': round_num, 'teams': [], 'awards': {}})
+        rd.setdefault('teams', [])
+        awards = rd.setdefault('awards', {})
+        table_awards = award_table.get(round_num)
+        if table_awards:
+            # 표가 라운드별 원본이므로 요약 문구('김준환(2라), 강재훈(3라)')를 덮어씀
+            awards['mom'] = ', '.join(table_awards['mom']) or '-'
+            awards['doubleDouble'] = ', '.join(table_awards['doubleDouble']) or '-'
+        elif round_num <= current_round and award_table:
+            # 표는 있는데 해당 라운드 칸이 비어 있으면 수상자 없음
+            awards['mom'] = '-'
+            awards['doubleDouble'] = '-'
+
+    return [by_round[r] for r in sorted(by_round) if r <= current_round]
+
+
+def build_display_awards(round_history, updated_rounds):
+    """홈 화면 어워드: 이번 싱크로 여러 라운드가 반영되면 '이름(N라)' 형식으로 합쳐서 표시"""
+    by_round = {rd['round']: rd for rd in round_history}
+    latest = by_round[updated_rounds[-1]]
+    display = dict(latest.get('awards', {}))
+
+    if len(updated_rounds) > 1:
+        for key in ('mom', 'doubleDouble'):
+            parts = []
+            for r in updated_rounds:
+                value = by_round.get(r, {}).get('awards', {}).get(key)
+                if value and value not in ('-', 'X'):
+                    parts.append(f'{value}({r}라)')
+            display[key] = ', '.join(parts) or '-'
+
+    return display
+
+
 def generate_metadata(season_name, total_rounds, rounds_data, current_round):
     """메타데이터 JSON 생성
 
@@ -401,8 +538,31 @@ def main():
         metadata = generate_metadata(result['시즌'], result['총라운드'], rounds_data, current_round)
 
         if metadata:
-            # 메타데이터 JSON 저장
             metadata_path = Path(__file__).parent / f"league_metadata_{season_code}.json"
+
+            # 기존 메타데이터와 라운드 단위 병합 (여러 라운드 동시 업데이트 대응)
+            existing = {}
+            if metadata_path.exists():
+                with open(metadata_path, 'r', encoding='utf-8') as f:
+                    existing = json.load(f)
+            prev_round = existing.get('currentRound', 0)
+
+            metadata['roundHistory'] = merge_round_history(
+                existing.get('roundHistory', []), rounds_data,
+                parse_round_award_table(wb), parse_previous_round_teams(wb), current_round)
+
+            # 이번 싱크로 새로 반영된 라운드 (같은 라운드 재싱크면 기존 범위 유지)
+            if prev_round < current_round:
+                updated_rounds = list(range(prev_round + 1, current_round + 1))
+            else:
+                updated_rounds = existing.get('updatedRounds') or [current_round]
+            metadata['updatedRounds'] = updated_rounds
+            metadata['displayAwards'] = build_display_awards(metadata['roundHistory'], updated_rounds)
+            for key in ('excelUrl',):
+                if key in existing:
+                    metadata[key] = existing[key]
+
+            # 메타데이터 JSON 저장
             with open(metadata_path, 'w', encoding='utf-8') as f:
                 json.dump(metadata, f, ensure_ascii=False, indent=2)
 
@@ -427,22 +587,21 @@ def main():
             for i, team in enumerate(metadata['standings'], 1):
                 print(f"    {i}위: {team['name']} ({team['wins']}승 {team['losses']}패, {team['points']}점)")
 
-            # 현재 라운드에 해당하는 어워드 찾기
-            current_round_data = None
+            # 이번 싱크로 반영된 라운드별 어워드
+            print(f"  반영 라운드: {', '.join(f'{r}라운드' for r in metadata['updatedRounds'])}")
             for rd in metadata['roundHistory']:
-                if rd['round'] == current_round:
-                    current_round_data = rd
-                    break
+                awards = rd.get('awards', {})
+                line = f"    {rd['round']}라운드 - MOM: {awards.get('mom', '-')}, 더블더블: {awards.get('doubleDouble', '-')}"
+                if awards.get('topScorer'):
+                    line += f", 득점왕: {awards['topScorer']['name']}({awards['topScorer']['points']}점)"
+                print(line)
 
-            if current_round_data and current_round_data.get('awards'):
-                print(f"  {current_round}라운드 어워드:")
-                if current_round_data['awards'].get('mom'):
-                    print(f"    MOM: {current_round_data['awards']['mom']}")
-                if current_round_data['awards'].get('doubleDouble'):
-                    print(f"    더블더블: {current_round_data['awards']['doubleDouble']}")
-                if current_round_data['awards'].get('topScorer'):
-                    scorer = current_round_data['awards']['topScorer']
-                    print(f"    득점왕: {scorer['name']}({scorer['points']}점)")
+            display = metadata['displayAwards']
+            print(f"  홈 화면 표시 어워드:")
+            print(f"    MOM: {display.get('mom', '-')}")
+            print(f"    더블더블: {display.get('doubleDouble', '-')}")
+            if display.get('topScorer'):
+                print(f"    득점왕: {display['topScorer']['name']}({display['topScorer']['points']}점)")
     else:
         print("\n메타데이터: GBL 승점 시트를 찾을 수 없거나 데이터가 없습니다.")
 

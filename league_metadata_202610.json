@@ -1,28 +1,28 @@
 {
   "season": "2026년 10월",
-  "currentRound": 1,
+  "currentRound": 3,
   "totalRounds": 15,
   "standings": [
     {
       "team": "B",
       "name": "B팀",
-      "wins": 2,
-      "losses": 0,
-      "points": 6.0
+      "wins": 4,
+      "losses": 2,
+      "points": 13.0
     },
     {
       "team": "C",
       "name": "C팀",
-      "wins": 1,
-      "losses": 1,
-      "points": 3.0
+      "wins": 3,
+      "losses": 3,
+      "points": 10.0
     },
     {
       "team": "A",
       "name": "A팀",
-      "wins": 0,
-      "losses": 2,
-      "points": 0
+      "wins": 2,
+      "losses": 4,
+      "points": 6.0
     }
   ],
   "roundHistory": [
@@ -62,6 +62,88 @@
           "points": 41
         }
       }
+    },
+    {
+      "round": 2,
+      "awards": {
+        "mom": "김준환",
+        "doubleDouble": "김돈규, 김승민, 이윤수"
+      },
+      "teams": [
+        {
+          "team": "A",
+          "name": "A팀",
+          "record": "1승 3패",
+          "wins": 1,
+          "losses": 3,
+          "points": 3.0
+        },
+        {
+          "team": "B",
+          "name": "B팀",
+          "record": "4승",
+          "wins": 4,
+          "losses": 0,
+          "points": 13.0
+        },
+        {
+          "team": "C",
+          "name": "C팀",
+          "record": "1승 3패",
+          "wins": 1,
+          "losses": 3,
+          "points": 3.0
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "teams": [
+        {
+          "team": "A",
+          "name": "A팀",
+          "record": "2승 4패",
+          "wins": 2,
+          "losses": 4,
+          "points": 6.0
+        },
+        {
+          "team": "B",
+          "name": "B팀",
+          "record": "4승 2패",
+          "wins": 4,
+          "losses": 2,
+          "points": 13.0
+        },
+        {
+          "team": "C",
+          "name": "C팀",
+          "record": "3승 3패",
+          "wins": 3,
+          "losses": 3,
+          "points": 10.0
+        }
+      ],
+      "awards": {
+        "mom": "강재훈",
+        "doubleDouble": "-",
+        "topScorer": {
+          "name": "강재훈",
+          "points": 43
+        }
+      }
     }
-  ]
+  ],
+  "updatedRounds": [
+    2,
+    3
+  ],
+  "displayAwards": {
+    "mom": "김준환(2라), 강재훈(3라)",
+    "doubleDouble": "김돈규, 김승민, 이윤수(2라)",
+    "topScorer": {
+      "name": "강재훈",
+      "points": 43
+    }
+  }
 }
