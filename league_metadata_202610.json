@@ -1,27 +1,27 @@
 {
   "season": "2026년 10월",
-  "currentRound": 3,
+  "currentRound": 4,
   "totalRounds": 15,
   "standings": [
     {
       "team": "B",
       "name": "B팀",
-      "wins": 4,
-      "losses": 2,
-      "points": 13.0
+      "wins": 5,
+      "losses": 3,
+      "points": 16.0
     },
     {
       "team": "C",
       "name": "C팀",
-      "wins": 3,
+      "wins": 5,
       "losses": 3,
-      "points": 10.0
+      "points": 16.0
     },
     {
       "team": "A",
       "name": "A팀",
       "wins": 2,
-      "losses": 4,
+      "losses": 6,
       "points": 6.0
     }
   ],
@@ -132,18 +132,54 @@
           "points": 43
         }
       }
+    },
+    {
+      "round": 4,
+      "teams": [
+        {
+          "team": "A",
+          "name": "A팀",
+          "record": "2승 6패",
+          "wins": 2,
+          "losses": 6,
+          "points": 6.0
+        },
+        {
+          "team": "B",
+          "name": "B팀",
+          "record": "5승 3패",
+          "wins": 5,
+          "losses": 3,
+          "points": 16.0
+        },
+        {
+          "team": "C",
+          "name": "C팀",
+          "record": "5승 3패",
+          "wins": 5,
+          "losses": 3,
+          "points": 16.0
+        }
+      ],
+      "awards": {
+        "mom": "이윤수",
+        "doubleDouble": "-",
+        "topScorer": {
+          "name": "강재훈",
+          "points": 55
+        }
+      }
     }
   ],
   "updatedRounds": [
-    2,
-    3
+    4
   ],
   "displayAwards": {
-    "mom": "김준환(2라), 강재훈(3라)",
-    "doubleDouble": "김돈규, 김승민, 이윤수(2라)",
+    "mom": "이윤수",
+    "doubleDouble": "-",
     "topScorer": {
       "name": "강재훈",
-      "points": 43
+      "points": 55
     }
   }
 }

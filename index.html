@@ -447,15 +447,15 @@
       font-size: var(--font-size-sm);
     }
 
-    .standing-item:first-child .standing-rank {
+    .standing-rank.rank-medal-1 {
       color: var(--medal-gold);
     }
 
-    .standing-item:nth-child(2) .standing-rank {
+    .standing-rank.rank-medal-2 {
       color: var(--medal-silver);
     }
 
-    .standing-item:nth-child(3) .standing-rank {
+    .standing-rank.rank-medal-3 {
       color: var(--medal-bronze);
     }
 
@@ -2023,19 +2023,19 @@
         </div>
         <div class="standings-row">
           <div class="standing-item" id="standing1">
-            <span class="standing-rank">1위</span>
+            <span class="standing-rank rank-medal-1">1위</span>
             <span class="standing-team team-badge team-C">C팀</span>
             <span class="standing-record">2승 0패</span>
             <span class="standing-points">6점</span>
           </div>
           <div class="standing-item" id="standing2">
-            <span class="standing-rank">2위</span>
+            <span class="standing-rank rank-medal-2">2위</span>
             <span class="standing-team team-badge team-A">A팀</span>
             <span class="standing-record">1승 1패</span>
             <span class="standing-points">3점</span>
           </div>
           <div class="standing-item" id="standing3">
-            <span class="standing-rank">3위</span>
+            <span class="standing-rank rank-medal-3">3위</span>
             <span class="standing-team team-badge team-B">B팀</span>
             <span class="standing-record">0승 2패</span>
             <span class="standing-points">1점</span>
@@ -2526,11 +2526,21 @@
 
       // 팀 순위 표시
       const standings = metadata.standings || [];
+      // 승·패·승점이 모두 같으면 같은 순위 (예: 1위, 1위, 3위)
+      const ranks = [];
+      standings.forEach((team, i) => {
+        const prev = standings[i - 1];
+        const tied = prev && prev.wins === team.wins && prev.losses === team.losses && prev.points === team.points;
+        ranks.push(tied ? ranks[i - 1] : i + 1);
+      });
       for (let i = 0; i < 3; i++) {
         const standingEl = document.getElementById(`standing${i + 1}`);
         if (standingEl && standings[i]) {
           const team = standings[i];
           const record = `${team.wins}승 ${team.losses}패`;
+          const rankEl = standingEl.querySelector('.standing-rank');
+          rankEl.textContent = `${ranks[i]}위`;
+          rankEl.className = `standing-rank rank-medal-${ranks[i]}`;
           standingEl.querySelector('.standing-team').textContent = team.name;
           standingEl.querySelector('.standing-team').className = `standing-team team-badge team-${team.team}`;
           standingEl.querySelector('.standing-record').textContent = record;
