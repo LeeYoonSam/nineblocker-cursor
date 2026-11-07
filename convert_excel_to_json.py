@@ -477,7 +477,16 @@ def convert_excel_to_json(excel_path, season_code):
             '블록': {'누적': 0, '평균': 0.0},
             '3점슛': {'누적': 0, '평균': 0.0}
         })
-        stats = fill_missing_averages(stats, player['attendance'])
+
+        # 출석 0 인데 부가기록 누적이 있으면 잘못 입력된 행 → 제외
+        if player['attendance'] == 0 and any(v['누적'] > 0 for v in stats.values()):
+            print(f"경고: {player['name']}(#{player['number']}) 출석 0 인데 부가기록 누적이 있어 제외합니다. 엑셀 원본을 확인하세요.")
+            continue
+
+        filled = fill_missing_averages(stats, player['attendance'])
+        if filled != stats:
+            print(f"경고: {player['name']}(#{player['number']}) 부가기록 평균 셀이 비어 있어 누적/출석으로 계산했습니다. 엑셀 평균 수식을 확인하세요.")
+        stats = filled
 
         players_list.append({
             '번호': player['number'],
