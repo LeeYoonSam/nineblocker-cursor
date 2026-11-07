@@ -1,2380 +1,503 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="dark">
+<html lang="ko">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>나인블로커스 리그 - 2026년 10월 시즌</title>
+  <meta name="theme-color" content="#0a0a0a">
+  <title>나인블로커스 리그</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Black+Han+Sans&family=IBM+Plex+Mono:wght@500;700&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* ===== Design Tokens ===== */
+    /* ===== Design Tokens: PRIME TIME ===== */
     :root {
-      /* Spacing */
-      --space-xs: 4px;
-      --space-sm: 8px;
-      --space-md: 16px;
-      --space-lg: 24px;
-      --space-xl: 32px;
-      --space-2xl: 48px;
-
-      /* Typography */
-      --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-      --font-size-xs: 0.75rem;
-      --font-size-sm: 0.875rem;
-      --font-size-md: 1rem;
-      --font-size-lg: 1.25rem;
-      --font-size-xl: 1.5rem;
-      --font-size-2xl: 2rem;
-
-      /* Border Radius */
-      --radius-sm: 12px;
-      --radius-md: 20px;
-      --radius-lg: 28px;
-      --radius-full: 9999px;
-
-      /* Transitions */
-      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-      --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-      --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
-
-      /* Team Colors */
-      --team-a: #3b82f6;
-      --team-b: #22c55e;
-      --team-c: #f59e0b;
-    }
-
-    /* ===== Dark Theme ===== */
-    [data-theme="dark"] {
-      --bg-base: transparent;
-      --bg-gradient-start: rgba(0, 0, 0, 0.6);
-      --bg-gradient-end: rgba(0, 0, 0, 0.75);
-      --bg-mesh-1: rgba(80, 80, 120, 0.1);
-      --bg-mesh-2: rgba(100, 60, 140, 0.08);
-      --bg-mesh-3: rgba(60, 100, 140, 0.06);
-
-      --glass-bg: rgba(20, 20, 25, 0.6);
-      --glass-bg-hover: rgba(30, 30, 35, 0.7);
-      --glass-border: rgba(255, 255, 255, 0.15);
-      --glass-border-hover: rgba(255, 255, 255, 0.25);
-      --glass-shadow: rgba(0, 0, 0, 0.5);
-      --glass-highlight: rgba(255, 255, 255, 0.08);
-      --glass-shine: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
-
-      /* Button/Filter glass */
-      --btn-glass-bg: rgba(255, 255, 255, 0.03);
-      --btn-glass-border: rgba(255, 255, 255, 0.1);
-
-      --text-primary: #ffffff;
-      --text-secondary: rgba(255, 255, 255, 0.7);
-      --text-muted: rgba(255, 255, 255, 0.45);
-
-      --accent: #ff6b35;
-      --accent-hover: #ff8555;
-      --accent-glow: rgba(255, 107, 53, 0.5);
-
-      --medal-gold: #ffd700;
-      --medal-silver: #c0c0c0;
-      --medal-bronze: #cd7f32;
-
-      /* Dark theme team badge colors */
-      --team-a-bg: rgba(255, 255, 255, 0.04);
-      --team-b-bg: rgba(255, 255, 255, 0.04);
-      --team-c-bg: rgba(255, 255, 255, 0.04);
-      --team-a: #60a5fa;
-      --team-b: #4ade80;
-      --team-c: #fbbf24;
-
-      /* Active filter glass */
-      --active-glass-bg: rgba(255, 107, 53, 0.12);
-      --active-glass-border: rgba(255, 107, 53, 0.25);
-
-      --border: rgba(255, 255, 255, 0.1);
-      --bg-hover: rgba(255, 255, 255, 0.05);
-    }
-
-    /* ===== Light Theme ===== */
-    [data-theme="light"] {
-      --bg-base: transparent;
-      --bg-gradient-start: rgba(245, 245, 250, 0.7);
-      --bg-gradient-end: rgba(235, 235, 245, 0.8);
-      --bg-mesh-1: rgba(59, 130, 246, 0.1);
-      --bg-mesh-2: rgba(139, 92, 246, 0.08);
-      --bg-mesh-3: rgba(236, 72, 153, 0.05);
-
-      --glass-bg: rgba(255, 255, 255, 0.6);
-      --glass-bg-hover: rgba(255, 255, 255, 0.75);
-      --glass-border: rgba(255, 255, 255, 0.8);
-      --glass-border-hover: rgba(255, 255, 255, 0.95);
-      --glass-shadow: rgba(0, 0, 0, 0.08);
-      --glass-highlight: rgba(255, 255, 255, 0.95);
-      --glass-shine: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, transparent 50%);
-
-      /* Button/Filter glass */
-      --btn-glass-bg: rgba(255, 255, 255, 0.5);
-      --btn-glass-border: rgba(255, 255, 255, 0.7);
-
-      --text-primary: rgba(0, 0, 0, 0.88);
-      --text-secondary: rgba(0, 0, 0, 0.55);
-      --text-muted: rgba(0, 0, 0, 0.35);
-
-      --accent: #e55a2b;
-      --accent-hover: #d04a1b;
-      --accent-glow: rgba(229, 90, 43, 0.3);
-
-      --medal-gold: #d4a800;
-      --medal-silver: #8a8a8a;
-      --medal-bronze: #a56324;
-
-      /* Light theme team badge colors */
-      --team-a-bg: rgba(59, 130, 246, 0.15);
-      --team-b-bg: rgba(34, 197, 94, 0.15);
-      --team-c-bg: rgba(245, 158, 11, 0.15);
-      --team-a: #2563eb;
-      --team-b: #16a34a;
-      --team-c: #d97706;
-
-      /* Active filter glass */
-      --active-glass-bg: rgba(229, 90, 43, 0.15);
-      --active-glass-border: rgba(229, 90, 43, 0.4);
-
-      --border: rgba(0, 0, 0, 0.1);
-      --bg-hover: rgba(0, 0, 0, 0.03);
-    }
-
-    /* ===== Base Styles ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: var(--font-family);
-      background: transparent;
-      color: var(--text-primary);
-      line-height: 1.6;
-      min-height: 100vh;
-      overflow-x: hidden;
-      transition: color var(--transition-slow);
-    }
-
-    /* ===== Background Image ===== */
-    .bg-image {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background-image: url('https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=2090&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
-    /* ===== Animated Background Overlay ===== */
-    .bg-mesh {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background:
-        radial-gradient(ellipse 80% 50% at 20% 30%, var(--bg-mesh-1), transparent),
-        radial-gradient(ellipse 60% 60% at 80% 20%, var(--bg-mesh-2), transparent),
-        radial-gradient(ellipse 50% 40% at 50% 80%, var(--bg-mesh-3), transparent),
-        linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-      transition: all var(--transition-slow);
-    }
-
-    /* ===== Liquid Glass Classes ===== */
-    .glass {
-      background: var(--glass-bg);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      box-shadow:
-        0 8px 32px var(--glass-shadow),
-        inset 0 1px 0 var(--glass-highlight),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-      position: relative;
-      overflow: hidden;
-      transition: all var(--transition-normal);
-    }
-
-    .glass::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(ellipse at 20% 20%, var(--glass-highlight), transparent 60%);
-      pointer-events: none;
-      border-radius: inherit;
-      opacity: 0.8;
-    }
-
-    .glass::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-      pointer-events: none;
-    }
-
-    .glass:hover:not(header):not(.table-wrapper) {
-      background: var(--glass-bg-hover);
-      border-color: var(--glass-border-hover);
-      transform: translateY(-2px);
-      box-shadow:
-        0 12px 40px var(--glass-shadow),
-        inset 0 1px 0 var(--glass-highlight);
-    }
-
-    /* Header - no hover effect */
-    header.glass:hover {
-      background: var(--glass-bg);
-      border-color: var(--glass-border);
-      transform: none;
-      box-shadow:
-        0 8px 32px var(--glass-shadow),
-        inset 0 1px 0 var(--glass-highlight);
-    }
-
-    /* ===== Container ===== */
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: var(--space-lg);
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ===== Theme Toggle ===== */
-    .theme-toggle {
-      position: fixed;
-      top: var(--space-lg);
-      right: var(--space-lg);
-      z-index: 100;
-    }
-
-    .theme-btn {
-      width: 48px;
-      height: 48px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-full);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-primary);
-      transition: all var(--transition-normal);
-      box-shadow: 0 4px 16px var(--glass-shadow);
-    }
-
-    .theme-btn:hover {
-      transform: scale(1.1) rotate(15deg);
-      background: var(--glass-bg-hover);
-    }
-
-    .theme-btn svg {
-      width: 24px;
-      height: 24px;
-      transition: transform var(--transition-normal);
-    }
-
-    .sun-icon {
-      display: none;
-    }
-
-    .moon-icon {
-      display: block;
-    }
-
-    [data-theme="light"] .sun-icon {
-      display: block;
-    }
-
-    [data-theme="light"] .moon-icon {
-      display: none;
-    }
-
-    /* ===== Header ===== */
-    header {
-      text-align: center;
-      margin-bottom: var(--space-xl);
-      padding: var(--space-2xl) var(--space-lg);
-    }
-
-    .header-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    header h1 {
-      font-size: var(--font-size-2xl);
-      font-weight: 700;
-      margin-bottom: var(--space-sm);
-      background: linear-gradient(135deg, var(--accent) 0%, #ffd700 50%, #4a9eff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      background-size: 200% auto;
-      animation: gradient-shift 5s ease infinite;
-    }
-
-    @keyframes gradient-shift {
-
-      0%,
-      100% {
-        background-position: 0% center;
-      }
-
-      50% {
-        background-position: 100% center;
-      }
-    }
-
-    header p {
-      color: var(--text-secondary);
-      font-size: var(--font-size-lg);
-    }
-
-    /* Stats Summary Pills */
-    .stats-summary {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-lg);
-      margin-top: var(--space-xl);
-      flex-wrap: wrap;
-    }
-
-    .stat-item {
-      padding: var(--space-md) var(--space-lg);
-      text-align: center;
-      min-width: 100px;
-      background: var(--btn-glass-bg);
-      backdrop-filter: blur(10px) saturate(140%);
-      -webkit-backdrop-filter: blur(10px) saturate(140%);
-      border: 1px solid var(--btn-glass-border);
-      border-radius: var(--radius-md);
-      box-shadow: 0 2px 8px var(--glass-shadow);
-    }
-
-    .stat-value {
-      font-size: var(--font-size-xl);
-      font-weight: 700;
-      color: var(--accent);
-      text-shadow: 0 0 20px var(--accent-glow);
-    }
-
-    .stat-label {
-      font-size: var(--font-size-xs);
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-top: var(--space-xs);
-    }
-
-    /* ===== League Info (Standings & Awards) ===== */
-    .league-info {
-      margin-top: var(--space-xl);
-      padding-top: var(--space-lg);
-      border-top: 1px solid var(--glass-border);
-    }
-
-    .current-round-row {
-      display: flex;
-      justify-content: center;
-      margin-bottom: var(--space-lg);
-    }
-
-    .current-round-badge {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      padding: var(--space-sm) var(--space-lg);
-      background: linear-gradient(135deg, var(--accent) 0%, #ff8555 100%);
-      border-radius: var(--radius-full);
-      box-shadow: 0 4px 15px var(--accent-glow);
-    }
-
-    .round-label {
-      font-size: var(--font-size-xs);
-      color: rgba(255, 255, 255, 0.8);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .round-value {
-      font-size: var(--font-size-xl);
-      font-weight: 700;
-      color: white;
-    }
-
-    .round-total {
-      font-size: var(--font-size-sm);
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    .standings-row {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-md);
-      flex-wrap: wrap;
-      margin-bottom: var(--space-lg);
-    }
-
-    .standing-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      padding: var(--space-sm) var(--space-md);
-      background: var(--btn-glass-bg);
-      backdrop-filter: blur(10px) saturate(140%);
-      -webkit-backdrop-filter: blur(10px) saturate(140%);
-      border: 1px solid var(--btn-glass-border);
-      border-radius: var(--radius-md);
-    }
-
-    .standing-rank {
-      font-weight: 700;
-      color: var(--text-muted);
-      font-size: var(--font-size-sm);
-    }
-
-    .standing-rank.rank-medal-1 {
-      color: var(--medal-gold);
-    }
-
-    .standing-rank.rank-medal-2 {
-      color: var(--medal-silver);
-    }
-
-    .standing-rank.rank-medal-3 {
-      color: var(--medal-bronze);
-    }
-
-    .standing-record {
-      font-size: var(--font-size-sm);
-      color: var(--text-secondary);
-    }
-
-    .standing-points {
-      font-weight: 600;
-      font-size: var(--font-size-sm);
-      color: var(--accent);
-    }
-
-    .awards-row {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-lg);
-      flex-wrap: wrap;
-    }
-
-    .award-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      padding: var(--space-sm) var(--space-md);
-      background: var(--btn-glass-bg);
-      backdrop-filter: blur(10px) saturate(140%);
-      -webkit-backdrop-filter: blur(10px) saturate(140%);
-      border: 1px solid var(--btn-glass-border);
-      border-radius: var(--radius-md);
-    }
-
-    .award-icon {
-      font-size: var(--font-size-lg);
-    }
-
-    .award-label {
-      font-size: var(--font-size-xs);
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .award-value {
-      font-weight: 600;
-      font-size: var(--font-size-sm);
-      color: var(--text-primary);
-    }
-
-    .excel-link-row {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-md);
-      margin-top: var(--space-lg);
-    }
-
-    .excel-link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-sm);
-      padding: var(--space-sm) var(--space-md);
-      background: var(--btn-glass-bg);
-      backdrop-filter: blur(10px) saturate(140%);
-      -webkit-backdrop-filter: blur(10px) saturate(140%);
-      border: 1px solid var(--btn-glass-border);
-      border-radius: var(--radius-md);
-      color: var(--text-secondary);
-      font-size: var(--font-size-sm);
-      text-decoration: none;
-      transition: all var(--transition-normal);
-    }
-
-    .excel-link-btn:hover {
-      background: var(--glass-bg-hover);
-      border-color: var(--glass-border-hover);
-      color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px var(--glass-shadow);
-    }
-
-    .excel-link-btn svg {
-      opacity: 0.7;
-      transition: opacity var(--transition-fast);
-    }
-
-    .excel-link-btn:hover svg {
-      opacity: 1;
-    }
-
-    button.excel-link-btn {
-      cursor: pointer;
-    }
-
-    /* ===== Controls ===== */
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-md);
-      margin-bottom: var(--space-lg);
-      align-items: center;
-    }
-
-    /* Season Toggle - Segmented Control */
-    .toggle-group {
-      display: flex;
-      padding: var(--space-xs);
-      gap: var(--space-xs);
-      background: var(--btn-glass-bg);
-      backdrop-filter: blur(10px) saturate(140%);
-      -webkit-backdrop-filter: blur(10px) saturate(140%);
-      border: 1px solid var(--btn-glass-border);
-      border-radius: var(--radius-md);
-    }
-
-    .toggle-btn {
-      padding: var(--space-sm) var(--space-md);
-      background: transparent;
-      border: 1px solid transparent;
-      color: var(--text-secondary);
-      font-size: var(--font-size-sm);
-      font-weight: 500;
-      cursor: pointer;
-      border-radius: var(--radius-sm);
-      transition: all var(--transition-normal);
-      position: relative;
-    }
-
-    .toggle-btn.active {
-      background: var(--active-glass-bg);
-      backdrop-filter: blur(10px) saturate(140%);
-      -webkit-backdrop-filter: blur(10px) saturate(140%);
-      border: 1px solid var(--active-glass-border);
-      color: var(--accent);
-      box-shadow: 0 2px 12px var(--accent-glow);
-    }
-
-    .toggle-btn:hover:not(.active) {
-      background: var(--glass-bg-hover);
-      border-color: var(--glass-border-hover);
-      color: var(--text-primary);
-    }
-
-    /* Search Box */
-    .search-box {
-      position: relative;
-      flex: 1;
-      min-width: 280px;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: var(--space-md) var(--space-md) var(--space-md) 48px;
-      background: var(--btn-glass-bg);
-      backdrop-filter: blur(10px) saturate(140%);
-      -webkit-backdrop-filter: blur(10px) saturate(140%);
-      border: 1px solid var(--btn-glass-border);
-      border-radius: var(--radius-md);
-      color: var(--text-primary);
-      font-size: var(--font-size-md);
-      transition: all var(--transition-normal);
-    }
-
-    .search-box input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px var(--accent-glow);
-      background: var(--glass-bg-hover);
-    }
-
-    .search-box input::placeholder {
-      color: var(--text-muted);
-    }
-
-    .search-box svg {
-      position: absolute;
-      left: var(--space-md);
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
-      pointer-events: none;
-    }
-
-    /* ===== Table ===== */
-    .table-wrapper {
-      overflow: hidden;
-      margin-bottom: 100px;
-    }
-
-    .table-scroll {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      min-width: 900px;
-    }
-
-    th,
-    td {
-      padding: var(--space-md);
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    thead {
-      position: relative;
-      z-index: 10;
-    }
-
-    /* 고정 헤더 상단 오버레이 */
-    .fixed-header-overlay {
-      position: fixed;
-      top: 0;
-      z-index: 99;
-      background: var(--glass-bg);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      display: none;
-    }
-
-    /* 고정 헤더 스타일 */
-    .fixed-header {
-      position: fixed;
-      top: 0;
-      z-index: 100;
-      background: var(--glass-bg);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid var(--glass-border);
-      border-bottom: none;
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-      box-shadow: 0 8px 32px var(--glass-shadow);
-      overflow: hidden;
-    }
-
-    .fixed-header table {
-      margin: 0;
-    }
-
-    .fixed-header th {
-      background: transparent;
-    }
-
-    thead tr {
-      background: transparent;
-    }
-
-    th {
-      background: transparent;
-      font-weight: 600;
-      font-size: var(--font-size-xs);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-secondary);
-      border-bottom: none;
-      transition: all var(--transition-normal);
-      padding: var(--space-lg) var(--space-sm) var(--space-md);
-      position: relative;
-    }
-
-    th::before {
-      content: '';
-      position: absolute;
-      top: var(--space-md);
-      bottom: 6px;
-      left: 2px;
-      right: 2px;
-      background: transparent;
-      border: 1px solid transparent;
-      border-radius: var(--radius-sm);
-      z-index: -1;
-      transition: all var(--transition-normal);
-    }
-
-    th[data-sort] {
-      cursor: pointer;
-      user-select: none;
-    }
-
-    th[data-sort]:hover::before {
-      background: var(--btn-glass-bg);
-      backdrop-filter: blur(10px) saturate(140%);
-      -webkit-backdrop-filter: blur(10px) saturate(140%);
-      border-color: var(--btn-glass-border);
-      box-shadow:
-        0 2px 8px var(--glass-shadow),
-        inset 0 1px 0 var(--glass-highlight);
-    }
-
-    th[data-sort]:hover {
-      color: var(--text-primary);
-    }
-
-    th.sorted {
-      color: var(--accent);
-    }
-
-    th.sorted::before {
-      background: var(--active-glass-bg);
-      backdrop-filter: blur(10px) saturate(140%);
-      -webkit-backdrop-filter: blur(10px) saturate(140%);
-      border-color: var(--active-glass-border);
-      box-shadow:
-        0 2px 10px var(--accent-glow),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    }
-
-    th .sort-icon {
-      display: inline-block;
-      margin-left: var(--space-xs);
-      opacity: 0.5;
-      transition: all var(--transition-fast);
-    }
-
-    th.sorted .sort-icon {
-      opacity: 1;
-    }
-
-    th.sorted.desc .sort-icon {
-      transform: rotate(180deg);
-    }
-
-    td {
-      background: transparent;
-      border-bottom: 1px solid var(--glass-border);
-      font-size: var(--font-size-sm);
-      transition: all var(--transition-fast);
-    }
-
-    tbody tr {
-      transition: all var(--transition-fast);
-    }
-
-    tbody tr:hover td {
-      background: var(--glass-bg-hover);
-    }
-
-    tbody tr:last-child td {
-      border-bottom: none;
-    }
-
-    .player-name {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    /* Team Badge - Glass Pill */
-    .team-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: var(--space-xs) var(--space-sm);
-      border-radius: var(--radius-full);
-      font-size: var(--font-size-xs);
-      font-weight: 600;
-      backdrop-filter: blur(8px) saturate(140%);
-      -webkit-backdrop-filter: blur(8px) saturate(140%);
-      border: 1px solid var(--btn-glass-border);
-    }
-
-    .team-A {
-      background: var(--team-a-bg);
-      color: var(--team-a);
-    }
-
-    .team-B {
-      background: var(--team-b-bg);
-      color: var(--team-b);
-    }
-
-    .team-C {
-      background: var(--team-c-bg);
-      color: var(--team-c);
-    }
-
-    .highlight {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    /* Rank Medals */
-    .rank {
-      font-weight: 700;
-      color: var(--text-secondary);
-    }
-
-    .rank-1 {
-      color: var(--medal-gold);
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    }
-
-    .rank-2 {
-      color: var(--medal-silver);
-      text-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
-    }
-
-    .rank-3 {
-      color: var(--medal-bronze);
-      text-shadow: 0 0 10px rgba(205, 127, 50, 0.5);
-    }
-
-    /* ===== Chat FAB ===== */
-    .chat-fab {
-      position: fixed;
-      bottom: var(--space-lg);
-      right: var(--space-lg);
-      width: 64px;
-      height: 64px;
-      background: linear-gradient(135deg, var(--accent) 0%, #ff8555 100%);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow:
-        0 8px 32px var(--accent-glow),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      transition: all var(--transition-normal);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: pulse-glow 3s ease-in-out infinite;
-    }
-
-    @keyframes pulse-glow {
-
-      0%,
-      100% {
-        box-shadow: 0 8px 32px var(--accent-glow);
-      }
-
-      50% {
-        box-shadow: 0 8px 48px var(--accent-glow), 0 0 60px var(--accent-glow);
-      }
-    }
-
-    .chat-fab:hover {
-      transform: scale(1.1);
-      animation: none;
-      box-shadow: 0 12px 48px var(--accent-glow);
-    }
-
-    .chat-fab svg {
-      color: white;
-      width: 28px;
-      height: 28px;
-    }
-
-    /* ===== Chat Modal ===== */
-    .chat-modal {
-      position: fixed;
-      bottom: 100px;
-      right: var(--space-lg);
-      width: 420px;
-      max-width: calc(100vw - 48px);
-      height: 550px;
-      max-height: calc(100vh - 150px);
-      display: none;
-      flex-direction: column;
-      z-index: 1001;
-      overflow: hidden;
-      background: var(--glass-bg);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 16px 48px var(--glass-shadow);
-    }
-
-    .chat-modal.open {
-      display: flex;
-      animation: slideUp 0.3s ease;
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.95);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .chat-header {
-      padding: var(--space-md) var(--space-lg);
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--glass-border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .chat-header h3 {
-      font-size: var(--font-size-md);
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-    }
-
-    .chat-header h3 svg {
-      color: var(--accent);
-    }
-
-    .close-btn {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      color: var(--text-secondary);
-      cursor: pointer;
-      padding: var(--space-sm);
-      border-radius: var(--radius-sm);
-      transition: all var(--transition-fast);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .close-btn:hover {
-      background: var(--glass-bg-hover);
-      color: var(--text-primary);
-    }
-
-    .chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: var(--space-md);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-sm);
-    }
-
-    .message {
-      max-width: 90%;
-      padding: var(--space-sm) var(--space-md);
-      border-radius: var(--radius-md);
-      font-size: var(--font-size-sm);
-      line-height: 1.5;
-      word-break: break-word;
-      overflow-wrap: break-word;
-    }
-
-    .message.user {
-      align-self: flex-end;
-      background: linear-gradient(135deg, var(--accent) 0%, #ff8555 100%);
-      color: white;
-      border-bottom-right-radius: var(--space-xs);
-      box-shadow: 0 4px 15px var(--accent-glow);
-    }
-
-    .message.ai {
-      align-self: flex-start;
-      background: var(--glass-bg-hover);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--glass-border);
-      color: var(--text-primary);
-      border-bottom-left-radius: var(--space-xs);
-    }
-
-    /* AI 메시지 마크다운 스타일 */
-    .message.ai p {
-      margin: 0 0 8px 0;
-    }
-
-    .message.ai p:last-child {
-      margin-bottom: 0;
-    }
-
-    .message.ai strong {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .message.ai ul,
-    .message.ai ol {
-      margin: 8px 0;
-      padding-left: 20px;
-    }
-
-    .message.ai li {
-      margin: 4px 0;
-    }
-
-    .message.ai .table-wrapper {
-      overflow-x: auto;
-      margin: 12px 0;
-      border-radius: 8px;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .message.ai table {
-      width: 100%;
-      min-width: 100%;
-      border-collapse: collapse;
-      font-size: var(--font-size-xs);
-      white-space: nowrap;
-    }
-
-    .message.ai th,
-    .message.ai td {
-      padding: var(--space-xs) var(--space-sm);
-      text-align: left;
-      border: 1px solid var(--glass-border);
-    }
-
-    .message.ai th {
-      background: var(--glass-bg);
-      font-weight: 600;
-      color: var(--accent);
-      font-size: var(--font-size-xs);
-    }
-
-    .message.ai td:first-child {
-      font-weight: 600;
-      color: var(--text-secondary);
-    }
-
-    .message.ai tr:hover td {
-      background: rgba(255, 107, 53, 0.05);
-    }
-
-    /* 테이블 스크롤바 스타일 */
-    .message.ai .table-wrapper::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    .message.ai .table-wrapper::-webkit-scrollbar-track {
-      background: var(--bg-hover);
-      border-radius: 2px;
-    }
-
-    .message.ai .table-wrapper::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 2px;
-    }
-
-    /* 모바일에서 테이블 최적화 */
-    @media (max-width: 480px) {
-      .message.ai table {
-        font-size: 0.72rem;
-      }
-
-      .message.ai th,
-      .message.ai td {
-        padding: 4px 5px;
-      }
-
-      .message.ai th {
-        font-size: 0.7rem;
-      }
-    }
-
-    .message.ai h3,
-    .message.ai h4 {
-      margin: 12px 0 8px 0;
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .message.ai h3:first-child,
-    .message.ai h4:first-child {
-      margin-top: 0;
-    }
-
-    .message.ai code {
-      background: var(--bg-hover);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: monospace;
-      font-size: 0.85em;
-    }
-
-    .message.ai hr {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 12px 0;
-    }
-
-    .message.ai .highlight-value {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .message.system {
-      align-self: center;
-      background: transparent;
-      color: var(--text-muted);
-      font-size: var(--font-size-xs);
-      text-align: center;
-      padding: var(--space-sm);
-    }
-
-    .chat-input-area {
-      padding: var(--space-md);
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-top: 1px solid var(--glass-border);
-      display: flex;
-      gap: var(--space-sm);
-    }
-
-    .chat-input-area input {
-      flex: 1;
-      padding: var(--space-sm) var(--space-md);
-      background: var(--glass-bg-hover);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-sm);
-      color: var(--text-primary);
-      font-size: var(--font-size-sm);
-      transition: all var(--transition-fast);
-    }
-
-    .chat-input-area input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px var(--accent-glow);
-    }
-
-    .chat-input-area input::placeholder {
-      color: var(--text-muted);
-    }
-
-    .send-btn {
-      padding: var(--space-sm) var(--space-md);
-      background: linear-gradient(135deg, var(--accent) 0%, #ff8555 100%);
-      border: none;
-      border-radius: var(--radius-sm);
-      color: white;
-      cursor: pointer;
-      transition: all var(--transition-fast);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .send-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 15px var(--accent-glow);
-    }
-
-    .send-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* ===== Team View Button ===== */
-    .team-view-btn {
-      cursor: pointer;
-      transition: all var(--transition-normal);
-      font-family: inherit;
-      position: relative;
-      overflow: visible;
-      border: none;
-    }
-
-    .team-view-btn .stat-value {
-      color: #ffffff;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    }
-
-    .team-view-btn .stat-label {
-      color: rgba(255, 255, 255, 0.9);
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    }
-
-    .team-view-btn::before {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      border-radius: calc(var(--radius-md) + 2px);
-      background: linear-gradient(90deg,
-          var(--team-a), var(--team-b), var(--team-c), var(--team-a));
-      background-size: 300% 100%;
-      animation: gradientFlow 3s linear infinite;
-      z-index: -1;
-    }
-
-    .team-view-btn::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: var(--radius-md);
-      background: var(--btn-glass-bg);
-      z-index: -1;
-    }
-
-    @keyframes gradientFlow {
-      0% {
-        background-position: 0% 50%;
-      }
-
-      100% {
-        background-position: 300% 50%;
-      }
-    }
-
-    .team-view-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
-    }
-
-    .team-view-btn:hover::after {
-      background: var(--glass-bg-hover);
-    }
-
-    .team-view-btn:active {
-      transform: translateY(0);
-    }
-
-    /* ===== 역대 시상 버튼 ===== */
-    .award-history-btn {
-      cursor: pointer;
-      transition: all var(--transition-normal);
-      font-family: inherit;
-      border: 1px solid var(--btn-glass-border);
-    }
-
-    .award-history-btn .stat-value {
-      color: var(--medal-gold);
-      text-shadow: 0 0 16px rgba(255, 215, 0, 0.4);
-    }
-
-    .award-history-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.25);
-      background: var(--glass-bg-hover);
-    }
-
-    .award-history-btn:active {
-      transform: translateY(0);
-    }
-
-    /* ===== 역대 시상 모달 ===== */
-    .awards-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: var(--space-lg);
-    }
-
-    .awards-modal.open {
-      display: flex;
-      animation: fadeIn 0.2s ease;
-    }
-
-    .awards-modal-content {
-      background: var(--glass-bg);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-lg);
-      width: 560px;
-      max-width: calc(100vw - 32px);
-      max-height: 80vh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 16px 48px var(--glass-shadow);
-    }
-
-    .awards-modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-md);
-    }
-
-    .awards-modal-header h3 {
-      font-size: var(--font-size-lg);
-      font-weight: 600;
-    }
-
-    .awards-modal-body {
-      overflow-y: auto;
-      flex: 1;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-md);
-    }
-
-    .award-season-card {
-      border: 1px solid var(--btn-glass-border);
-      border-radius: var(--radius-md);
-      padding: var(--space-md);
-      background: var(--btn-glass-bg);
-    }
-
-    .award-season-title {
-      font-weight: 700;
-      font-size: var(--font-size-md);
-      color: var(--accent);
-      margin-bottom: var(--space-md);
-    }
-
-    .award-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-sm);
-    }
-
-    .award-cell {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      padding: var(--space-sm) var(--space-md);
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-sm);
-    }
-
-    .award-cell .award-icon {
-      font-size: var(--font-size-lg);
-    }
-
-    .award-cell-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.3;
-    }
-
-    .award-cell-label {
-      font-size: var(--font-size-xs);
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-    }
-
-    .award-cell-name {
-      font-weight: 600;
-      font-size: var(--font-size-sm);
-      color: var(--text-primary);
-    }
-
-    .awards-empty {
-      text-align: center;
-      color: var(--text-secondary);
-      padding: var(--space-xl);
-    }
-
-    @media (max-width: 768px) {
-      .award-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ===== Team Modal ===== */
-    .team-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: var(--space-lg);
-    }
-
-    .team-modal.open {
-      display: flex;
-      animation: fadeIn 0.2s ease;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    .team-modal-content {
-      background: var(--glass-bg);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-lg);
-      width: fit-content;
-      max-width: calc(100vw - 32px);
-      max-height: 80vh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 16px 48px var(--glass-shadow);
-    }
-
-    .team-modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-md);
-    }
-
-    .team-modal-header h3 {
-      font-size: var(--font-size-lg);
-      font-weight: 600;
-    }
-
-    .team-modal-header .close-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      cursor: pointer;
-      padding: var(--space-xs);
-      border-radius: var(--radius-sm);
-      transition: all var(--transition-fast);
-    }
-
-    .team-modal-header .close-btn:hover {
-      color: var(--text-primary);
-      background: var(--btn-glass-bg-hover);
-    }
-
-    .team-tabs {
-      display: flex;
-      gap: var(--space-sm);
-      margin-bottom: var(--space-md);
-    }
-
-    .team-tab {
-      flex: 1;
-      padding: var(--space-sm) var(--space-md);
-      background: var(--btn-glass-bg);
-      border: 1px solid var(--btn-glass-border);
-      border-radius: var(--radius-full);
-      color: var(--text-secondary);
-      font-size: var(--font-size-sm);
-      font-weight: 600;
-      cursor: pointer;
-      transition: all var(--transition-fast);
-      font-family: inherit;
-    }
-
-    .team-tab:hover {
-      background: var(--btn-glass-bg-hover);
-      color: var(--text-primary);
-    }
-
-    .team-tab.active {
-      background: var(--active-glass-bg);
-      border-color: var(--active-glass-border);
-      color: var(--accent);
-    }
-
-    .team-tab[data-team="A"].active {
-      background: rgba(59, 130, 246, 0.15);
-      border-color: rgba(59, 130, 246, 0.3);
-      color: var(--team-a);
-    }
-
-    .team-tab[data-team="B"].active {
-      background: rgba(34, 197, 94, 0.15);
-      border-color: rgba(34, 197, 94, 0.3);
-      color: var(--team-b);
-    }
-
-    .team-tab[data-team="C"].active {
-      background: rgba(245, 158, 11, 0.15);
-      border-color: rgba(245, 158, 11, 0.3);
-      color: var(--team-c);
-    }
-
-    .team-table-container {
-      overflow: auto;
-      flex: 1;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
-    }
-
-    /* 트레이드 모달 */
-    .trade-modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      backdrop-filter: blur(4px);
-    }
-    .trade-modal.open {
-      display: flex;
-    }
-    .trade-modal-content {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      width: 100%;
-      max-width: 500px;
-      max-height: 85vh;
-      overflow-y: auto;
-      padding: 24px;
-    }
-    .trade-modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .trade-modal-header h3 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .trade-team-card {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 12px;
-    }
-    .trade-team-card.team-a { border-left: 4px solid var(--team-a); }
-    .trade-team-card.team-b { border-left: 4px solid var(--team-b); }
-    .trade-team-card.team-c { border-left: 4px solid var(--team-c); }
-    .trade-team-name {
-      font-weight: 700;
-      font-size: 1rem;
-      margin-bottom: 12px;
-    }
-    .trade-team-card.team-a .trade-team-name { color: var(--team-a); }
-    .trade-team-card.team-b .trade-team-name { color: var(--team-b); }
-    .trade-team-card.team-c .trade-team-name { color: var(--team-c); }
-    .trade-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 0;
-      font-size: 0.9rem;
-    }
-    .trade-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      min-width: 40px;
-      justify-content: center;
-    }
-    .trade-badge.in {
-      background: rgba(74, 222, 128, 0.15);
-      color: #4ade80;
-    }
-    .trade-badge.out {
-      background: rgba(248, 113, 113, 0.15);
-      color: #f87171;
-    }
-    .trade-player-name {
-      color: var(--text);
-    }
-    .trade-player-from {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      margin-left: auto;
-    }
-
-    /* 모달 열릴 때 body 스크롤 방지 */
-    body.modal-open {
-      overflow: hidden;
-      position: fixed;
-      width: 100%;
-    }
-
-    .team-table {
-      width: 500px;
-      min-width: 500px;
-      border-collapse: collapse;
-      table-layout: fixed;
-    }
-
-    .team-table th,
-    .team-table td {
-      padding: 12px 10px;
-      text-align: center;
-      border-bottom: 1px solid var(--glass-border);
-      font-size: 15px;
-    }
-
-    .team-table th:nth-child(1) {
-      width: 80px;
-    }
-
-    .team-table th:nth-child(2) {
-      width: 150px;
-    }
-
-    .team-table th:nth-child(3) {
-      width: 80px;
-    }
-
-    .team-table th:nth-child(4) {
-      width: 120px;
-    }
-
-    .team-table th {
-      font-weight: 600;
-      color: var(--text-secondary);
-      background: rgb(20, 20, 25);
-      position: sticky;
-      top: 0;
-      z-index: 1;
-      font-size: 11px;
-    }
-
-    [data-theme="light"] .team-table th {
-      background: rgb(245, 245, 250);
-    }
-
-    .team-table td {
-      color: var(--text-primary);
-    }
-
-    .team-table tbody tr:hover {
-      background: var(--btn-glass-bg-hover);
-    }
-
-    .team-table td:last-child {
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    /* ===== API Key Modal ===== */
-    .api-key-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: var(--space-lg);
-    }
-
-    .api-key-modal.open {
-      display: flex;
-    }
-
-    .api-key-content {
-      background: var(--glass-bg);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-xl);
-      max-width: 420px;
-      width: 100%;
-      box-shadow: 0 16px 48px var(--glass-shadow);
-    }
-
-    .api-key-content h3 {
-      margin-bottom: var(--space-sm);
-      font-size: var(--font-size-lg);
-    }
-
-    .api-key-content p {
-      color: var(--text-secondary);
-      margin-bottom: var(--space-lg);
-      font-size: var(--font-size-sm);
-    }
-
-    .api-key-content input {
-      width: 100%;
-      padding: var(--space-md);
-      background: var(--glass-bg-hover);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-sm);
-      color: var(--text-primary);
-      font-size: var(--font-size-md);
-      margin-bottom: var(--space-md);
-      transition: all var(--transition-fast);
-    }
-
-    .api-key-content input:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .api-key-buttons {
-      display: flex;
-      gap: var(--space-sm);
-      justify-content: flex-end;
-    }
-
-    .btn-secondary {
-      padding: var(--space-sm) var(--space-lg);
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-sm);
-      color: var(--text-primary);
-      cursor: pointer;
-      font-size: var(--font-size-sm);
-      transition: all var(--transition-fast);
-    }
-
-    .btn-secondary:hover {
-      background: var(--glass-bg-hover);
-    }
-
-    .btn-primary {
-      padding: var(--space-sm) var(--space-lg);
-      background: linear-gradient(135deg, var(--accent) 0%, #ff8555 100%);
-      border: none;
-      border-radius: var(--radius-sm);
-      color: white;
-      cursor: pointer;
-      font-size: var(--font-size-sm);
-      transition: all var(--transition-fast);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 15px var(--accent-glow);
-    }
-
-    /* ===== Typing Indicator ===== */
-    .typing-indicator {
-      display: flex;
-      gap: var(--space-xs);
-      padding: var(--space-sm) var(--space-md);
-      background: var(--glass-bg-hover);
-      border-radius: var(--radius-md);
-      width: fit-content;
-      border: 1px solid var(--glass-border);
-    }
-
-    .typing-indicator span {
-      width: 8px;
-      height: 8px;
-      background: var(--text-muted);
-      border-radius: 50%;
-      animation: bounce 1.4s infinite ease-in-out;
-    }
-
-    .typing-indicator span:nth-child(1) {
-      animation-delay: -0.32s;
-    }
-
-    .typing-indicator span:nth-child(2) {
-      animation-delay: -0.16s;
-    }
-
-    @keyframes bounce {
-
-      0%,
-      80%,
-      100% {
-        transform: scale(0);
-      }
-
-      40% {
-        transform: scale(1);
-      }
-    }
-
-    /* ===== Responsive ===== */
-    @media (max-width: 768px) {
-      .container {
-        padding: var(--space-md);
-      }
-
-      .theme-toggle {
-        top: var(--space-md);
-        right: var(--space-md);
-      }
-
-      header {
-        padding: var(--space-lg) var(--space-md);
-      }
-
-      header h1 {
-        font-size: var(--font-size-xl);
-      }
-
-      .stats-summary {
-        gap: var(--space-sm);
-        flex-wrap: nowrap;
-      }
-
-      .stat-item {
-        padding: var(--space-sm) var(--space-md);
-        min-width: auto;
-        flex: 1;
-      }
-
-      .stat-value {
-        font-size: var(--font-size-md);
-      }
-
-      .stat-label {
-        font-size: 10px;
-        letter-spacing: 0.5px;
-      }
-
-      .controls {
-        flex-direction: column;
-      }
-
-      .search-box {
-        width: 100%;
-      }
-
-      .chat-modal {
-        bottom: 0;
-        right: 0;
-        width: 100%;
-        max-width: 100%;
-        height: calc(100dvh - 80px);
-        max-height: calc(100dvh - 80px);
-        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-      }
-
-      .team-table {
-        width: 100%;
-        min-width: 260px;
-      }
-
-      .team-table th,
-      .team-table td {
-        padding: 8px 4px;
-        font-size: 13px;
-      }
-
-      .team-table th:nth-child(1) {
-        width: 50px;
-      }
-
-      .team-table th:nth-child(2) {
-        width: 80px;
-      }
-
-      .team-table th:nth-child(3) {
-        width: 50px;
-      }
-
-      .team-table th:nth-child(4) {
-        width: 100px;
-      }
-
-      .excel-link-row {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-    }
-
-    /* Empty State */
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--text-muted);
-    }
-
-    .empty-state svg {
-      margin-bottom: 16px;
-      opacity: 0.5;
-    }
-
-    /* ===== Scrollbar ===== */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--glass-bg);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--glass-border);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--text-muted);
+      --bg: #0a0a0a;
+      --bg-2: #141414;
+      --bg-3: #1e1e1e;
+      --line: #2a2a2a;
+      --ink: #f5f5f0;
+      --ink-dim: #9a9a94;
+      --ink-faint: #5a5a56;
+      --volt: #d4ff00;
+      --volt-ink: #0a0a0a;
+      --hot: #ff3b30;
+      --team-A: #3d7bff;
+      --team-B: #00d084;
+      --team-C: #ff8a00;
+      --display: 'Anton', 'Black Han Sans', sans-serif;
+      --kr-display: 'Black Han Sans', sans-serif;
+      --body: 'IBM Plex Sans KR', -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', 'IBM Plex Sans KR', monospace;
+      --topbar-h: 54px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-padding-top: calc(var(--topbar-h) + 60px); }
+    body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body.modal-open { overflow: hidden; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    [hidden] { display: none !important; }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+
+    .team-badge.team-A { color: var(--team-A); }
+    .team-badge.team-B { color: var(--team-B); }
+    .team-badge.team-C { color: var(--team-C); }
+
+    /* ===== 상단 바 ===== */
+    .topbar { display: flex; align-items: stretch; border-bottom: 2px solid var(--ink); position: sticky; top: 0; z-index: 30; background: var(--bg); }
+    .logo { background: var(--volt); color: var(--volt-ink); font-family: var(--display); font-size: 22px; letter-spacing: .02em; padding: 10px 28px 10px 20px; clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%); display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .logo i { font-style: normal; font-family: var(--kr-display); font-size: 15px; }
+    .live { display: flex; align-items: center; gap: 8px; padding: 0 18px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .1em; flex-shrink: 0; }
+    .live::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--hot); box-shadow: 0 0 0 4px rgba(255, 59, 48, .25); animation: pulse 1.6s infinite; }
+    @keyframes pulse { 50% { box-shadow: 0 0 0 8px rgba(255, 59, 48, 0); } }
+    .season-tabs { margin-left: auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+    .season-tabs::-webkit-scrollbar { display: none; }
+    .season-tab { padding: 0 16px; display: flex; flex-direction: column; justify-content: center; line-height: 1.1; border-left: 1px solid var(--bg-3); color: var(--ink-faint); min-width: 72px; flex-shrink: 0; }
+    .season-tab-year { font-family: var(--mono); font-size: 10px; }
+    .season-tab-month { font-family: var(--display); font-size: 20px; }
+    .season-tab:hover { color: var(--ink); }
+    .season-tab.active { background: var(--ink); color: var(--bg); }
+
+    /* ===== 티커 ===== */
+    .ticker { background: var(--volt); color: var(--volt-ink); overflow: hidden; white-space: nowrap; border-bottom: 2px solid var(--ink); }
+    .ticker-track { display: inline-flex; gap: 40px; padding: 8px 0; animation: tick 40s linear infinite; font-family: var(--kr-display); font-size: 15px; }
+    .ticker-track span::after { content: '◆'; margin-left: 40px; font-size: 10px; vertical-align: middle; }
+    @keyframes tick { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
+
+    /* ===== 히어로 (압축형) ===== */
+    .hero { position: relative; overflow: hidden; border-bottom: 2px solid var(--ink); background: var(--bg); }
+    .hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-55deg, transparent 0 22px, rgba(255, 255, 255, .025) 22px 23px); pointer-events: none; }
+    .hero-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding-top: 32px; padding-bottom: 28px; align-items: end; }
+    .kicker { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .2em; color: var(--volt); }
+    .hero h1 { font-family: var(--kr-display); font-weight: 400; font-size: clamp(34px, 4.4vw, 58px); line-height: 1.02; margin: 10px 0 6px; }
+    .hero h1 em { font-style: normal; color: var(--volt); }
+    .hero-sub { color: var(--ink-dim); font-size: 14px; }
+    .round-mega { display: flex; align-items: flex-end; gap: 12px; margin-top: 18px; line-height: .78; }
+    .rm-label { font-family: var(--display); font-size: 24px; writing-mode: vertical-rl; transform: rotate(180deg); color: var(--ink-dim); letter-spacing: .08em; }
+    .rm-value { font-family: var(--display); font-size: clamp(110px, 12vw, 168px); color: var(--ink); }
+    .rm-total { font-family: var(--display); font-size: 48px; color: var(--ink-faint); padding-bottom: 4px; }
+    .progress { margin-top: 16px; height: 8px; background: var(--bg-3); position: relative; clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%); }
+    .progress::after { content: ''; position: absolute; inset: 0 auto 0 0; width: var(--progress, 0%); background: var(--volt); }
+
+    .hero-side { display: grid; gap: 14px; }
+    .board { background: var(--bg-2); border: 2px solid var(--ink); }
+    .board-head { display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; background: var(--ink); color: var(--bg); font-family: var(--display); font-size: 18px; letter-spacing: .04em; }
+    .board-head small { font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .st-item { display: grid; grid-template-columns: 50px 1fr auto 80px; align-items: center; gap: 14px; padding: 9px 16px; border-bottom: 1px solid var(--bg-3); position: relative; }
+    .st-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--tc); }
+    .st-item[data-team="A"] { --tc: var(--team-A); }
+    .st-item[data-team="B"] { --tc: var(--team-B); }
+    .st-item[data-team="C"] { --tc: var(--team-C); }
+    .st-rank { font-family: var(--display); font-size: 30px; line-height: 1; color: var(--ink-faint); }
+    .rank-1 .st-rank { color: var(--volt); }
+    .st-team { font-family: var(--kr-display); font-size: 24px; }
+    .st-record { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); }
+    .st-record b { color: var(--ink); font-size: 15px; }
+    .st-points { text-align: right; font-family: var(--display); font-size: 34px; line-height: 1; }
+    .st-points small { font-family: var(--body); font-size: 12px; color: var(--ink-dim); margin-left: 3px; }
+    .st-bar { position: absolute; left: 5px; bottom: 0; height: 2px; width: calc(var(--pts) - 5px); background: var(--tc); opacity: .6; }
+    .board-actions { display: flex; }
+    .board-actions > * { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 8px; text-align: center; font-size: 12.5px; font-weight: 700; border-right: 1px solid var(--bg-3); }
+    .board-actions > *:last-child { border-right: 0; }
+    .board-actions > *:hover { background: var(--volt); color: var(--volt-ink); }
+
+    .hero-stats { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); }
+    .hero-stats > * { padding: 10px 14px; border-right: 1px solid var(--line); text-align: left; transition: background .15s; }
+    .hero-stats > *:last-child { border-right: 0; }
+    .hs-v { font-family: var(--display); font-size: 28px; line-height: 1; }
+    .hs-l { font-size: 12px; color: var(--ink-dim); margin-top: 4px; }
+    .hero-stats button:hover { background: var(--volt); color: var(--volt-ink); }
+    .hero-stats button:hover .hs-l { color: var(--volt-ink); }
+
+    /* 라운드 시상 띠 */
+    .awards-strip { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--ink); position: relative; }
+    .ra-item { padding: 12px 28px; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 14px; border-right: 2px solid var(--ink); align-items: center; }
+    .ra-item:last-child { border-right: 0; }
+    .ra-item:first-child { background: var(--volt); color: var(--volt-ink); }
+    .ra-item:first-child .ra-label em { color: var(--volt-ink); opacity: .6; }
+    .ra-icon { grid-row: span 2; font-size: 26px; }
+    .ra-label { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .1em; }
+    .ra-label em { font-style: normal; color: var(--ink-faint); margin-left: 8px; }
+    .ra-value { font-family: var(--kr-display); font-size: 24px; line-height: 1.2; }
+    .ra-value small { font-family: var(--display); font-size: 18px; margin-left: 8px; }
+
+    /* ===== 콘텐츠 탭 ===== */
+    .tabs-bar { position: sticky; top: var(--topbar-h); z-index: 25; background: var(--bg); border-bottom: 2px solid var(--ink); }
+    .tabs { display: flex; overflow-x: auto; scrollbar-width: none; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab { padding: 14px 22px 12px; font-family: var(--kr-display); font-size: 19px; color: var(--ink-faint); white-space: nowrap; border-bottom: 4px solid transparent; }
+    .tab em { font-style: normal; font-family: var(--display); font-size: 13px; margin-left: 6px; letter-spacing: .04em; }
+    .tab:hover { color: var(--ink); }
+    .tab.active { color: var(--ink); border-bottom-color: var(--volt); }
+    .tab.active em { color: var(--volt); }
+    .panel { padding: 24px 0 40px; }
+
+    /* ===== 선수 기록 (박스스코어) ===== */
+    .records-tools { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+    .records-note { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); }
+    .search { display: flex; align-items: center; gap: 10px; border: 2px solid var(--ink); padding: 8px 14px; min-width: 300px; }
+    .search:focus-within { border-color: var(--volt); }
+    .search input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--ink); font: inherit; font-weight: 500; }
+    .search input::placeholder { color: var(--ink-faint); }
+    .table-box { border: 2px solid var(--ink); max-height: calc(100vh - var(--topbar-h) - 150px); min-height: 360px; overflow: auto; scrollbar-color: var(--ink-faint) var(--bg); }
+    table.stats { width: 100%; border-collapse: separate; border-spacing: 0; white-space: nowrap; font-size: 14px; }
+    .stats thead th { position: sticky; top: 0; z-index: 3; background: var(--ink); color: var(--bg); height: 34px; padding: 0 12px; font-size: 12px; font-weight: 700; cursor: pointer; user-select: none; border-right: 1px solid #d0d0ca; }
+    .stats thead tr.th-sub th { top: 34px; height: 28px; background: #d9d9d3; font-family: var(--mono); font-size: 11px; }
+    .stats thead th.grp { font-family: var(--display); font-weight: 400; font-size: 16px; letter-spacing: .04em; cursor: default; }
+    .stats thead th.grp-active, .stats thead th.sorted { background: var(--volt); color: var(--volt-ink); }
+    .stats thead th i { font-style: normal; font-size: 9px; }
+    .stats td { padding: 10px 12px; text-align: center; border-bottom: 1px solid var(--bg-3); background: var(--bg); font-family: var(--mono); font-weight: 500; }
+    .stats td.avg { color: var(--ink-dim); }
+    .stats tbody tr:hover td { background: var(--bg-2); }
+    .stats td.hl { background: #1a1d0c; color: var(--volt); font-weight: 700; }
+    .sticky-1 { position: sticky; left: 0; z-index: 2; width: 54px; }
+    .sticky-2 { position: sticky; left: 54px; z-index: 2; text-align: left !important; min-width: 100px; border-right: 2px solid var(--bg-3); }
+    thead .sticky-1, thead .sticky-2 { z-index: 4; }
+    td.col-name { font-family: var(--body) !important; font-weight: 700 !important; }
+    .rank-num { font-family: var(--display); font-size: 20px; color: var(--ink-faint); }
+    tr.top .rank-num { color: var(--ink); }
+    tr.top-1 td.col-rank { background: var(--volt); }
+    tr.top-1 .rank-num { color: var(--volt-ink); }
+    .stats td .team-badge { font-family: var(--display); font-size: 18px; }
+    .empty { padding: 48px; text-align: center; color: var(--ink-dim); font-family: var(--body); }
+
+    /* ===== 부문별 선두 ===== */
+    .leaders { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--ink); border: 2px solid var(--ink); }
+    .ld-card { background: var(--bg); padding: 18px 22px; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+    .ld-card:hover { background: var(--bg-2); }
+    .ld-cat { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+    .ld-cat em { font-style: normal; color: var(--volt); }
+    .ld-val { font-family: var(--display); font-size: 92px; line-height: .85; margin-top: 12px; color: var(--ink); }
+    .ld-val small { font-size: 18px; color: var(--ink-faint); margin-left: 6px; }
+    .ld-card:first-child .ld-val { color: var(--volt); }
+    .ld-top { order: 3; margin-top: 8px; display: flex; align-items: baseline; gap: 10px; }
+    .ld-name { font-family: var(--kr-display); font-size: 24px; }
+    .ld-meta { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); }
+    .ld-meta .team-badge { font-weight: 700; }
+    .ld-rest { order: 4; list-style: none; margin-top: 12px; padding-top: 10px; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--ink-dim); border-top: 1px solid var(--bg-3); }
+    .ld-rest li b { font-family: var(--mono); color: var(--ink); margin-left: 4px; }
+
+    /* ===== 라운드 기록 ===== */
+    .gamelog { border: 2px solid var(--ink); }
+    .rt-round { display: grid; grid-template-columns: 120px 1.2fr 1.4fr; align-items: center; border-bottom: 1px solid var(--bg-3); }
+    .rt-round:last-child { border-bottom: 0; }
+    .rt-round:first-child { background: var(--bg-2); }
+    .rt-head { padding: 14px 20px; display: grid; }
+    .rt-no { font-family: var(--display); font-size: 36px; line-height: 1; }
+    .rt-round:first-child .rt-no { color: var(--volt); }
+    .rt-label { font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: .1em; text-transform: uppercase; }
+    .rt-teams { list-style: none; display: flex; gap: 8px; padding: 12px 16px; }
+    .rt-teams li { flex: 1; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 8px; background: var(--bg-3); padding: 8px 10px; font-size: 12px; color: var(--ink-dim); white-space: nowrap; }
+    .rt-teams li .team-badge { grid-row: span 2; font-family: var(--display); font-size: 26px; line-height: 1; }
+    .rt-teams li b { font-family: var(--display); font-size: 18px; color: var(--ink); font-weight: 400; }
+    .rt-awards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 12px 20px; }
+    .rt-awards dt { font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: .1em; }
+    .rt-awards dd { font-weight: 700; font-size: 14px; }
+    .rt-awards dd small { font-family: var(--mono); color: var(--volt); font-weight: 500; }
+
+    footer { padding: 24px 0 100px; border-top: 2px solid var(--ink); font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: .1em; }
+
+    /* ===== 모달 공통 ===== */
+    .modal { position: fixed; inset: 0; background: rgba(0, 0, 0, .85); display: grid; place-items: center; z-index: 60; opacity: 0; pointer-events: none; transition: opacity .2s; padding: 16px; }
+    .modal.open { opacity: 1; pointer-events: auto; }
+    .modal-card { width: min(540px, 100%); max-height: 86vh; overflow: auto; background: var(--bg); border: 2px solid var(--ink); }
+    .modal-card.wide { width: min(860px, 100%); }
+    .modal-head { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; background: var(--ink); color: var(--bg); padding: 10px 16px; }
+    .modal-head h3 { font-family: var(--kr-display); font-weight: 400; font-size: 22px; }
+    .modal-x { font-size: 28px; line-height: 1; width: 32px; height: 32px; }
+    .team-tabs { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 2px solid var(--ink); }
+    .team-tab { padding: 12px; font-family: var(--kr-display); font-size: 18px; color: var(--ink-faint); }
+    .team-tab.active { background: var(--volt); color: var(--volt-ink); }
+    .team-summary { display: flex; gap: 16px; padding: 12px 16px; font-family: var(--mono); font-size: 12px; color: var(--ink-dim); }
+    .team-summary .team-badge { font-family: var(--kr-display); font-size: 16px; }
+    .mini { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .mini th { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); padding: 8px; border-bottom: 1px solid var(--bg-3); }
+    .mini td { padding: 9px 8px; text-align: center; border-bottom: 1px solid var(--bg-3); }
+    .trade-card { padding: 14px 16px; border-bottom: 1px solid var(--bg-3); }
+    .trade-team { font-family: var(--kr-display); font-size: 20px; margin-bottom: 6px; }
+    .trade-row { display: grid; grid-template-columns: 52px 1fr auto; gap: 10px; padding: 4px 0; font-size: 14px; align-items: center; }
+    .trade-kind { font-family: var(--mono); font-size: 11px; font-weight: 700; text-align: center; padding: 2px 0; }
+    .trade-kind.in { background: var(--volt); color: var(--volt-ink); }
+    .trade-kind.out { background: var(--hot); color: #fff; }
+    .trade-from { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); }
+
+    /* 역대 시상 (레전드) */
+    .hall { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; padding: 16px; }
+    .hof-season { position: relative; border: 2px solid var(--ink); padding: 22px; overflow: hidden; background: var(--bg-2); }
+    .hof-head { position: relative; }
+    .hof-year { position: absolute; right: -8px; top: -40px; font-family: var(--display); font-size: 120px; line-height: 1; color: var(--bg-3); pointer-events: none; }
+    .hof-title { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--volt); letter-spacing: .1em; position: relative; }
+    .hof-mvp { position: relative; margin: 14px 0 18px; display: grid; }
+    .hof-mvp-label { justify-self: start; background: var(--volt); color: var(--volt-ink); font-family: var(--display); font-size: 15px; padding: 2px 10px; transform: skewX(-12deg); }
+    .hof-mvp-name { font-family: var(--kr-display); font-size: 52px; line-height: 1.05; margin-top: 8px; }
+    .hof-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--bg-3); position: relative; }
+    .hof-list li { display: flex; align-items: center; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--bg-3); font-size: 13px; }
+    .hof-label { color: var(--ink-dim); width: 72px; }
+    .hof-name { font-weight: 700; }
+
+    /* ===== AI 채팅 ===== */
+    .chat-fab { position: fixed; right: 24px; bottom: 24px; height: 52px; padding: 0 20px; background: var(--volt); color: var(--volt-ink); font-family: var(--display); font-size: 18px; display: flex; align-items: center; gap: 10px; z-index: 40; clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); }
+    .chat-modal { position: fixed; right: 24px; bottom: 90px; width: min(420px, calc(100% - 32px)); height: min(600px, calc(100vh - 140px)); background: var(--bg); border: 2px solid var(--ink); display: flex; flex-direction: column; z-index: 50; opacity: 0; transform: translateY(16px); pointer-events: none; transition: all .2s; }
+    .chat-modal.open { opacity: 1; transform: none; pointer-events: auto; }
+    .chat-header { display: flex; justify-content: space-between; align-items: center; background: var(--ink); color: var(--bg); padding: 10px 14px; }
+    .chat-header h3 { font-family: var(--kr-display); font-weight: 400; font-size: 20px; }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+    .message { max-width: 88%; padding: 10px 13px; font-size: 14px; line-height: 1.55; word-break: keep-all; overflow-wrap: anywhere; }
+    .message.user { align-self: flex-end; background: var(--volt); color: var(--volt-ink); font-weight: 500; }
+    .message.ai { align-self: flex-start; background: var(--bg-2); border: 1px solid var(--line); }
+    .message.system { align-self: center; max-width: 100%; text-align: center; font-size: 13px; color: var(--ink-dim); }
+    .message.ai strong { color: var(--volt); }
+    .message.ai ul, .message.ai ol { padding-left: 18px; margin: 4px 0; }
+    .message.ai h3, .message.ai h4 { font-size: 15px; margin: 8px 0 4px; }
+    .message.ai code { font-family: var(--mono); background: var(--bg-3); padding: 0 4px; }
+    .message.ai hr { border: 0; border-top: 1px solid var(--line); margin: 8px 0; }
+    .message.ai .table-wrapper { overflow-x: auto; margin: 6px 0; }
+    .message.ai table { border-collapse: collapse; font-size: 12.5px; white-space: nowrap; }
+    .message.ai th, .message.ai td { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+    .message.ai th { font-family: var(--mono); color: var(--volt); }
+    .typing-indicator { align-self: flex-start; display: flex; gap: 4px; padding: 12px; background: var(--bg-2); }
+    .typing-indicator span { width: 6px; height: 6px; background: var(--volt); animation: blink 1s infinite; }
+    .typing-indicator span:nth-child(2) { animation-delay: .15s; }
+    .typing-indicator span:nth-child(3) { animation-delay: .3s; }
+    @keyframes blink { 50% { opacity: .2; } }
+    .chat-input-area { display: flex; border-top: 2px solid var(--ink); }
+    .chat-input-area input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--ink); font: inherit; padding: 12px 14px; }
+    .send-btn { width: 52px; background: var(--volt); color: var(--volt-ink); display: grid; place-items: center; }
+    .send-btn:disabled { opacity: .4; }
+    .api-key-content { padding: 18px 16px; }
+    .api-key-content p { font-size: 13px; color: var(--ink-dim); margin-bottom: 12px; }
+    .api-key-content input { width: 100%; background: var(--bg-2); border: 2px solid var(--line); color: var(--ink); font: inherit; padding: 10px 12px; outline: 0; }
+    .api-key-content input:focus { border-color: var(--volt); }
+    .api-key-buttons { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; }
+    .btn-primary, .btn-secondary { padding: 9px 18px; font-weight: 700; font-size: 13px; }
+    .btn-primary { background: var(--volt); color: var(--volt-ink); }
+    .btn-secondary { border: 1px solid var(--line); }
+
+    .toast { position: fixed; left: 50%; bottom: 96px; transform: translate(-50%, 20px); background: var(--volt); color: var(--volt-ink); font-weight: 700; padding: 12px 20px; font-size: 13px; opacity: 0; transition: all .25s; z-index: 70; pointer-events: none; max-width: calc(100% - 32px); text-align: center; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .capturing .board-actions, .capturing .rm-label { display: none; }
+
+    /* ===== 반응형 ===== */
+    @media (max-width: 960px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 20px; align-items: stretch; }
+      .leaders { grid-template-columns: repeat(2, 1fr); }
+      .rt-round { grid-template-columns: 90px 1fr; }
+      .rt-awards { grid-column: 1 / -1; border-top: 1px dashed var(--bg-3); }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 0 14px; }
+      .topbar { flex-wrap: wrap; }
+      .logo { font-size: 19px; padding: 8px 24px 8px 14px; }
+      .live { display: none; }
+      .season-tabs { margin-left: 0; width: 100%; border-top: 1px solid var(--bg-3); }
+      .season-tab { min-width: 62px; padding: 5px 12px; }
+      .season-tab-month { font-size: 17px; }
+      .ticker-track { font-size: 13px; padding: 6px 0; }
+
+      /* 히어로: 제목과 라운드를 한 줄로 */
+      .hero-grid { padding-top: 18px; padding-bottom: 16px; gap: 14px; }
+      .hero-main { display: grid; grid-template-columns: 1fr auto; align-items: end; column-gap: 12px; }
+      .hero-main .kicker { grid-column: 1 / -1; font-size: 11px; }
+      .hero h1 { font-size: 30px; margin: 6px 0 2px; }
+      .hero-sub { font-size: 12px; }
+      .round-mega { grid-column: 2; grid-row: 2 / span 2; margin-top: 0; gap: 4px; }
+      .rm-label { font-size: 13px; }
+      .rm-value { font-size: 84px; }
+      .rm-total { font-size: 26px; }
+      .progress { grid-column: 1 / -1; margin-top: 12px; height: 6px; }
+      .st-item { grid-template-columns: 34px 1fr auto auto; gap: 10px; padding: 7px 12px; }
+      .st-rank { font-size: 22px; }
+      .st-team { font-size: 19px; }
+      .st-record { font-size: 12px; }
+      .st-points { font-size: 26px; }
+      .board-head { padding: 6px 12px; font-size: 16px; }
+      .board-actions > * { padding: 9px 4px; font-size: 12px; }
+      .hero-stats > * { padding: 8px 10px; }
+      .hs-v { font-size: 22px; }
+      .hs-l { font-size: 11px; }
+      .awards-strip { grid-template-columns: repeat(3, 1fr); }
+      .ra-item { grid-template-columns: 1fr; padding: 8px 10px; border-right-width: 1px; }
+      .ra-icon { display: none; }
+      .ra-label { font-size: 10px; letter-spacing: 0; }
+      .ra-label em { display: none; }
+      .ra-value { font-size: 16px; overflow-wrap: anywhere; }
+      .ra-value small { display: block; font-size: 13px; margin: 0; }
+
+      .tab { padding: 11px 14px 9px; font-size: 16px; }
+      .tab em { display: none; }
+      .panel { padding: 14px 0 28px; }
+      .records-tools { flex-direction: column-reverse; align-items: stretch; gap: 8px; margin-bottom: 10px; }
+      .records-note { font-size: 11px; }
+      .search { min-width: 0; padding: 7px 12px; }
+      .table-box { max-height: calc(100vh - var(--topbar-h) - 130px); }
+      .stats td { padding: 9px 10px; font-size: 13px; }
+
+      .leaders { grid-template-columns: 1fr 1fr; }
+      .ld-card { padding: 14px; }
+      .ld-val { font-size: 58px; }
+      .ld-val small { font-size: 13px; }
+      .ld-name { font-size: 18px; }
+      .ld-top { flex-wrap: wrap; gap: 2px 8px; }
+      .ld-rest { font-size: 11.5px; }
+
+      .rt-round { grid-template-columns: 1fr; }
+      .rt-head { display: flex; align-items: baseline; gap: 10px; padding: 12px 12px 0; }
+      .rt-no { font-size: 28px; }
+      .rt-teams { padding: 10px 12px; }
+      .rt-awards { grid-template-columns: 1fr 1fr; padding: 10px 12px; }
+
+      .hall { grid-template-columns: 1fr; padding: 12px; }
+      .hof-mvp-name { font-size: 42px; }
+      .chat-fab { bottom: 16px; right: 16px; height: 46px; padding: 0 16px; }
+      .chat-fab span { display: none; }
+      .chat-modal { right: 16px; bottom: 74px; }
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 
 <body>
-  <!-- Background -->
-  <div class="bg-image"></div>
-  <div class="bg-mesh"></div>
+  <nav class="topbar" id="topbar">
+    <div class="logo">NINEBLOCKERS <i>나인블로커스</i></div>
+    <div class="live" data-needs-meta>LIVE SEASON</div>
+    <div class="season-tabs" id="seasonTabs"></div>
+  </nav>
 
-  <!-- Theme Toggle -->
-  <div class="theme-toggle">
-    <button class="theme-btn" id="themeToggle" title="Toggle theme">
-      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-      </svg>
-      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-      </svg>
-    </button>
-  </div>
+  <div class="ticker" data-needs-meta><div class="ticker-track" id="ticker"></div></div>
 
-  <div class="container">
-    <header class="glass">
-      <h1>나인블로커스 리그</h1>
-      <p>2026년 10월 시즌 선수 통계</p>
-      <div class="stats-summary">
-        <div class="stat-item">
-          <div class="stat-value" id="totalRounds">12</div>
-          <div class="stat-label">총 라운드</div>
+  <header class="hero" id="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-main">
+        <div class="kicker">GBL · <span data-bind="season"></span> SEASON</div>
+        <h1>나인블로커스<br><em>리그</em> 기록실</h1>
+        <p class="hero-sub"><span data-bind="season"></span> 시즌 선수 통계</p>
+        <div class="round-mega">
+          <span class="rm-label">ROUND</span>
+          <span class="rm-value" id="statCurrent">-</span>
+          <span class="rm-total">/<span data-bind="totalRounds"></span></span>
         </div>
-        <div class="stat-item">
-          <div class="stat-value" id="totalPlayers">42</div>
-          <div class="stat-label">참가 선수</div>
-        </div>
-        <button class="stat-item team-view-btn" id="teamViewBtn">
-          <div class="stat-value" id="totalTeams">3</div>
-          <div class="stat-label">팀 보기</div>
-        </button>
-        <button class="stat-item award-history-btn" id="awardHistoryBtn">
-          <div class="stat-value">🏆</div>
-          <div class="stat-label">역대 시상</div>
-        </button>
+        <div class="progress" id="roundProgress"></div>
       </div>
 
-      <!-- 팀 순위 및 어워드 (메타데이터에서 동적 로딩) -->
-      <div class="league-info" id="leagueInfo" style="display: none;">
-        <div class="current-round-row">
-          <div class="current-round-badge" id="currentRoundBadge">
-            <span class="round-label">현재</span>
-            <span class="round-value" id="currentRoundValue">1</span>
-            <span class="round-total">/ 15 라운드</span>
+      <div class="hero-side">
+        <div class="board" data-needs-meta>
+          <div class="board-head">STANDINGS <small>팀 순위 · 승점</small></div>
+          <div id="standings"></div>
+          <div class="board-actions">
+            <a id="excelLink" target="_blank" rel="noopener">원본 엑셀 ↗</a>
+            <button id="shareBtn">라운드 정보 공유</button>
+            <button id="tradeBtn">트레이드 현황</button>
           </div>
         </div>
-        <div class="standings-row">
-          <div class="standing-item" id="standing1">
-            <span class="standing-rank rank-medal-1">1위</span>
-            <span class="standing-team team-badge team-C">C팀</span>
-            <span class="standing-record">2승 0패</span>
-            <span class="standing-points">6점</span>
-          </div>
-          <div class="standing-item" id="standing2">
-            <span class="standing-rank rank-medal-2">2위</span>
-            <span class="standing-team team-badge team-A">A팀</span>
-            <span class="standing-record">1승 1패</span>
-            <span class="standing-points">3점</span>
-          </div>
-          <div class="standing-item" id="standing3">
-            <span class="standing-rank rank-medal-3">3위</span>
-            <span class="standing-team team-badge team-B">B팀</span>
-            <span class="standing-record">0승 2패</span>
-            <span class="standing-points">1점</span>
-          </div>
+        <div class="hero-stats">
+          <div><div class="hs-v" id="statRounds">-</div><div class="hs-l">총 라운드</div></div>
+          <div><div class="hs-v" id="statPlayers">-</div><div class="hs-l">참가 선수</div></div>
+          <button id="teamBtn"><div class="hs-v">3</div><div class="hs-l">팀 보기 →</div></button>
+          <button id="awardHistoryBtn"><div class="hs-v">🏆</div><div class="hs-l">역대 시상 →</div></button>
         </div>
-        <div class="awards-row" id="awardsRow">
-          <div class="award-item">
-            <span class="award-icon">👑</span>
-            <span class="award-label">MOM</span>
-            <span class="award-value" id="awardMom">권인회</span>
-          </div>
-          <div class="award-item">
-            <span class="award-icon">✌️</span>
-            <span class="award-label">더블더블</span>
-            <span class="award-value" id="awardDD">이승현</span>
-          </div>
-          <div class="award-item">
-            <span class="award-icon">🏀</span>
-            <span class="award-label">득점왕</span>
-            <span class="award-value" id="awardScorer">강재훈(66점)</span>
-          </div>
-        </div>
-        <div class="excel-link-row">
-          <a id="excelLinkBtn" href="#"
-            target="_blank" rel="noopener" class="excel-link-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            원본 엑셀 바로가기
-          </a>
-          <button class="excel-link-btn share-btn" onclick="shareLeagueInfo()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-              <polyline points="16 6 12 2 8 6"></polyline>
-              <line x1="12" y1="2" x2="12" y2="15"></line>
-            </svg>
-            라운드 정보 공유
-          </button>
-          <button id="tradeBtn" class="excel-link-btn" onclick="openTradeModal()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="17 1 21 5 17 9"></polyline>
-              <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
-              <polyline points="7 23 3 19 7 15"></polyline>
-              <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
-            </svg>
-            트레이드 현황
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <div class="controls">
-      <div class="toggle-group" id="seasonSelector">
-        <button class="toggle-btn" data-season="202402">2024년 2월</button>
-        <button class="toggle-btn" data-season="202409">2024년 9월</button>
-        <button class="toggle-btn" data-season="202508">2025년 8월</button>
-        <button class="toggle-btn" data-season="202601">2026년 1월</button>
-        <button class="toggle-btn" data-season="202605">2026년 5월</button>
-        <button class="toggle-btn active" data-season="202610">2026년 10월</button>
-      </div>
-      <div class="search-box">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="searchInput" placeholder="선수 이름으로 검색...">
       </div>
     </div>
+    <div class="awards-strip" id="roundAwards" data-needs-meta></div>
+  </header>
 
-    <div class="table-wrapper glass">
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>순위</th>
-              <th data-sort="번호">번호<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="팀">팀<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="선수명">선수명<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="출석">출석<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="누적득점" class="sorted desc">누적득점<span class="sort-icon"><svg width="12" height="12"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="평균득점">평균득점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="누적어시">누적어시<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="평균어시">평균어시<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="누적리바">누적리바<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="평균리바">평균리바<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="누적스틸">누적스틸<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="평균스틸">평균스틸<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="누적블록">누적블록<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="평균블록">평균블록<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="누적3점">누적3점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-              <th data-sort="평균3점">평균3점<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7-7 7 7" />
-                  </svg></span></th>
-            </tr>
-          </thead>
-          <tbody id="tableBody">
-          </tbody>
-        </table>
-      </div>
+  <div class="tabs-bar" id="tabsBar">
+    <div class="wrap tabs" role="tablist">
+      <button class="tab active" role="tab" data-panel="records">선수 기록<em>BOX SCORE</em></button>
+      <button class="tab" role="tab" data-panel="leaders">부문별 선두<em>LEADERS</em></button>
+      <button class="tab" role="tab" data-panel="rounds" data-needs-meta>라운드 기록<em>GAME LOG</em></button>
     </div>
   </div>
 
-  <!-- Chat FAB -->
+  <main class="wrap">
+    <section class="panel" id="panel-records">
+      <div class="records-tools">
+        <p class="records-note">열 제목을 누르면 정렬 · 누적 / 평균</p>
+        <label class="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" /></svg>
+          <input type="text" id="searchInput" placeholder="선수 이름으로 검색...">
+        </label>
+      </div>
+      <div class="table-box">
+        <table class="stats"><thead id="statsHead"></thead><tbody id="tableBody"></tbody></table>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-leaders" hidden>
+      <div class="leaders" id="leaders"></div>
+    </section>
+
+    <section class="panel" id="panel-rounds" hidden>
+      <div class="gamelog" id="roundTimeline"></div>
+    </section>
+  </main>
+
+  <footer class="wrap">NINEBLOCKERS BASKETBALL LEAGUE — OFFICIAL STATS</footer>
+
+  <!-- AI 채팅 -->
   <button class="chat-fab" id="chatFab" title="AI에게 질문하기">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-      stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-    </svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+    <span>ASK AI</span>
   </button>
-
-  <!-- Chat Modal -->
   <div class="chat-modal" id="chatModal">
     <div class="chat-header">
-      <h3>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-          <line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-        리그 통계 AI
-      </h3>
-      <button class="close-btn" id="closeChat">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+      <h3>리그 통계 AI</h3>
+      <button class="modal-x" id="closeChat" title="닫기">×</button>
     </div>
     <div class="chat-messages" id="chatMessages">
-      <div class="message system">
-        나인블로커스 리그 통계에 대해 무엇이든 물어보세요!
-      </div>
+      <div class="message system">나인블로커스 리그 통계에 대해 무엇이든 물어보세요!</div>
     </div>
     <div class="chat-input-area">
       <input type="text" id="chatInput" placeholder="질문을 입력하세요..." autocomplete="off">
-      <button class="send-btn" id="sendBtn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="22" y1="2" x2="11" y2="13"></line>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-        </svg>
+      <button class="send-btn" id="sendBtn" title="전송">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
       </button>
     </div>
   </div>
 
-  <!-- Team Modal -->
-  <div class="team-modal" id="teamModal">
-    <div class="team-modal-content">
-      <div class="team-modal-header">
-        <h3>팀 정보</h3>
-        <button class="close-btn" id="closeTeamModal">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
+  <div class="modal" id="apiKeyModal">
+    <div class="modal-card">
+      <div class="modal-head"><h3>Gemini API 키 입력</h3></div>
+      <div class="api-key-content">
+        <p>AI 채팅 기능을 사용하려면 Google Gemini API 키가 필요합니다. 키는 브라우저에 저장됩니다.</p>
+        <input type="password" id="apiKeyInput" placeholder="API 키를 입력하세요...">
+        <div class="api-key-buttons">
+          <button class="btn-secondary" id="cancelApiKey">취소</button>
+          <button class="btn-primary" id="saveApiKey">저장</button>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <!-- 팀 정보 -->
+  <div class="modal" id="teamModal">
+    <div class="modal-card">
+      <div class="modal-head"><h3>팀 정보</h3><button class="modal-x" data-close title="닫기">×</button></div>
       <div class="team-tabs">
-        <button class="team-tab active" data-team="A">A팀</button>
+        <button class="team-tab" data-team="A">A팀</button>
         <button class="team-tab" data-team="B">B팀</button>
         <button class="team-tab" data-team="C">C팀</button>
       </div>
-      <div class="team-table-container">
-        <table class="team-table">
-          <thead>
-            <tr>
-              <th>번호</th>
-              <th>이름</th>
-              <th>출석</th>
-              <th>누적득점</th>
-            </tr>
-          </thead>
-          <tbody id="teamTableBody"></tbody>
-        </table>
-      </div>
+      <div class="team-summary" id="teamSummary"></div>
+      <table class="mini"><thead><tr><th>번호</th><th>이름</th><th>출석</th><th>누적득점</th></tr></thead><tbody id="teamBody"></tbody></table>
     </div>
   </div>
 
-  <!-- Trade Modal -->
-  <div class="trade-modal" id="tradeModal">
-    <div class="trade-modal-content">
-      <div class="trade-modal-header">
-        <h3 id="tradeModalTitle">8라운드 후 트레이드</h3>
-        <button class="close-btn" id="closeTradeModal">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-      <div class="trade-team-card team-a">
-        <div class="trade-team-name">A팀</div>
-        <div class="trade-row">
-          <span class="trade-badge in">IN</span>
-          <span class="trade-player-name">유지형(24)</span>
-          <span class="trade-player-from">← B팀</span>
-        </div>
-        <div class="trade-row">
-          <span class="trade-badge in">IN</span>
-          <span class="trade-player-name">강효진(28)</span>
-          <span class="trade-player-from">← C팀</span>
-        </div>
-        <div class="trade-row">
-          <span class="trade-badge out">OUT</span>
-          <span class="trade-player-name">김정호(32)</span>
-          <span class="trade-player-from">→ B팀</span>
-        </div>
-        <div class="trade-row">
-          <span class="trade-badge out">OUT</span>
-          <span class="trade-player-name">최효림(36)</span>
-          <span class="trade-player-from">→ C팀</span>
-        </div>
-      </div>
-      <div class="trade-team-card team-b">
-        <div class="trade-team-name">B팀</div>
-        <div class="trade-row">
-          <span class="trade-badge in">IN</span>
-          <span class="trade-player-name">김정호(32)</span>
-          <span class="trade-player-from">← A팀</span>
-        </div>
-        <div class="trade-row">
-          <span class="trade-badge in">IN</span>
-          <span class="trade-player-name">김주철(72)</span>
-          <span class="trade-player-from">← C팀</span>
-        </div>
-        <div class="trade-row">
-          <span class="trade-badge out">OUT</span>
-          <span class="trade-player-name">유지형(24)</span>
-          <span class="trade-player-from">→ A팀</span>
-        </div>
-        <div class="trade-row">
-          <span class="trade-badge out">OUT</span>
-          <span class="trade-player-name">김동광(30)</span>
-          <span class="trade-player-from">→ C팀</span>
-        </div>
-      </div>
-      <div class="trade-team-card team-c">
-        <div class="trade-team-name">C팀</div>
-        <div class="trade-row">
-          <span class="trade-badge in">IN</span>
-          <span class="trade-player-name">최효림(36)</span>
-          <span class="trade-player-from">← A팀</span>
-        </div>
-        <div class="trade-row">
-          <span class="trade-badge in">IN</span>
-          <span class="trade-player-name">김동광(30)</span>
-          <span class="trade-player-from">← B팀</span>
-        </div>
-        <div class="trade-row">
-          <span class="trade-badge out">OUT</span>
-          <span class="trade-player-name">강효진(28)</span>
-          <span class="trade-player-from">→ A팀</span>
-        </div>
-        <div class="trade-row">
-          <span class="trade-badge out">OUT</span>
-          <span class="trade-player-name">김주철(72)</span>
-          <span class="trade-player-from">→ B팀</span>
-        </div>
-      </div>
+  <!-- 트레이드 -->
+  <div class="modal" id="tradeModal">
+    <div class="modal-card">
+      <div class="modal-head"><h3 id="tradeModalTitle">트레이드</h3><button class="modal-x" data-close title="닫기">×</button></div>
+      <div id="tradeBody"></div>
     </div>
   </div>
 
-  <!-- 역대 시상 모달 -->
-  <div class="awards-modal" id="awardsModal">
-    <div class="awards-modal-content">
-      <div class="awards-modal-header">
-        <h3>🏆 역대 시상</h3>
-        <button class="close-btn" id="closeAwardsModal">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-      <div class="awards-modal-body" id="awardsModalBody"></div>
-    </div>
-  </div>
-
-  <!-- API Key Modal -->
-  <div class="api-key-modal" id="apiKeyModal">
-    <div class="api-key-content">
-      <h3>🔑 Gemini API 키 입력</h3>
-      <p>AI 채팅 기능을 사용하려면 Google Gemini API 키가 필요합니다. 키는 브라우저에 안전하게 저장됩니다.</p>
-      <input type="password" id="apiKeyInput" placeholder="API 키를 입력하세요...">
-      <div class="api-key-buttons">
-        <button class="btn-secondary" id="cancelApiKey">취소</button>
-        <button class="btn-primary" id="saveApiKey">저장</button>
-      </div>
+  <!-- 역대 시상 -->
+  <div class="modal" id="awardsModal">
+    <div class="modal-card wide">
+      <div class="modal-head"><h3>🏆 역대 시상 · LEGENDS</h3><button class="modal-x" data-close title="닫기">×</button></div>
+      <div class="hall" id="awardsModalBody"></div>
     </div>
   </div>
 
@@ -2384,514 +507,21 @@
     // 시즌 목록 (새 시즌 추가 시 배열 앞에 추가)
     const SEASONS = ['202610', '202605', '202601', '202508', '202409', '202402'];
 
-    // ===== 데이터 로더 (JSON 전용) =====
-    class LeagueDataLoader {
-      async loadSeasonData(seasonId) {
-        const response = await fetch(`league_stats_${seasonId}.json`, { cache: 'no-store' });
-        if (!response.ok) {
-          throw new Error(`Failed to load JSON for season ${seasonId}`);
-        }
-        console.log(`[DataLoader] Season ${seasonId}: loaded from JSON`);
-        return await response.json();
-      }
-
-      async loadMetadata(seasonId) {
-        try {
-          const response = await fetch(`league_metadata_${seasonId}.json`, { cache: 'no-store' });
-          if (!response.ok) return null;
-          return await response.json();
-        } catch (e) {
-          return null;
-        }
-      }
-    }
-
-    // 전역 데이터 로더 인스턴스
-    const dataLoader = new LeagueDataLoader();
-
-    // JSON 데이터 로딩 함수 (dataLoader 사용)
-    async function loadSeasonData(seasonId) {
-      return await dataLoader.loadSeasonData(seasonId);
-    }
-
-    async function loadAllSeasons() {
-      const data = {};
-      await Promise.all(SEASONS.map(async (seasonId) => {
-        data[seasonId] = await dataLoader.loadSeasonData(seasonId);
-      }));
-      return data;
-    }
-
-    // 메타데이터 로딩 함수 (dataLoader 사용)
-    async function loadSeasonMetadata(seasonId) {
-      return await dataLoader.loadMetadata(seasonId);
-    }
-
-    async function loadAllMetadata() {
-      const data = {};
-
-      // manifest 로드
-      let availableSeasons = [];
-      try {
-        const res = await fetch('metadata_manifest.json', { cache: 'no-store' });
-        if (res.ok) {
-          const manifest = await res.json();
-          availableSeasons = manifest.seasons || [];
-        }
-      } catch (e) {
-        // manifest 없으면 빈 배열 유지
-      }
-
-      // manifest에 있는 시즌만 메타데이터 로드
-      await Promise.all(availableSeasons.map(async (seasonId) => {
-        data[seasonId] = await dataLoader.loadMetadata(seasonId);
-      }));
-
-      return data;
-    }
-
-    // 시즌별 데이터 (JSON 파일에서 동적 로딩)
-    let seasonsData = {};
-    let metadataCache = {};
-    let seasonAwardsData = [];
-
-    // 역대 시상 데이터 로딩 (실패해도 앱 동작에 영향 없음)
-    async function loadSeasonAwards() {
-      try {
-        const res = await fetch('season_awards.json', { cache: 'no-store' });
-        if (!res.ok) return [];
-        const json = await res.json();
-        return json.seasonAwards || [];
-      } catch (e) {
-        return [];
-      }
-    }
-
-    // 현재 선택된 시즌 데이터
-    let currentSeason = '202610';
-    let leagueData = seasonsData[currentSeason];
-
-    // 시즌 전환 함수
-    function switchSeason(season) {
-      if (season === currentSeason) return;
-
-      currentSeason = season;
-      leagueData = seasonsData[season];
-
-      // UI 업데이트
-      updateHeader();
-      renderTable();
-
-      // 시즌 버튼 상태 업데이트
-      document.querySelectorAll('#seasonSelector .toggle-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.season === season);
-      });
-
-      // AI 채팅 히스토리 초기화 (시즌 변경시)
-      chatHistory = [];
-    }
-
-    // 헤더 정보 업데이트
-    function updateHeader() {
-      document.title = `나인블로커스 리그 - ${leagueData.시즌} 시즌`;
-      document.querySelector('header p').textContent = `${leagueData.시즌} 시즌 선수 통계`;
-      document.getElementById('totalRounds').textContent = leagueData.총라운드;
-      document.getElementById('totalPlayers').textContent = leagueData.총선수수;
-
-      // 메타데이터 표시
-      updateLeagueInfo();
-    }
-
-    // 리그 정보(순위, 어워드) 업데이트
-    function updateLeagueInfo() {
-      const metadata = metadataCache[currentSeason];
-      const leagueInfo = document.getElementById('leagueInfo');
-
-      if (!metadata) {
-        if (leagueInfo) leagueInfo.style.display = 'none';
-        return;
-      }
-
-      if (leagueInfo) leagueInfo.style.display = 'block';
-
-      // 현재 라운드 표시
-      const currentRoundValue = document.getElementById('currentRoundValue');
-      const roundTotalEl = document.querySelector('.round-total');
-      if (currentRoundValue) {
-        currentRoundValue.textContent = metadata.currentRound || 1;
-      }
-      if (roundTotalEl) {
-        roundTotalEl.textContent = `/ ${metadata.totalRounds || 15} 라운드`;
-      }
-
-      // 팀 순위 표시
-      const standings = metadata.standings || [];
-      // 승·패·승점이 모두 같으면 같은 순위 (예: 1위, 1위, 3위)
-      const ranks = [];
-      standings.forEach((team, i) => {
-        const prev = standings[i - 1];
-        const tied = prev && prev.wins === team.wins && prev.losses === team.losses && prev.points === team.points;
-        ranks.push(tied ? ranks[i - 1] : i + 1);
-      });
-      for (let i = 0; i < 3; i++) {
-        const standingEl = document.getElementById(`standing${i + 1}`);
-        if (standingEl && standings[i]) {
-          const team = standings[i];
-          const record = `${team.wins}승 ${team.losses}패`;
-          const rankEl = standingEl.querySelector('.standing-rank');
-          rankEl.textContent = `${ranks[i]}위`;
-          rankEl.className = `standing-rank rank-medal-${ranks[i]}`;
-          standingEl.querySelector('.standing-team').textContent = team.name;
-          standingEl.querySelector('.standing-team').className = `standing-team team-badge team-${team.team}`;
-          standingEl.querySelector('.standing-record').textContent = record;
-          standingEl.querySelector('.standing-points').textContent = `${team.points}점`;
-        }
-      }
-
-      // 최신 라운드의 어워드 표시
-      const roundHistory = metadata.roundHistory || [];
-      const latestRound = roundHistory[roundHistory.length - 1];
-      const awardsRow = document.getElementById('awardsRow');
-
-      // displayAwards: 여러 라운드가 한 번에 반영된 경우 '이름(N라)' 형식으로 합쳐진 어워드
-      const displayAwards = metadata.displayAwards || (latestRound && latestRound.awards);
-      if (displayAwards) {
-        awardsRow.style.display = 'flex';
-        const awards = displayAwards;
-
-        // MOM
-        const momEl = document.getElementById('awardMom');
-        if (momEl && awards.mom) {
-          momEl.textContent = awards.mom;
-        } else if (momEl) {
-          momEl.textContent = '-';
-        }
-
-        // 더블더블
-        const ddEl = document.getElementById('awardDD');
-        if (ddEl && awards.doubleDouble) {
-          ddEl.textContent = awards.doubleDouble;
-        } else if (ddEl) {
-          ddEl.textContent = '-';
-        }
-
-        // 득점왕
-        const scorerEl = document.getElementById('awardScorer');
-        if (scorerEl && awards.topScorer) {
-          scorerEl.textContent = `${awards.topScorer.name}(${awards.topScorer.points}점)`;
-        } else if (scorerEl) {
-          scorerEl.textContent = '-';
-        }
-      } else {
-        awardsRow.style.display = 'none';
-      }
-
-      // 원본 엑셀 링크 (시즌마다 URL이 다름)
-      const excelLinkBtn = document.getElementById('excelLinkBtn');
-      if (excelLinkBtn) {
-        if (metadata.excelUrl) {
-          excelLinkBtn.href = metadata.excelUrl;
-          excelLinkBtn.style.display = '';
-        } else {
-          excelLinkBtn.style.display = 'none';
-        }
-      }
-
-      // 트레이드 버튼 (트레이드가 진행된 시즌만 표시)
-      const tradeBtn = document.getElementById('tradeBtn');
-      const tradeModalTitle = document.getElementById('tradeModalTitle');
-      if (tradeBtn) {
-        if (metadata.tradeRound) {
-          tradeBtn.style.display = '';
-          if (tradeModalTitle) {
-            tradeModalTitle.textContent = `${metadata.tradeRound}라운드 후 트레이드`;
-          }
-        } else {
-          tradeBtn.style.display = 'none';
-        }
-      }
-    }
-
-    // 상태 관리
-    let currentSort = { field: '누적득점', order: 'desc' };
-    let searchQuery = '';
-    let apiKey = localStorage.getItem('gemini_api_key') || '';
-    let genAI = null;
-    let chatHistory = [];
-
-    // DOM 요소
-    const tableBody = document.getElementById('tableBody');
-    const searchInput = document.getElementById('searchInput');
-    const chatFab = document.getElementById('chatFab');
-    const chatModal = document.getElementById('chatModal');
-    const closeChat = document.getElementById('closeChat');
-    const chatMessages = document.getElementById('chatMessages');
-    const chatInput = document.getElementById('chatInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const apiKeyModal = document.getElementById('apiKeyModal');
-    const apiKeyInput = document.getElementById('apiKeyInput');
-    const saveApiKey = document.getElementById('saveApiKey');
-    const cancelApiKey = document.getElementById('cancelApiKey');
-    const themeToggle = document.getElementById('themeToggle');
-    const teamViewBtn = document.getElementById('teamViewBtn');
-    const teamModal = document.getElementById('teamModal');
-    const closeTeamModal = document.getElementById('closeTeamModal');
-    const teamTabs = document.querySelectorAll('.team-tab');
-    const teamTableBody = document.getElementById('teamTableBody');
-
-    // 테마 토글 기능
-    function initTheme() {
-      const savedTheme = localStorage.getItem('theme') || 'dark';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    }
-
-    function toggleTheme() {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-    }
-
-    themeToggle.addEventListener('click', toggleTheme);
-    initTheme();
-
-    // 데이터 가공 함수
-    function getPlayerValue(player, field) {
-      switch (field) {
-        case '번호': return player.번호;
-        case '팀': return player.팀;
-        case '선수명': return player.선수명;
-        case '출석': return player.출석;
-        case '누적득점': return player.득점.누적득점;
-        case '평균득점': return player.득점.평균득점;
-        case '누적어시': return player.부가기록.어시스트.누적;
-        case '평균어시': return player.부가기록.어시스트.평균;
-        case '누적리바': return player.부가기록.리바운드.누적;
-        case '평균리바': return player.부가기록.리바운드.평균;
-        case '누적스틸': return player.부가기록.스틸.누적;
-        case '평균스틸': return player.부가기록.스틸.평균;
-        case '누적블록': return player.부가기록.블록.누적;
-        case '평균블록': return player.부가기록.블록.평균;
-        case '누적3점': return player.부가기록['3점슛'].누적;
-        case '평균3점': return player.부가기록['3점슛'].평균;
-        default: return 0;
-      }
-    }
-
-    // 정렬된 전체 선수 목록 반환
-    function getSortedPlayers() {
-      let players = [...leagueData.선수목록];
-
-      // 정렬
-      players.sort((a, b) => {
-        const aVal = getPlayerValue(a, currentSort.field);
-        const bVal = getPlayerValue(b, currentSort.field);
-
-        if (typeof aVal === 'string') {
-          return currentSort.order === 'asc'
-            ? aVal.localeCompare(bVal)
-            : bVal.localeCompare(aVal);
-        }
-
-        return currentSort.order === 'asc' ? aVal - bVal : bVal - aVal;
-      });
-
-      return players;
-    }
-
-    // 검색 필터링 적용
-    function getFilteredPlayers(sortedPlayers) {
-      if (!searchQuery) {
-        return sortedPlayers;
-      }
-
-      return sortedPlayers.filter(p =>
-        p.선수명.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-
-    // 현재 정렬 기준에 따라 highlight 클래스 반환
-    function getHighlightClass(field) {
-      return currentSort.field === field ? 'highlight' : '';
-    }
-
-    // 테이블 렌더링
-    function renderTable() {
-      const sortedPlayers = getSortedPlayers();
-      const filteredPlayers = getFilteredPlayers(sortedPlayers);
-
-      // 정렬된 전체 목록에서 각 선수의 순위 맵 생성
-      const rankMap = new Map();
-      sortedPlayers.forEach((player, index) => {
-        rankMap.set(player.선수명, index + 1);
-      });
-
-      if (filteredPlayers.length === 0) {
-        tableBody.innerHTML = `
-          <tr>
-            <td colspan="17">
-              <div class="empty-state">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <p>검색 결과가 없습니다</p>
-              </div>
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      tableBody.innerHTML = filteredPlayers.map(player => {
-        const rank = rankMap.get(player.선수명);
-        const rankClass = rank <= 3 ? `rank rank-${rank}` : 'rank';
-        return `
-        <tr>
-          <td class="${rankClass}">${rank}</td>
-          <td class="${getHighlightClass('번호')}">${player.번호}</td>
-          <td class="${getHighlightClass('팀')}"><span class="team-badge team-${player.팀}">${player.팀}</span></td>
-          <td class="player-name ${getHighlightClass('선수명')}">${player.선수명}</td>
-          <td class="${getHighlightClass('출석')}">${player.출석}</td>
-          <td class="${getHighlightClass('누적득점')}">${player.득점.누적득점}</td>
-          <td class="${getHighlightClass('평균득점')}">${player.득점.평균득점.toFixed(1)}</td>
-          <td class="${getHighlightClass('누적어시')}">${player.부가기록.어시스트.누적}</td>
-          <td class="${getHighlightClass('평균어시')}">${player.부가기록.어시스트.평균.toFixed(1)}</td>
-          <td class="${getHighlightClass('누적리바')}">${player.부가기록.리바운드.누적}</td>
-          <td class="${getHighlightClass('평균리바')}">${player.부가기록.리바운드.평균.toFixed(1)}</td>
-          <td class="${getHighlightClass('누적스틸')}">${player.부가기록.스틸.누적}</td>
-          <td class="${getHighlightClass('평균스틸')}">${player.부가기록.스틸.평균.toFixed(1)}</td>
-          <td class="${getHighlightClass('누적블록')}">${player.부가기록.블록.누적}</td>
-          <td class="${getHighlightClass('평균블록')}">${player.부가기록.블록.평균.toFixed(1)}</td>
-          <td class="${getHighlightClass('누적3점')}">${player.부가기록['3점슛'].누적}</td>
-          <td class="${getHighlightClass('평균3점')}">${player.부가기록['3점슛'].평균.toFixed(1)}</td>
-        </tr>
-      `;
-      }).join('');
-    }
-
-    // 정렬 헤더 업데이트
-    function updateSortHeaders() {
-      document.querySelectorAll('th').forEach(th => {
-        th.classList.remove('sorted', 'asc', 'desc');
-        if (th.dataset.sort === currentSort.field) {
-          th.classList.add('sorted', currentSort.order);
-        }
-      });
-    }
-
-    // 정렬 클릭 핸들러
-    document.querySelectorAll('th[data-sort]').forEach(th => {
-      th.addEventListener('click', () => {
-        const field = th.dataset.sort;
-        if (currentSort.field === field) {
-          currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
-        } else {
-          currentSort.field = field;
-          currentSort.order = 'desc';
-        }
-        updateSortHeaders();
-        renderTable();
-      });
-    });
-
-    // 검색 핸들러
-    searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value;
-      renderTable();
-    });
-
-    // 팀 모달 기능
-    function renderTeamTable(team) {
-      const teamPlayers = leagueData.선수목록.filter(p => p.팀 === team);
-      teamPlayers.sort((a, b) => a.번호 - b.번호);
-      teamTableBody.innerHTML = teamPlayers.map(p => `
-        <tr>
-          <td>${p.번호}</td>
-          <td>${p.선수명}</td>
-          <td>${p.출석}</td>
-          <td>${p.득점.누적득점}</td>
-        </tr>
-      `).join('');
-    }
-
-    // 스크롤 위치 저장 변수
-    let savedScrollPosition = 0;
-
-    teamViewBtn.addEventListener('click', () => {
-      savedScrollPosition = window.scrollY;
-      document.body.style.top = `-${savedScrollPosition}px`;
-      document.body.classList.add('modal-open');
-      teamModal.classList.add('open');
-      teamTabs.forEach(t => t.classList.remove('active'));
-      teamTabs[0].classList.add('active');
-      renderTeamTable('A');
-    });
-
-    function closeTeamModalHandler() {
-      teamModal.classList.remove('open');
-      document.body.classList.remove('modal-open');
-      document.body.style.top = '';
-      window.scrollTo(0, savedScrollPosition);
-    }
-
-    closeTeamModal.addEventListener('click', closeTeamModalHandler);
-
-    teamModal.addEventListener('click', (e) => {
-      if (e.target === teamModal) {
-        closeTeamModalHandler();
-      }
-    });
-
-    teamTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        teamTabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        renderTeamTable(tab.dataset.team);
-      });
-    });
-
-    // 트레이드 모달
-    const tradeModal = document.getElementById('tradeModal');
-    const closeTradeModal = document.getElementById('closeTradeModal');
-    let tradeScrollPosition = 0;
-
-    function openTradeModal() {
-      tradeScrollPosition = window.pageYOffset;
-      document.body.style.top = `-${tradeScrollPosition}px`;
-      document.body.classList.add('modal-open');
-      tradeModal.classList.add('open');
-    }
-
-    function closeTradeModalHandler() {
-      tradeModal.classList.remove('open');
-      document.body.classList.remove('modal-open');
-      document.body.style.top = '';
-      window.scrollTo(0, tradeScrollPosition);
-    }
-
-    closeTradeModal.addEventListener('click', closeTradeModalHandler);
-
-    tradeModal.addEventListener('click', (e) => {
-      if (e.target === tradeModal) {
-        closeTradeModalHandler();
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && tradeModal.classList.contains('open')) {
-        closeTradeModalHandler();
-      }
-    });
-
-    window.openTradeModal = openTradeModal;
-
-    // 역대 시상 모달
-    const awardHistoryBtn = document.getElementById('awardHistoryBtn');
-    const awardsModal = document.getElementById('awardsModal');
-    const closeAwardsModal = document.getElementById('closeAwardsModal');
-    const awardsModalBody = document.getElementById('awardsModalBody');
-    let awardsScrollPosition = 0;
+    // 트레이드 내역 (metadata.tradeRound가 있는 시즌에만 버튼 노출)
+    const TRADE = {
+      A: [['IN', '유지형(24)', '← B팀'], ['IN', '강효진(28)', '← C팀'], ['OUT', '김정호(32)', '→ B팀'], ['OUT', '최효림(36)', '→ C팀']],
+      B: [['IN', '김정호(32)', '← A팀'], ['IN', '김주철(72)', '← C팀'], ['OUT', '유지형(24)', '→ A팀'], ['OUT', '김동광(30)', '→ C팀']],
+      C: [['IN', '최효림(36)', '← A팀'], ['IN', '김동광(30)', '← B팀'], ['OUT', '강효진(28)', '→ A팀'], ['OUT', '김주철(72)', '→ B팀']],
+    };
+
+    const GROUPS = [
+      { label: '득점', key: '득점', short: 'PTS' },
+      { label: '어시스트', key: '어시', short: 'AST' },
+      { label: '리바운드', key: '리바', short: 'REB' },
+      { label: '스틸', key: '스틸', short: 'STL' },
+      { label: '블록', key: '블록', short: 'BLK' },
+      { label: '3점슛', key: '3점', short: '3PM' },
+    ];
 
     const AWARD_META = [
       { key: 'mvp', icon: '🏆', label: 'MVP' },
@@ -2899,86 +529,370 @@
       { key: 'rebound', icon: '💪', label: '리바운드왕' },
       { key: 'assist', icon: '🎯', label: '어시스트왕' },
       { key: 'steal', icon: '🥷', label: '스틸왕' },
-      { key: 'block', icon: '🛡️', label: '블록왕' }
+      { key: 'block', icon: '🛡️', label: '블록왕' },
     ];
 
-    // 텍스트 노드를 사용해 안전하게 DOM 구성 (innerHTML 미사용)
-    function el(tag, className, text) {
-      const node = document.createElement(tag);
-      if (className) node.className = className;
-      if (text != null) node.textContent = text;
-      return node;
+    const $ = id => document.getElementById(id);
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const fmt = n => (typeof n === 'number' ? n.toFixed(1) : n);
+    const pad2 = n => String(n).padStart(2, '0');
+
+    // ===== 데이터 로딩 =====
+    async function getJSON(path) {
+      try {
+        const res = await fetch(path, { cache: 'no-store' });
+        return res.ok ? await res.json() : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    let seasonsData = {};
+    let metadataCache = {};
+    let seasonAwardsData = [];
+    let currentSeason = SEASONS[0];
+    let leagueData = null;
+
+    // 상태
+    let currentSort = { field: '누적득점', order: 'desc' };
+    let searchQuery = '';
+    let apiKey = localStorage.getItem('gemini_api_key') || '';
+    let genAI = null;
+    let chatHistory = [];
+
+    // DOM (AI 채팅 코드에서 사용)
+    const chatFab = $('chatFab');
+    const chatModal = $('chatModal');
+    const chatMessages = $('chatMessages');
+    const chatInput = $('chatInput');
+    const sendBtn = $('sendBtn');
+    const apiKeyModal = $('apiKeyModal');
+    const apiKeyInput = $('apiKeyInput');
+
+    function getPlayerValue(p, field) {
+      const cats = { 어시: '어시스트', 리바: '리바운드', 스틸: '스틸', 블록: '블록', '3점': '3점슛' };
+      switch (field) {
+        case '번호': return p.번호;
+        case '팀': return p.팀;
+        case '선수명': return p.선수명;
+        case '출석': return p.출석;
+        case '누적득점': return p.득점.누적득점;
+        case '평균득점': return p.득점.평균득점;
+      }
+      return p.부가기록[cats[field.slice(2)]][field.slice(0, 2)];
+    }
+
+    // 승·패·승점이 모두 같으면 같은 순위 (예: 1위, 1위, 3위)
+    function rankWithTies(standings) {
+      const ranks = [];
+      standings.forEach((t, i) => {
+        const prev = standings[i - 1];
+        const tied = prev && prev.wins === t.wins && prev.losses === t.losses && prev.points === t.points;
+        ranks.push(tied ? ranks[i - 1] : i + 1);
+      });
+      return ranks;
+    }
+
+    // ===== 상단 (시즌 탭, 히어로) =====
+    function renderSeasonTabs() {
+      $('seasonTabs').innerHTML = SEASONS.filter(s => seasonsData[s]).map(s => `
+        <button class="season-tab ${s === currentSeason ? 'active' : ''}" data-season="${s}">
+          <span class="season-tab-year">${s.slice(0, 4)}</span><span class="season-tab-month">${Number(s.slice(4))}월</span>
+        </button>`).join('');
+      $('seasonTabs').querySelectorAll('.season-tab').forEach(b => b.addEventListener('click', () => switchSeason(b.dataset.season)));
+    }
+
+    function updateHeader() {
+      const m = metadataCache[currentSeason];
+      document.title = `나인블로커스 리그 - ${leagueData.시즌} 시즌`;
+      document.querySelectorAll('[data-bind="season"]').forEach(e => e.textContent = leagueData.시즌);
+      $('statRounds').textContent = leagueData.총라운드;
+      $('statPlayers').textContent = leagueData.총선수수;
+      const total = m ? m.totalRounds || 15 : leagueData.총라운드;
+      const cur = m ? m.currentRound || 1 : total;
+      $('statCurrent').textContent = m ? pad2(cur) : 'FIN';
+      document.querySelectorAll('[data-bind="totalRounds"]').forEach(e => e.textContent = total);
+      $('roundProgress').style.setProperty('--progress', `${Math.min(100, (cur / total) * 100)}%`);
+
+      // 메타데이터가 있는 시즌만 순위/어워드/라운드 기록 표시
+      document.querySelectorAll('[data-needs-meta]').forEach(e => e.hidden = !m);
+      if (!m && activePanel === 'rounds') showPanel('records');
+      if (!m) return;
+
+      const st = m.standings || [];
+      const ranks = rankWithTies(st);
+      const maxPts = Math.max(...st.map(t => t.points), 1);
+      $('standings').innerHTML = st.map((t, i) => `
+        <div class="st-item rank-${ranks[i]}" data-team="${esc(t.team)}" style="--pts:${(t.points / maxPts) * 100}%">
+          <span class="st-rank">${pad2(ranks[i])}</span>
+          <span class="st-team team-badge team-${esc(t.team)}">${esc(t.name)}</span>
+          <span class="st-record"><b>${t.wins}</b>승 <b>${t.losses}</b>패</span>
+          <span class="st-points"><b>${t.points}</b><small>점</small></span>
+          <span class="st-bar"></span>
+        </div>`).join('');
+
+      // displayAwards: 여러 라운드가 한 번에 반영된 경우 '이름(N라)' 형식으로 합쳐진 어워드
+      const hist = m.roundHistory || [];
+      const aw = m.displayAwards || (hist.length && hist[hist.length - 1].awards) || {};
+      const items = [
+        { icon: '👑', label: 'MOM', en: 'Man of the Match', v: aw.mom || '-' },
+        { icon: '✌️', label: '더블더블', en: 'Double-Double', v: aw.doubleDouble || '-' },
+        { icon: '🏀', label: '득점왕', en: 'Top Scorer', v: aw.topScorer ? aw.topScorer.name : '-', sub: aw.topScorer ? `${aw.topScorer.points}점` : '' },
+      ];
+      $('roundAwards').innerHTML = items.map(a => `
+        <div class="ra-item">
+          <span class="ra-icon">${a.icon}</span>
+          <span class="ra-label">${a.label}<em>${a.en}</em></span>
+          <span class="ra-value">${esc(a.v)}${a.sub ? `<small>${a.sub}</small>` : ''}</span>
+        </div>`).join('');
+
+      // 원본 엑셀 링크 / 트레이드 버튼 (시즌마다 다름)
+      $('excelLink').hidden = !m.excelUrl;
+      if (m.excelUrl) $('excelLink').href = m.excelUrl;
+      $('tradeBtn').hidden = !m.tradeRound;
+      if (m.tradeRound) $('tradeModalTitle').textContent = `${m.tradeRound}라운드 후 트레이드`;
+
+      renderTicker(m, aw);
+      renderRounds(hist);
+    }
+
+    function renderTicker(m, aw) {
+      const top = [...leagueData.선수목록].sort((a, b) => b.득점.누적득점 - a.득점.누적득점)[0];
+      const items = [
+        `${m.season} 시즌 · ROUND ${m.currentRound}/${m.totalRounds}`,
+        ...(m.standings || []).map(t => `${t.name} ${t.wins}승 ${t.losses}패 · 승점 ${t.points}`),
+        aw.mom && aw.mom !== '-' && `MOM ${aw.mom}`,
+        aw.doubleDouble && aw.doubleDouble !== '-' && `더블더블 ${aw.doubleDouble}`,
+        aw.topScorer && `라운드 득점왕 ${aw.topScorer.name} ${aw.topScorer.points}점`,
+        top && `시즌 득점 1위 ${top.선수명} ${top.득점.누적득점}점`,
+      ].filter(Boolean).map(t => `<span>${esc(t)}</span>`).join('');
+      $('ticker').innerHTML = items + items;
+    }
+
+    // ===== 탭 패널 =====
+    let activePanel = 'records';
+    function showPanel(name) {
+      activePanel = name;
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.panel === name));
+      ['records', 'leaders', 'rounds'].forEach(p => $(`panel-${p}`).hidden = p !== name);
+      // 탭바가 위에 붙어 있을 때는 패널 시작 위치로 맞춤
+      const bar = $('tabsBar');
+      if (bar.getBoundingClientRect().top <= topbarHeight() + 1) {
+        window.scrollTo({ top: bar.offsetTop - topbarHeight() });
+      }
+    }
+
+    function renderLeaders() {
+      const players = leagueData.선수목록;
+      $('leaders').innerHTML = GROUPS.map(g => {
+        const field = '누적' + g.key;
+        const [first, ...rest] = [...players].sort((a, b) => getPlayerValue(b, field) - getPlayerValue(a, field)).slice(0, 4);
+        return `
+        <article class="ld-card">
+          <div class="ld-cat"><span>${g.label}</span><em>${g.short}</em></div>
+          <div class="ld-top">
+            <span class="ld-name">${esc(first.선수명)}</span>
+            <span class="ld-meta"><span class="team-badge team-${esc(first.팀)}">${esc(first.팀)}</span> #${first.번호}</span>
+          </div>
+          <div class="ld-val">${getPlayerValue(first, field)}<small>${g.short}</small></div>
+          <ol class="ld-rest">${rest.map(p => `<li><span>${esc(p.선수명)}</span><b>${getPlayerValue(p, field)}</b></li>`).join('')}</ol>
+        </article>`;
+      }).join('');
+    }
+
+    function renderRounds(hist) {
+      $('roundTimeline').innerHTML = [...hist].reverse().map(r => {
+        const teams = [...(r.teams || [])].sort((a, b) => b.points - a.points || b.wins - a.wins);
+        const a = r.awards || {};
+        return `
+        <article class="rt-round">
+          <header class="rt-head"><span class="rt-no">R${pad2(r.round)}</span><span class="rt-label">Round ${r.round}</span></header>
+          <ul class="rt-teams">${teams.map(t => `<li><span class="team-badge team-${esc(t.team)}">${esc(t.team)}</span><span>${esc(t.record)}</span><b>${t.points}</b></li>`).join('')}</ul>
+          <dl class="rt-awards">
+            <div><dt>MOM</dt><dd>${esc(a.mom || '-')}</dd></div>
+            <div><dt>더블더블</dt><dd>${esc(a.doubleDouble || '-')}</dd></div>
+            <div><dt>득점왕</dt><dd>${a.topScorer ? `${esc(a.topScorer.name)} <small>${a.topScorer.points}점</small>` : '-'}</dd></div>
+          </dl>
+        </article>`;
+      }).join('');
+    }
+
+    // ===== 선수 기록 테이블 =====
+    function sortMark(field) {
+      if (currentSort.field !== field) return '';
+      return currentSort.order === 'desc' ? ' ▼' : ' ▲';
+    }
+
+    function renderTableHead() {
+      const th = (f, label, extra = '') => `<th data-sort="${f}" ${extra} class="${currentSort.field === f ? 'sorted' : ''}">${label}<i>${sortMark(f)}</i></th>`;
+      $('statsHead').innerHTML = `
+        <tr>
+          <th rowspan="2" class="col-rank sticky-1">#</th>
+          <th rowspan="2" class="col-name sticky-2 ${currentSort.field === '선수명' ? 'sorted' : ''}" data-sort="선수명">선수<i>${sortMark('선수명')}</i></th>
+          ${th('팀', '팀', 'rowspan="2"')}
+          ${th('번호', '번호', 'rowspan="2"')}
+          ${th('출석', '출석', 'rowspan="2"')}
+          ${GROUPS.map(g => `<th colspan="2" class="grp ${currentSort.field.endsWith(g.key) ? 'grp-active' : ''}">${g.label}</th>`).join('')}
+        </tr>
+        <tr class="th-sub">${GROUPS.map(g => th('누적' + g.key, '누적') + th('평균' + g.key, '평균')).join('')}</tr>`;
+      $('statsHead').querySelectorAll('th[data-sort]').forEach(t => t.addEventListener('click', () => {
+        const field = t.dataset.sort;
+        currentSort = currentSort.field === field
+          ? { field, order: currentSort.order === 'asc' ? 'desc' : 'asc' }
+          : { field, order: 'desc' };
+        renderTable();
+      }));
+    }
+
+    function renderTable() {
+      renderTableHead();
+      const sorted = [...leagueData.선수목록].sort((a, b) => {
+        const x = getPlayerValue(a, currentSort.field), y = getPlayerValue(b, currentSort.field);
+        const c = typeof x === 'string' ? x.localeCompare(y) : x - y;
+        return currentSort.order === 'asc' ? c : -c;
+      });
+      // 검색해도 전체 기준 순위는 유지
+      const rankMap = new Map(sorted.map((p, i) => [p.선수명, i + 1]));
+      const q = searchQuery.toLowerCase();
+      const list = q ? sorted.filter(p => p.선수명.toLowerCase().includes(q)) : sorted;
+
+      if (!list.length) {
+        $('tableBody').innerHTML = '<tr><td colspan="17" class="empty">검색 결과가 없습니다</td></tr>';
+        return;
+      }
+      const hl = f => (currentSort.field === f ? 'hl' : '');
+      $('tableBody').innerHTML = list.map(p => {
+        const r = rankMap.get(p.선수명);
+        return `<tr class="${r <= 3 ? `top top-${r}` : ''}">
+          <td class="col-rank sticky-1"><span class="rank-num">${r}</span></td>
+          <td class="col-name sticky-2 ${hl('선수명')}">${esc(p.선수명)}</td>
+          <td class="${hl('팀')}"><span class="team-badge team-${esc(p.팀)}">${esc(p.팀)}</span></td>
+          <td class="${hl('번호')}">${p.번호}</td>
+          <td class="${hl('출석')}">${p.출석}</td>
+          ${GROUPS.map(g => `<td class="${hl('누적' + g.key)}">${getPlayerValue(p, '누적' + g.key)}</td><td class="avg ${hl('평균' + g.key)}">${fmt(getPlayerValue(p, '평균' + g.key))}</td>`).join('')}
+        </tr>`;
+      }).join('');
+    }
+
+    // ===== 시즌 전환 =====
+    function switchSeason(season) {
+      if (!seasonsData[season]) return;
+      currentSeason = season;
+      leagueData = seasonsData[season];
+      renderSeasonTabs();
+      updateHeader();
+      renderLeaders();
+      renderTable();
+      chatHistory = []; // 시즌 변경 시 AI 대화 초기화
+    }
+
+    // ===== 모달 =====
+    let savedScroll = 0;
+    function openModal(id) {
+      savedScroll = window.scrollY;
+      $(id).classList.add('open');
+      document.body.classList.add('modal-open');
+    }
+    function closeModals() {
+      document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
+      document.body.classList.remove('modal-open');
+      window.scrollTo(0, savedScroll);
+    }
+
+    function renderTeam(team) {
+      const ps = leagueData.선수목록.filter(p => p.팀 === team).sort((a, b) => a.번호 - b.번호);
+      const total = ps.reduce((s, p) => s + p.득점.누적득점, 0);
+      $('teamSummary').innerHTML = `<span class="team-badge team-${team}">${team}팀</span><span>${ps.length}명</span><span>팀 누적 ${total}점</span>`;
+      $('teamBody').innerHTML = ps.map(p => `<tr><td>${p.번호}</td><td>${esc(p.선수명)}</td><td>${p.출석}</td><td>${p.득점.누적득점}</td></tr>`).join('');
+      document.querySelectorAll('.team-tab').forEach(t => t.classList.toggle('active', t.dataset.team === team));
+    }
+
+    function renderTrade() {
+      $('tradeBody').innerHTML = Object.entries(TRADE).map(([team, rows]) => `
+        <div class="trade-card">
+          <div class="trade-team"><span class="team-badge team-${team}">${team}팀</span></div>
+          ${rows.map(([kind, name, from]) => `<div class="trade-row"><span class="trade-kind ${kind.toLowerCase()}">${kind}</span><span>${name}</span><span class="trade-from">${from}</span></div>`).join('')}
+        </div>`).join('');
     }
 
     function renderAwardsModal() {
-      awardsModalBody.replaceChildren();
-
-      if (!seasonAwardsData || seasonAwardsData.length === 0) {
-        awardsModalBody.appendChild(
-          el('div', 'awards-empty', '아직 등록된 시상 내역이 없습니다.'));
+      const box = $('awardsModalBody');
+      if (!seasonAwardsData.length) {
+        box.innerHTML = '<p class="empty">아직 등록된 시상 내역이 없습니다.</p>';
         return;
       }
-
-      // 최신 시즌이 위로 오도록 정렬
-      const sorted = [...seasonAwardsData].sort((a, b) =>
-        String(b.season).localeCompare(String(a.season)));
-
-      sorted.forEach(entry => {
-        const card = el('div', 'award-season-card');
-        card.appendChild(
-          el('div', 'award-season-title', entry.seasonName || entry.season));
-
-        const grid = el('div', 'award-grid');
-        const awards = entry.awards || {};
-        AWARD_META.forEach(meta => {
-          const cell = el('div', 'award-cell');
-          cell.appendChild(el('span', 'award-icon', meta.icon));
-
-          const textWrap = el('span', 'award-cell-text');
-          textWrap.appendChild(el('span', 'award-cell-label', meta.label));
-          textWrap.appendChild(
-            el('span', 'award-cell-name', awards[meta.key] || '-'));
-
-          cell.appendChild(textWrap);
-          grid.appendChild(cell);
-        });
-
-        card.appendChild(grid);
-        awardsModalBody.appendChild(card);
-      });
+      box.innerHTML = [...seasonAwardsData].sort((a, b) => String(b.season).localeCompare(String(a.season))).map(e => {
+        const aw = e.awards || {};
+        const s = String(e.season);
+        return `
+        <article class="hof-season">
+          <header class="hof-head">
+            <span class="hof-year">${s.slice(2, 4)}.${s.slice(4)}</span>
+            <span class="hof-title">${esc(e.seasonName || s)} 시즌</span>
+          </header>
+          <div class="hof-mvp"><span class="hof-mvp-label">SEASON MVP</span><span class="hof-mvp-name">${esc(aw.mvp || '-')}</span></div>
+          <ul class="hof-list">${AWARD_META.filter(a => a.key !== 'mvp').map(a => `
+            <li><span>${a.icon}</span><span class="hof-label">${a.label}</span><span class="hof-name">${esc(aw[a.key] || '-')}</span></li>`).join('')}
+          </ul>
+        </article>`;
+      }).join('');
     }
 
-    function openAwardsModal() {
-      renderAwardsModal();
-      awardsScrollPosition = window.pageYOffset;
-      document.body.style.top = `-${awardsScrollPosition}px`;
-      document.body.classList.add('modal-open');
-      awardsModal.classList.add('open');
-    }
-
-    function closeAwardsModalHandler() {
-      awardsModal.classList.remove('open');
-      document.body.classList.remove('modal-open');
-      document.body.style.top = '';
-      window.scrollTo(0, awardsScrollPosition);
-    }
-
-    awardHistoryBtn.addEventListener('click', openAwardsModal);
-    closeAwardsModal.addEventListener('click', closeAwardsModalHandler);
-
-    awardsModal.addEventListener('click', (e) => {
-      if (e.target === awardsModal) {
-        closeAwardsModalHandler();
+    function toast(msg) {
+      let t = $('toast');
+      if (!t) {
+        t = document.createElement('div');
+        t.id = 'toast';
+        t.className = 'toast';
+        document.body.appendChild(t);
       }
-    });
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(() => t.classList.remove('show'), 2400);
+    }
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && awardsModal.classList.contains('open')) {
-        closeAwardsModalHandler();
+    // 라운드 정보 공유 (히어로 영역 스크린샷 다운로드)
+    async function shareLeagueInfo() {
+      if (!window.html2canvas) return toast('이미지 생성 도구를 불러오지 못했습니다');
+      document.body.classList.add('capturing');
+      try {
+        const canvas = await html2canvas($('hero'), { backgroundColor: '#0a0a0a', scale: 2, logging: false, useCORS: true });
+        const link = document.createElement('a');
+        link.download = `GBL_${currentSeason}_R${metadataCache[currentSeason]?.currentRound ?? 0}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      } catch (error) {
+        console.error('스크린샷 생성 실패:', error);
+        toast('스크린샷 생성에 실패했습니다');
       }
-    });
+      document.body.classList.remove('capturing');
+    }
 
-    // 채팅 모달 토글
+    // 상단 바 높이 (탭바 sticky 위치 계산용)
+    function topbarHeight() { return $('topbar').offsetHeight; }
+    function syncTopbarHeight() { document.documentElement.style.setProperty('--topbar-h', `${topbarHeight()}px`); }
+
+    // ===== 이벤트 =====
+    document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => showPanel(t.dataset.panel)));
+    $('searchInput').addEventListener('input', e => { searchQuery = e.target.value.trim(); renderTable(); });
+    $('teamBtn').addEventListener('click', () => { renderTeam('A'); openModal('teamModal'); });
+    document.querySelectorAll('.team-tab').forEach(t => t.addEventListener('click', () => renderTeam(t.dataset.team)));
+    $('tradeBtn').addEventListener('click', () => { renderTrade(); openModal('tradeModal'); });
+    $('awardHistoryBtn').addEventListener('click', () => { renderAwardsModal(); openModal('awardsModal'); });
+    $('shareBtn').addEventListener('click', shareLeagueInfo);
+    document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeModals));
+    document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => {
+      if (e.target === m && m.id !== 'apiKeyModal') closeModals();
+    }));
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+      if (document.querySelector('.modal.open:not(#apiKeyModal)')) closeModals();
+      else chatModal.classList.remove('open');
+    });
+    window.addEventListener('resize', syncTopbarHeight);
+
+    // 채팅 열기/닫기
     chatFab.addEventListener('click', () => {
       if (!apiKey) {
         apiKeyModal.classList.add('open');
@@ -2986,13 +900,10 @@
       }
       chatModal.classList.toggle('open');
     });
+    $('closeChat').addEventListener('click', () => chatModal.classList.remove('open'));
 
-    closeChat.addEventListener('click', () => {
-      chatModal.classList.remove('open');
-    });
-
-    // API 키 모달
-    saveApiKey.addEventListener('click', () => {
+    // API 키 입력
+    $('saveApiKey').addEventListener('click', () => {
       const key = apiKeyInput.value.trim();
       if (key) {
         apiKey = key;
@@ -3003,8 +914,7 @@
         apiKeyInput.value = '';
       }
     });
-
-    cancelApiKey.addEventListener('click', () => {
+    $('cancelApiKey').addEventListener('click', () => {
       apiKeyModal.classList.remove('open');
       apiKeyInput.value = '';
     });
@@ -3151,7 +1061,7 @@ ${playersSummary}
 
       if (type === 'ai') {
         // AI 메시지는 마크다운 파싱
-        div.innerHTML = parseMarkdown(content);
+        div.innerHTML = parseMarkdown(esc(content)); // HTML 이스케이프 후 마크다운 변환
       } else {
         div.textContent = content;
       }
@@ -3247,200 +1157,27 @@ ${playersSummary}
       }
     });
 
-    // 시즌 선택 핸들러
-    document.querySelectorAll('#seasonSelector .toggle-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        switchSeason(btn.dataset.season);
-      });
-    });
-
-    // 앱 초기화 (비동기)
+    // ===== 앱 초기화 =====
     async function initApp() {
-      try {
-        // 시즌 데이터와 메타데이터 병렬 로딩
-        const [seasons, metadata, awards] = await Promise.all([
-          loadAllSeasons(),
-          loadAllMetadata(),
-          loadSeasonAwards()
-        ]);
-        seasonsData = seasons;
-        metadataCache = metadata;
-        seasonAwardsData = awards;
-        leagueData = seasonsData[currentSeason];
-        initGemini();
-        updateHeader();
-        renderTable();
-        updateSortHeaders();
-      } catch (error) {
-        console.error('데이터 로딩 실패:', error);
-        document.querySelector('.container').innerHTML = `
-          <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
-            <h2>데이터를 불러오는 중 오류가 발생했습니다.</h2>
-            <p>페이지를 새로고침 해주세요.</p>
-          </div>
-        `;
+      syncTopbarHeight();
+      const manifest = await getJSON('metadata_manifest.json');
+      const [, , awards] = await Promise.all([
+        Promise.all(SEASONS.map(async s => { seasonsData[s] = await getJSON(`league_stats_${s}.json`); })),
+        Promise.all((manifest?.seasons || []).map(async s => { metadataCache[s] = await getJSON(`league_metadata_${s}.json`); })),
+        getJSON('season_awards.json'),
+      ]);
+      seasonAwardsData = awards?.seasonAwards || [];
+      const first = SEASONS.find(s => seasonsData[s]);
+      if (!first) {
+        document.querySelector('main').innerHTML = '<p class="empty">데이터를 불러오는 중 오류가 발생했습니다. 페이지를 새로고침 해주세요.</p>';
+        return;
       }
+      initGemini();
+      switchSeason(first);
+      syncTopbarHeight();
     }
 
     initApp();
-
-    // 고정 헤더 기능
-    const tableWrapper = document.querySelector('.table-wrapper');
-    const tableScroll = document.querySelector('.table-scroll');
-    const originalThead = document.querySelector('table thead');
-    let fixedHeaderContainer = null;
-    let fixedHeaderOverlay = null;
-
-    function createFixedHeader() {
-      if (fixedHeaderContainer) return;
-
-      // 상단 오버레이 생성
-      fixedHeaderOverlay = document.createElement('div');
-      fixedHeaderOverlay.className = 'fixed-header-overlay';
-      document.body.appendChild(fixedHeaderOverlay);
-
-      // 고정 헤더 생성
-      fixedHeaderContainer = document.createElement('div');
-      fixedHeaderContainer.className = 'fixed-header';
-      fixedHeaderContainer.style.display = 'none';
-
-      const table = document.createElement('table');
-      table.innerHTML = originalThead.outerHTML;
-      fixedHeaderContainer.appendChild(table);
-
-      document.body.appendChild(fixedHeaderContainer);
-
-      // 고정 헤더의 정렬 이벤트 연결
-      fixedHeaderContainer.querySelectorAll('th[data-sort]').forEach(th => {
-        th.addEventListener('click', () => {
-          const field = th.dataset.sort;
-          if (currentSort.field === field) {
-            currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
-          } else {
-            currentSort.field = field;
-            currentSort.order = 'desc';
-          }
-          updateSortHeaders();
-          updateFixedHeaderSort();
-          renderTable();
-        });
-      });
-    }
-
-    function updateFixedHeaderSort() {
-      if (!fixedHeaderContainer) return;
-      fixedHeaderContainer.querySelectorAll('th').forEach(th => {
-        th.classList.remove('sorted', 'asc', 'desc');
-        if (th.dataset.sort === currentSort.field) {
-          th.classList.add('sorted', currentSort.order);
-        }
-      });
-    }
-
-    function updateFixedHeader() {
-      if (!fixedHeaderContainer) return;
-
-      const wrapperRect = tableWrapper.getBoundingClientRect();
-      const theadRect = originalThead.getBoundingClientRect();
-      const tableRect = tableScroll.querySelector('table').getBoundingClientRect();
-
-      // thead가 화면 상단을 벗어났고, 테이블이 아직 화면에 있을 때
-      const shouldFix = theadRect.top <= 0 && wrapperRect.bottom > theadRect.height;
-
-      if (shouldFix) {
-        // 컨테이너 패딩 동적 계산 (반응형 지원)
-        const containerPadding = window.innerWidth <= 768 ? 16 : 24;
-
-        // 고정 헤더 표시
-        fixedHeaderContainer.style.display = 'block';
-        fixedHeaderContainer.style.top = containerPadding + 'px';
-        fixedHeaderContainer.style.left = wrapperRect.left + 'px';
-        fixedHeaderContainer.style.width = wrapperRect.width + 'px';
-
-        // 오버레이 표시 (고정 헤더 뒤까지 덮도록)
-        const fixedHeaderHeight = fixedHeaderContainer.offsetHeight;
-        fixedHeaderOverlay.style.display = 'block';
-        fixedHeaderOverlay.style.left = wrapperRect.left + 'px';
-        fixedHeaderOverlay.style.width = wrapperRect.width + 'px';
-        fixedHeaderOverlay.style.height = (containerPadding + fixedHeaderHeight) + 'px';
-
-        // 가로 스크롤 동기화
-        const scrollLeft = tableScroll.scrollLeft;
-        fixedHeaderContainer.querySelector('table').style.transform = `translateX(-${scrollLeft}px)`;
-        fixedHeaderContainer.querySelector('table').style.width = tableRect.width + 'px';
-
-        // 컬럼 너비 동기화
-        const originalThs = originalThead.querySelectorAll('th');
-        const fixedThs = fixedHeaderContainer.querySelectorAll('th');
-        originalThs.forEach((th, i) => {
-          fixedThs[i].style.width = th.offsetWidth + 'px';
-          fixedThs[i].style.minWidth = th.offsetWidth + 'px';
-        });
-      } else {
-        fixedHeaderContainer.style.display = 'none';
-        fixedHeaderOverlay.style.display = 'none';
-      }
-    }
-
-    // 초기화
-    createFixedHeader();
-    updateFixedHeaderSort();
-
-    // 이벤트 리스너
-    window.addEventListener('scroll', updateFixedHeader);
-    window.addEventListener('resize', updateFixedHeader);
-    tableScroll.addEventListener('scroll', updateFixedHeader);
-
-    // MutationObserver로 테이블 변경 감지
-    const observer = new MutationObserver(() => {
-      updateFixedHeader();
-      updateFixedHeaderSort();
-    });
-    observer.observe(originalThead, { childList: true, subtree: true, attributes: true });
-
-    // 라운드 정보 공유 (스크린샷 다운로드)
-    async function shareLeagueInfo() {
-      const header = document.querySelector('header.glass');
-      if (!header) {
-        alert('공유할 라운드 정보가 없습니다.');
-        return;
-      }
-
-      // 버튼 행 숨기기 (스크린샷에서 제외)
-      const excelLinkRow = document.querySelector('.excel-link-row');
-      if (excelLinkRow) excelLinkRow.style.display = 'none';
-
-      try {
-        const canvas = await html2canvas(header, {
-          backgroundColor: '#1a1a2e',
-          scale: 2,
-          logging: false,
-          useCORS: true,
-          width: header.offsetWidth,
-          windowWidth: header.offsetWidth
-        });
-
-        // 버튼 행 다시 표시
-        if (excelLinkRow) excelLinkRow.style.display = '';
-
-        // 현재 라운드 가져오기
-        const currentRound = document.getElementById('currentRoundValue')?.textContent || '0';
-
-        // 이미지 다운로드
-        const link = document.createElement('a');
-        link.download = `GBL_${currentSeason}_R${currentRound}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      } catch (error) {
-        // 버튼 행 다시 표시
-        if (excelLinkRow) excelLinkRow.style.display = '';
-        console.error('스크린샷 생성 실패:', error);
-        alert('스크린샷 생성에 실패했습니다.');
-      }
-    }
-
-    // 전역으로 노출 (onclick에서 사용)
-    window.shareLeagueInfo = shareLeagueInfo;
   </script>
 </body>
 
