@@ -143,9 +143,15 @@
     .search:focus-within { border-color: var(--volt); }
     .search input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--ink); font: inherit; font-weight: 500; }
     .search input::placeholder { color: var(--ink-faint); }
-    .table-box { border: 2px solid var(--ink); max-height: calc(100vh - var(--topbar-h) - 150px); max-height: calc(100dvh - var(--topbar-h) - 150px); min-height: 360px; overflow: auto; overscroll-behavior: none; /* 표 끝 바운스·페이지로 스크롤 번짐 제거 */ scrollbar-color: var(--ink-faint) var(--bg); }
+    /* 표는 가로로만 스크롤, 세로는 페이지 스크롤 하나만 사용 (스크롤 안의 스크롤 제거) */
+    .table-box { border: 2px solid var(--ink); overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: none; scrollbar-color: var(--ink-faint) var(--bg); }
+    /* 표가 화면 위로 지나가면 탭 바 아래에 붙는 복제 머리글 */
+    .float-head { position: sticky; top: calc(var(--topbar-h) + var(--tabs-h, 0px)); height: 0; z-index: 15; }
+    .float-head-inner { overflow: hidden; border: 2px solid var(--ink); border-top: 0; border-bottom: 0; visibility: hidden; }
+    .float-head-inner.show { visibility: visible; box-shadow: 0 6px 12px rgba(0, 0, 0, .5); }
+    .float-head table { table-layout: fixed; }
     table.stats { width: 100%; border-collapse: separate; border-spacing: 0; white-space: nowrap; font-size: 14px; }
-    .stats thead th { position: sticky; top: 0; z-index: 3; background: var(--ink); color: var(--bg); height: 48px; padding: 4px 12px; font-size: 12px; font-weight: 700; line-height: 1.25; cursor: pointer; user-select: none; vertical-align: middle; }
+    .stats thead th { position: relative; z-index: 3; background: var(--ink); color: var(--bg); height: 48px; padding: 4px 12px; font-size: 12px; font-weight: 700; line-height: 1.25; cursor: pointer; user-select: none; vertical-align: middle; }
     .stats thead th .th-grp { display: block; font-family: var(--kr-display); font-weight: 400; font-size: 13px; }
     .stats thead th.sorted { background: var(--volt); color: var(--volt-ink); }
     .stats thead th i { font-style: normal; font-size: 9px; }
@@ -155,8 +161,8 @@
     .stats td.avg { color: var(--ink-dim); }
     .stats tbody tr:hover td { background: var(--bg-2); }
     .stats td.hl { background: #1a1d0c; color: var(--volt); font-weight: 700; }
-    .sticky-1 { position: sticky; left: 0; z-index: 2; width: 48px; min-width: 48px; }
-    .sticky-2 { position: sticky; left: var(--rank-w, 48px); z-index: 2; text-align: left !important; min-width: 100px; border-right: 2px solid var(--bg-3); }
+    .stats .sticky-1 { position: sticky; left: 0; z-index: 2; width: 48px; min-width: 48px; }
+    .stats .sticky-2 { position: sticky; left: var(--rank-w, 48px); z-index: 2; text-align: left !important; min-width: 100px; border-right: 2px solid var(--bg-3); }
     .stats thead th.sticky-1, .stats thead th.sticky-2 { z-index: 5; } /* 다른 머리글보다 위 */
     td.col-name { font-family: var(--body) !important; font-weight: 700 !important; }
     .rank-num { font-family: var(--display); font-size: 20px; color: var(--ink-faint); }
@@ -334,7 +340,6 @@
       .records-tools { flex-direction: column-reverse; align-items: stretch; gap: 8px; margin-bottom: 10px; }
       .records-note { font-size: 11px; }
       .search { min-width: 0; padding: 7px 12px; }
-      .table-box { max-height: calc(100vh - var(--topbar-h) - 120px); max-height: calc(100dvh - var(--topbar-h) - 120px); min-height: 300px; }
       .stats thead th { padding: 4px 10px; }
       .stats td { padding: 9px 10px; font-size: 13px; }
 
@@ -423,8 +428,11 @@
           <input type="text" id="searchInput" placeholder="선수 이름으로 검색...">
         </label>
       </div>
-      <div class="table-box">
-        <table class="stats"><thead id="statsHead"></thead><tbody id="tableBody"></tbody></table>
+      <div class="float-head" aria-hidden="true">
+        <div class="float-head-inner" id="floatHead"><table class="stats"><thead id="floatHeadRow"></thead></table></div>
+      </div>
+      <div class="table-box" id="tableBox">
+        <table class="stats" id="statsTable"><thead id="statsHead"></thead><tbody id="tableBody"></tbody></table>
       </div>
     </section>
 
@@ -678,6 +686,7 @@
       activePanel = name;
       document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.panel === name));
       ['records', 'leaders', 'rounds'].forEach(p => $(`panel-${p}`).hidden = p !== name);
+      if (name === 'records') layoutTable(); // 숨겨져 있던 동안 재지 못한 칸 폭을 다시 맞춤
       // 탭바가 위에 붙어 있을 때는 패널 시작 위치로 맞춤
       const bar = $('tabsBar');
       if (bar.getBoundingClientRect().top <= topbarHeight() + 1) {
@@ -730,7 +739,7 @@
       // 한 줄 머리글 (iOS Safari는 rowspan 머리글을 sticky로 고정하지 못함)
       const th = (f, label, cls = '', grp = '') =>
         `<th data-sort="${f}" class="${cls} ${currentSort.field === f ? 'sorted' : ''}">${grp ? `<span class="th-grp">${grp}</span>` : ''}${label}<i>${sortMark(f)}</i></th>`;
-      $('statsHead').innerHTML = `
+      const headHtml = `
         <tr>
           <th class="col-rank sticky-1">#</th>
           ${th('선수명', '선수', 'col-name sticky-2')}
@@ -739,7 +748,9 @@
           ${th('출석', '출석')}
           ${GROUPS.map(g => th('누적' + g.key, '누적', 'grp-start', g.label) + th('평균' + g.key, '평균', '', g.label)).join('')}
         </tr>`;
-      $('statsHead').querySelectorAll('th[data-sort]').forEach(t => t.addEventListener('click', () => {
+      $('statsHead').innerHTML = headHtml;
+      $('floatHeadRow').innerHTML = headHtml;
+      document.querySelectorAll('#statsHead th[data-sort], #floatHeadRow th[data-sort]').forEach(t => t.addEventListener('click', () => {
         const field = t.dataset.sort;
         currentSort = currentSort.field === field
           ? { field, order: currentSort.order === 'asc' ? 'desc' : 'asc' }
@@ -762,6 +773,7 @@
 
       if (!list.length) {
         $('tableBody').innerHTML = '<tr><td colspan="17" class="empty">검색 결과가 없습니다</td></tr>';
+        layoutTable();
         return;
       }
       const hl = f => (currentSort.field === f ? 'hl' : '');
@@ -776,13 +788,40 @@
           ${GROUPS.map(g => `<td class="grp-start ${hl('누적' + g.key)}">${getPlayerValue(p, '누적' + g.key)}</td><td class="avg ${hl('평균' + g.key)}">${fmt(getPlayerValue(p, '평균' + g.key))}</td>`).join('')}
         </tr>`;
       }).join('');
-      syncStickyColumns();
+      layoutTable();
     }
 
-    // 순위 열의 실제 폭만큼 선수 열을 띄워 고정 (틈 사이로 다른 칸이 비치지 않게)
-    function syncStickyColumns() {
-      const rankCell = document.querySelector('#statsHead .sticky-1');
-      if (rankCell) $('statsHead').closest('table').style.setProperty('--rank-w', `${rankCell.offsetWidth}px`);
+    // 표 렌더 후 칸 폭 맞춤: 고정 열 위치 + 복제 머리글 폭
+    function layoutTable() {
+      const table = $('statsTable');
+      const realThs = $('statsHead').querySelectorAll('th');
+      if (!realThs.length) return;
+      // 순위 열의 실제 폭만큼 선수 열을 띄워 고정 (틈 사이로 다른 칸이 비치지 않게)
+      const rankW = `${realThs[0].offsetWidth}px`;
+      table.style.setProperty('--rank-w', rankW);
+      const floatTable = $('floatHeadRow').closest('table');
+      floatTable.style.setProperty('--rank-w', rankW);
+      floatTable.style.width = `${table.offsetWidth}px`;
+      $('floatHeadRow').querySelectorAll('th').forEach((th, i) => {
+        const w = `${realThs[i].offsetWidth}px`;
+        th.style.width = w;
+        th.style.minWidth = w;
+        th.style.maxWidth = w;
+      });
+      updateFloatHead();
+    }
+
+    // 원래 머리글이 화면 위로 사라지면 복제 머리글 표시 + 가로 위치 동기화
+    function updateFloatHead() {
+      const inner = $('floatHead');
+      const box = $('tableBox');
+      if (!inner || $('panel-records').hidden) return;
+      const stickTop = topbarHeight() + $('tabsBar').offsetHeight;
+      const headRect = $('statsHead').getBoundingClientRect();
+      const boxRect = box.getBoundingClientRect();
+      const show = headRect.top < stickTop && boxRect.bottom > stickTop + headRect.height * 2;
+      inner.classList.toggle('show', show);
+      inner.scrollLeft = box.scrollLeft;
     }
 
     // ===== 시즌 전환 =====
@@ -882,7 +921,10 @@
 
     // 상단 바 높이 (탭바 sticky 위치 계산용)
     function topbarHeight() { return $('topbar').offsetHeight; }
-    function syncTopbarHeight() { document.documentElement.style.setProperty('--topbar-h', `${topbarHeight()}px`); }
+    function syncTopbarHeight() {
+      document.documentElement.style.setProperty('--topbar-h', `${topbarHeight()}px`);
+      document.documentElement.style.setProperty('--tabs-h', `${$('tabsBar').offsetHeight}px`);
+    }
 
     // ===== 이벤트 =====
     document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => showPanel(t.dataset.panel)));
@@ -901,7 +943,9 @@
       if (document.querySelector('.modal.open:not(#apiKeyModal)')) closeModals();
       else chatModal.classList.remove('open');
     });
-    window.addEventListener('resize', () => { syncTopbarHeight(); syncStickyColumns(); });
+    window.addEventListener('resize', () => { syncTopbarHeight(); layoutTable(); });
+    window.addEventListener('scroll', updateFloatHead, { passive: true });
+    $('tableBox').addEventListener('scroll', updateFloatHead, { passive: true });
 
     // 채팅 열기/닫기
     chatFab.addEventListener('click', () => {
@@ -1187,7 +1231,7 @@ ${playersSummary}
       switchSeason(first);
       syncTopbarHeight();
       // 웹폰트 로딩 후 칸 폭이 바뀌므로 한 번 더 맞춤
-      document.fonts?.ready.then(() => { syncTopbarHeight(); syncStickyColumns(); });
+      document.fonts?.ready.then(() => { syncTopbarHeight(); layoutTable(); });
     }
 
     initApp();
