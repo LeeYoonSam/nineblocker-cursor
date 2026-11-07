@@ -94,6 +94,24 @@ def parse_additional_stats(ws):
     return stats
 
 
+def fill_missing_averages(stats, attendance):
+    """엑셀 평균 셀이 비어 있어 0으로 읽힌 항목을 누적 / 출석으로 보정
+
+    '부가기록 계산' 시트에서 일부 선수 행에 평균 수식이 없으면 누적은 있는데
+    평균이 0.0으로 변환된다. 누적 > 0 인데 평균이 0 인 경우만 재계산한다.
+    """
+    if attendance <= 0:
+        return stats
+
+    fixed = {}
+    for stat_name, value in stats.items():
+        total, avg = value['누적'], value['평균']
+        if total > 0 and avg == 0:
+            avg = round(total / attendance, 1)
+        fixed[stat_name] = {'누적': total, '평균': avg}
+    return fixed
+
+
 def count_rounds(ws):
     """전체득점 시트 헤더에서 라운드 수를 계산
 
@@ -459,6 +477,7 @@ def convert_excel_to_json(excel_path, season_code):
             '블록': {'누적': 0, '평균': 0.0},
             '3점슛': {'누적': 0, '평균': 0.0}
         })
+        stats = fill_missing_averages(stats, player['attendance'])
 
         players_list.append({
             '번호': player['number'],
