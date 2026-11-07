@@ -34,6 +34,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-padding-top: calc(var(--topbar-h) + 60px); }
+    html, body { overscroll-behavior: none; } /* 페이지 끝 바운스 제거 */
     body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     body.modal-open { overflow: hidden; }
     button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
@@ -142,7 +143,7 @@
     .search:focus-within { border-color: var(--volt); }
     .search input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--ink); font: inherit; font-weight: 500; }
     .search input::placeholder { color: var(--ink-faint); }
-    .table-box { border: 2px solid var(--ink); max-height: calc(100vh - var(--topbar-h) - 150px); max-height: calc(100dvh - var(--topbar-h) - 150px); min-height: 360px; overflow: auto; -webkit-overflow-scrolling: touch; scrollbar-color: var(--ink-faint) var(--bg); }
+    .table-box { border: 2px solid var(--ink); max-height: calc(100vh - var(--topbar-h) - 150px); max-height: calc(100dvh - var(--topbar-h) - 150px); min-height: 360px; overflow: auto; overscroll-behavior: none; /* 표 끝 바운스·페이지로 스크롤 번짐 제거 */ scrollbar-color: var(--ink-faint) var(--bg); }
     table.stats { width: 100%; border-collapse: separate; border-spacing: 0; white-space: nowrap; font-size: 14px; }
     .stats thead th { position: sticky; top: 0; z-index: 3; background: var(--ink); color: var(--bg); height: 48px; padding: 4px 12px; font-size: 12px; font-weight: 700; line-height: 1.25; cursor: pointer; user-select: none; vertical-align: middle; }
     .stats thead th .th-grp { display: block; font-family: var(--kr-display); font-weight: 400; font-size: 13px; }
