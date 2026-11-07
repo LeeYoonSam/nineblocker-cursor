@@ -15,3 +15,4 @@ Thumbs.db
 
 # Plugins
 .omc/
+__pycache__/
