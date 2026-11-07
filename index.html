@@ -142,20 +142,21 @@
     .search:focus-within { border-color: var(--volt); }
     .search input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--ink); font: inherit; font-weight: 500; }
     .search input::placeholder { color: var(--ink-faint); }
-    .table-box { border: 2px solid var(--ink); max-height: calc(100vh - var(--topbar-h) - 150px); min-height: 360px; overflow: auto; scrollbar-color: var(--ink-faint) var(--bg); }
+    .table-box { border: 2px solid var(--ink); max-height: calc(100vh - var(--topbar-h) - 150px); max-height: calc(100dvh - var(--topbar-h) - 150px); min-height: 360px; overflow: auto; -webkit-overflow-scrolling: touch; scrollbar-color: var(--ink-faint) var(--bg); }
     table.stats { width: 100%; border-collapse: separate; border-spacing: 0; white-space: nowrap; font-size: 14px; }
-    .stats thead th { position: sticky; top: 0; z-index: 3; background: var(--ink); color: var(--bg); height: 34px; padding: 0 12px; font-size: 12px; font-weight: 700; cursor: pointer; user-select: none; border-right: 1px solid #d0d0ca; }
-    .stats thead tr.th-sub th { top: 34px; height: 28px; background: #d9d9d3; font-family: var(--mono); font-size: 11px; }
-    .stats thead th.grp { font-family: var(--display); font-weight: 400; font-size: 16px; letter-spacing: .04em; cursor: default; }
-    .stats thead th.grp-active, .stats thead th.sorted { background: var(--volt); color: var(--volt-ink); }
+    .stats thead th { position: sticky; top: 0; z-index: 3; background: var(--ink); color: var(--bg); height: 48px; padding: 4px 12px; font-size: 12px; font-weight: 700; line-height: 1.25; cursor: pointer; user-select: none; vertical-align: middle; }
+    .stats thead th .th-grp { display: block; font-family: var(--kr-display); font-weight: 400; font-size: 13px; }
+    .stats thead th.sorted { background: var(--volt); color: var(--volt-ink); }
     .stats thead th i { font-style: normal; font-size: 9px; }
+    .stats .grp-start { border-left: 2px solid var(--line); }
+    .stats thead th.grp-start { border-left-color: #bcbcb6; }
     .stats td { padding: 10px 12px; text-align: center; border-bottom: 1px solid var(--bg-3); background: var(--bg); font-family: var(--mono); font-weight: 500; }
     .stats td.avg { color: var(--ink-dim); }
     .stats tbody tr:hover td { background: var(--bg-2); }
     .stats td.hl { background: #1a1d0c; color: var(--volt); font-weight: 700; }
-    .sticky-1 { position: sticky; left: 0; z-index: 2; width: 54px; }
-    .sticky-2 { position: sticky; left: 54px; z-index: 2; text-align: left !important; min-width: 100px; border-right: 2px solid var(--bg-3); }
-    thead .sticky-1, thead .sticky-2 { z-index: 4; }
+    .sticky-1 { position: sticky; left: 0; z-index: 2; width: 48px; min-width: 48px; }
+    .sticky-2 { position: sticky; left: var(--rank-w, 48px); z-index: 2; text-align: left !important; min-width: 100px; border-right: 2px solid var(--bg-3); }
+    .stats thead th.sticky-1, .stats thead th.sticky-2 { z-index: 5; } /* 다른 머리글보다 위 */
     td.col-name { font-family: var(--body) !important; font-weight: 700 !important; }
     .rank-num { font-family: var(--display); font-size: 20px; color: var(--ink-faint); }
     tr.top .rank-num { color: var(--ink); }
@@ -332,7 +333,8 @@
       .records-tools { flex-direction: column-reverse; align-items: stretch; gap: 8px; margin-bottom: 10px; }
       .records-note { font-size: 11px; }
       .search { min-width: 0; padding: 7px 12px; }
-      .table-box { max-height: calc(100vh - var(--topbar-h) - 130px); }
+      .table-box { max-height: calc(100vh - var(--topbar-h) - 120px); max-height: calc(100dvh - var(--topbar-h) - 120px); min-height: 300px; }
+      .stats thead th { padding: 4px 10px; }
       .stats td { padding: 9px 10px; font-size: 13px; }
 
       .leaders { grid-template-columns: 1fr 1fr; }
@@ -724,17 +726,18 @@
     }
 
     function renderTableHead() {
-      const th = (f, label, extra = '') => `<th data-sort="${f}" ${extra} class="${currentSort.field === f ? 'sorted' : ''}">${label}<i>${sortMark(f)}</i></th>`;
+      // 한 줄 머리글 (iOS Safari는 rowspan 머리글을 sticky로 고정하지 못함)
+      const th = (f, label, cls = '', grp = '') =>
+        `<th data-sort="${f}" class="${cls} ${currentSort.field === f ? 'sorted' : ''}">${grp ? `<span class="th-grp">${grp}</span>` : ''}${label}<i>${sortMark(f)}</i></th>`;
       $('statsHead').innerHTML = `
         <tr>
-          <th rowspan="2" class="col-rank sticky-1">#</th>
-          <th rowspan="2" class="col-name sticky-2 ${currentSort.field === '선수명' ? 'sorted' : ''}" data-sort="선수명">선수<i>${sortMark('선수명')}</i></th>
-          ${th('팀', '팀', 'rowspan="2"')}
-          ${th('번호', '번호', 'rowspan="2"')}
-          ${th('출석', '출석', 'rowspan="2"')}
-          ${GROUPS.map(g => `<th colspan="2" class="grp ${currentSort.field.endsWith(g.key) ? 'grp-active' : ''}">${g.label}</th>`).join('')}
-        </tr>
-        <tr class="th-sub">${GROUPS.map(g => th('누적' + g.key, '누적') + th('평균' + g.key, '평균')).join('')}</tr>`;
+          <th class="col-rank sticky-1">#</th>
+          ${th('선수명', '선수', 'col-name sticky-2')}
+          ${th('팀', '팀')}
+          ${th('번호', '번호')}
+          ${th('출석', '출석')}
+          ${GROUPS.map(g => th('누적' + g.key, '누적', 'grp-start', g.label) + th('평균' + g.key, '평균', '', g.label)).join('')}
+        </tr>`;
       $('statsHead').querySelectorAll('th[data-sort]').forEach(t => t.addEventListener('click', () => {
         const field = t.dataset.sort;
         currentSort = currentSort.field === field
@@ -769,9 +772,16 @@
           <td class="${hl('팀')}"><span class="team-badge team-${esc(p.팀)}">${esc(p.팀)}</span></td>
           <td class="${hl('번호')}">${p.번호}</td>
           <td class="${hl('출석')}">${p.출석}</td>
-          ${GROUPS.map(g => `<td class="${hl('누적' + g.key)}">${getPlayerValue(p, '누적' + g.key)}</td><td class="avg ${hl('평균' + g.key)}">${fmt(getPlayerValue(p, '평균' + g.key))}</td>`).join('')}
+          ${GROUPS.map(g => `<td class="grp-start ${hl('누적' + g.key)}">${getPlayerValue(p, '누적' + g.key)}</td><td class="avg ${hl('평균' + g.key)}">${fmt(getPlayerValue(p, '평균' + g.key))}</td>`).join('')}
         </tr>`;
       }).join('');
+      syncStickyColumns();
+    }
+
+    // 순위 열의 실제 폭만큼 선수 열을 띄워 고정 (틈 사이로 다른 칸이 비치지 않게)
+    function syncStickyColumns() {
+      const rankCell = document.querySelector('#statsHead .sticky-1');
+      if (rankCell) $('statsHead').closest('table').style.setProperty('--rank-w', `${rankCell.offsetWidth}px`);
     }
 
     // ===== 시즌 전환 =====
@@ -890,7 +900,7 @@
       if (document.querySelector('.modal.open:not(#apiKeyModal)')) closeModals();
       else chatModal.classList.remove('open');
     });
-    window.addEventListener('resize', syncTopbarHeight);
+    window.addEventListener('resize', () => { syncTopbarHeight(); syncStickyColumns(); });
 
     // 채팅 열기/닫기
     chatFab.addEventListener('click', () => {
@@ -1175,6 +1185,8 @@ ${playersSummary}
       initGemini();
       switchSeason(first);
       syncTopbarHeight();
+      // 웹폰트 로딩 후 칸 폭이 바뀌므로 한 번 더 맞춤
+      document.fonts?.ready.then(() => { syncTopbarHeight(); syncStickyColumns(); });
     }
 
     initApp();
